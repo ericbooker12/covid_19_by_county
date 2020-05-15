@@ -1,0 +1,4 @@
+python -m venv venv
+pip freeze > requirements.txt
+export FLASK_ENV=development
+export FLASK_APP=app.py

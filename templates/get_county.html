@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% set active_page = 'home' %}
+
+{% block content %}
+	<form method="POST" action="/data_view">
+
+	  <label for="county">Choose a County:</label>
+	  <select id="counties" name="county">
+	  {# 	{% default_county = "San Diego" %} #}
+	  	{% for county, joined_county in counties.items() %}
+			  <option value={{joined_county}}{% if county == "San Diego" %} selected {% endif %}>{{county}}</option>
+			{% endfor %}
+	  </select>
+
+	  <input type="submit">
+  </form>
+
+{% endblock %}

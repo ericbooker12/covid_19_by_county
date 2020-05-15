@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% set active_page = 'home' %}
+
+{% block content %}
+
+	<div class="chart">
+		<h1>COVID-19 Cases</h1>
+		<h2>COVID-19 Cases from {{county}} county</h2>
+		<form method="GET" action="/">
+			<input name="county" type=text value="{{county}}" />
+			<input name="from_date" type=text value="{{county}}" />
+			<input name="to_date" type=text value="{{county}}" />
+			<input type=submit value="update graph">
+		</form>
+		<h3>Plot as a png</h3>
+		<img src="/matplot-as-image-{{num_x_points}}.png"
+				 id="plot_png"
+				 alt="random points as png"
+
+
+
+		>
+		<h3>Plot as a SVG</h3>
+		<img src="/matplot-as-image-{{num_x_points}}.svg"
+				 alt="random points as svg"
+				 height="400"
+		>
+	</div>
+
+{% endblock %}

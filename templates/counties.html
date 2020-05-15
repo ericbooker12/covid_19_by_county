@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% set active_page = 'home' %}
+
+{% block content %}
+  <div class="box sidebar">
+
+  {# <button onclick="" id="countyBtn" name="counties" class="render_chart san_diego" size="23" data-style="btn-primary">Refresh Data</button> #}
+
+{#   <br>
+  <br>
+ #}
+ 	<div>Select a County</div>
+	<select id="counties" name="counties" size="23" data-style="btn-primary">
+		{% for county in counties %}
+		  <option class="countyForm selectCounty" value="counties">{{county}}</option>
+		{% endfor %}
+	</select>
+
+
+{# 		<ul>
+			{% for county in counties: %}
+				<li>
+					<a href="" class="countyForm">{{county}}</a>
+				</li>
+			{% endfor %}
+		</ul> #}
+	</div>
+
+
+	<div class="box content" id="chart">
+			<div id="exp-slider">
+			<table id="slider-table" hidden=true>
+				<tr>
+					<td>
+						<span>Emphasize Lower Range</span>
+					</td>
+					<td>
+						<input onchange="renderChart(this.value)" id="render_scale" type="range" min=".1" max="5" value="1" step=".1" class="render_chart san_diego" id="myRange">
+					</td>
+					<td>
+						<span>Emphasize Upper Range</span>
+					</td>
+					<td>
+						<span>&nbsp;|&nbsp;</span>
+						<span id="range-value"></span>
+					</td>
+				</tr>
+			</table>
+			</div>
+	</div>
+
+	<script>
+
+	function fromHtml() {
+		console.log("In HTML")
+		getData()
+		// d3.csv("/static/data/alameda.csv")
+		// 	.then(function(data) {
+
+	 //  		console.log(data[0]);
+
+		// 	});
+	}
+
+	</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

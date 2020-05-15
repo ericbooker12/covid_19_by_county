@@ -1,0 +1,11 @@
+- when loading data for the first time:
+    - make ajax call -
+    - create csv (from python controller?)
+    - create chart
+
+- when reloading data
+  - get data from stored csv
+
+- add tick marks
+
+

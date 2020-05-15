@@ -1,0 +1,57 @@
+body {
+	padding-top: 80px;
+	padding-right: 50px;
+
+}
+
+.grid line {
+	stroke: lightgrey;
+	stroke-opacity: 0.6;
+	shape-rendering: crispEdges
+}
+
+#legend-box {
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+
+#range-value-bold {
+	/*float: right;*/
+  font-weight: bold;
+}
+
+#plot_png {
+	/*height: 600px;*/
+}
+
+.selectCounty {
+	margin-right: 20px;
+}
+
+button.link {
+	font-family: "Verdana" sans-serif;
+	font-size: 1em;
+	text-align: left;
+	color: blue;
+	background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+}
+
+li {
+	text-decoration: none;
+}
+
+	ul {
+		list-style-type: none;
+		float: right;
+	}
+
+.chart-svg {
+	/*background-color: #ddd;*/
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+
