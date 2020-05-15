@@ -4,8 +4,6 @@ import datetime
 
 url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
 
-
-
 def get_all_data():
 
 	return pd.read_csv(url)
