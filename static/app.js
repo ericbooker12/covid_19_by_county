@@ -233,8 +233,6 @@ $( document ).ready(function() {
 					}
 				})
 
-
-
 				let legendElements = [];
 
 				let legend = chart
@@ -269,8 +267,8 @@ $( document ).ready(function() {
 					.attr("opacity", .1)
 
 
-				for (var i = 0; i < propertyNames.length; i++) {
-					var element =
+				for (let i = 0; i < propertyNames.length; i++) {
+					let element =
 						{
 							color: colors[i],
 							title: propertyNames[i],
@@ -307,8 +305,6 @@ $( document ).ready(function() {
 					currentY += elementHeight + 10
 
 				});
-
-				// console.log("pop", typeof parseFloat(pop))
 
 				if (pop){
 					pop = parseFloat(pop.split(",").join(""));

@@ -71,3 +71,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-10,San Mateo,California,6081.0,1453,65,28.0
 2020-05-11,San Mateo,California,6081.0,1464,65,11.0
 2020-05-12,San Mateo,California,6081.0,1499,65,35.0
+2020-05-13,San Mateo,California,6081.0,1533,66,34.0
+2020-05-14,San Mateo,California,6081.0,1550,66,17.0

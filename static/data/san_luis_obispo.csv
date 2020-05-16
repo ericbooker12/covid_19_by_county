@@ -59,3 +59,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-10,San Luis Obispo,California,6079.0,220,1,6.0
 2020-05-11,San Luis Obispo,California,6079.0,226,1,6.0
 2020-05-12,San Luis Obispo,California,6079.0,227,1,1.0
+2020-05-13,San Luis Obispo,California,6079.0,232,1,5.0
+2020-05-14,San Luis Obispo,California,6079.0,237,1,5.0

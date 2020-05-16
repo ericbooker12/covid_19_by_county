@@ -75,3 +75,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-09,Sonoma,California,6097.0,309,4,9.0
 2020-05-10,Sonoma,California,6097.0,309,4,0.0
 2020-05-11,Sonoma,California,6097.0,312,4,3.0
+2020-05-12,Sonoma,California,6097.0,312,5,0.0
+2020-05-13,Sonoma,California,6097.0,337,4,25.0
+2020-05-14,Sonoma,California,6097.0,351,4,14.0

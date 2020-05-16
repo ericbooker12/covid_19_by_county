@@ -80,3 +80,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-09,Sacramento,California,6067.0,1164,51,5.0
 2020-05-10,Sacramento,California,6067.0,1166,52,2.0
 2020-05-11,Sacramento,California,6067.0,1172,52,6.0
+2020-05-12,Sacramento,California,6067.0,1180,52,8.0
+2020-05-13,Sacramento,California,6067.0,1182,52,2.0
+2020-05-14,Sacramento,California,6067.0,1193,54,11.0
