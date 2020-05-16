@@ -62,3 +62,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-09,Ventura,California,6111.0,666,19,14.0
 2020-05-10,Ventura,California,6111.0,679,19,13.0
 2020-05-11,Ventura,California,6111.0,690,19,11.0
+2020-05-12,Ventura,California,6111.0,698,19,8.0
+2020-05-13,Ventura,California,6111.0,725,24,27.0
+2020-05-14,Ventura,California,6111.0,742,24,17.0

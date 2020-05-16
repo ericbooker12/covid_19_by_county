@@ -46,10 +46,6 @@ $( document ).ready(function() {
 
 		let source = "csv"
 
-		console.log("render value = ", value)
-		console.log("county = ", county)
-
-
 		d3.csv("/static/data/" + county_joined + ".csv")
 			.then(function(data) {
 				makeData(data, 'csv', value, county)
@@ -62,95 +58,17 @@ $( document ).ready(function() {
 
 	function makeData(inputData, source, exp, entity){
 
-		// let popData;
-
-		async function getCSV(){
-			return await d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000))
-
-
-					// d.forEach(function(record){
-					// 	if (record.county == entity) {
-					// 		addPop(record.population)
-					// 	}
-					// })
-
-					// popData = d;
-					// return d;
-
-					// console.log(d)
-
-		}
-		// let csvData;
-
-		getCSV().then(function(x){
-			d(x);
-		})
-
-		// let csvData = getCSV();
-
-		// console.log("csvData = ",  csvData)
-
-		let csvData;
-
-		function d(x){
-			// console.log(x)
-			csvData = x;
-		}
-
-		console.log(csvData)
-
-
-
-		// async function hello() {
-		//   return greeting = await Promise.resolve("Hello");
-		// };
-
-		// d = hello().then();
-
-
-
-
-		// const promise1 = new Promise((resolve, reject) => {
-		//   resolve('Success!');
-		// });
-
-		// promise1.then((value) => {
-		//   console.log(value);
-		//   // expected output: "Success!"
-		// });
-
-		// console.log("pop:", popData)
-
-		// var dataset;  //Global var
-
-		// d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000), function(error, data) {
-		// 		// If error is not null, something went wrong.
-		// 		if (error) {
-		// 					// console.log("error", error);  //Log the error.
-		// 		} else {
-		// 					// console.log(data);   //Log the data.
-		// 					dataset = data; // Give the data a global scope
-		// 					//Call some other functions that generate the visualization
-		// 		}
-		// });
-
-		// console.log("dataset", dataset)
-
-
 		$("#range-value").html(`Y-scale = <span id='range-value-bold'>y^` + exp + `</span>`);
 		$("#slider-table").removeAttr('hidden');
 
 		d3.select(".chart-svg").remove();
-
-		// console.log("data is from " + source)
-		// console.log("ajax", inputData[0])
 
 		var data = {};
 
 		if (source == "ajax"){
 			data = inputData
 			data = JSON.parse(data);
-			console.log("ajax", data[data.length - 1])
+			// console.log("ajax", data[data.length - 1])
 		}
 
 		if (source == "csv"){
@@ -158,15 +76,12 @@ $( document ).ready(function() {
 
 			for (var i = 0; i < data.length; i++){
 				for (var item in data[i]) {
-					// console.log(items[i])
 					if(item == 'cases' || item == 'deaths' || item == 'new_cases'){
 						data[i][item] = parseInt(data[i][item])
 					}
 				}
 			}
 		}
-
-		// console.log(data)
 
 		var margin = 50;
 		var width = 600;
@@ -192,57 +107,25 @@ $( document ).ready(function() {
 		var maxCases = d3.max(data, function(d) {return d.cases})
 		var maxDeaths = d3.max(data, function(d) {return d.deaths})
 		var minCases = d3.min(data, function(d) {return d.cases})
-		// console.log("max cases = ", maxCases)
-		// console.log("min cases = ", minCases)
 
 		var y  = d3.scalePow()
-			// .domain(d3.extent(data, function(d) {return d.cases}))
 			.domain([0, maxCases])
-			// d3.max([3, 2, 1, 1, 6, 2, 4])
 			.range([height, 0])
 			.exponent(exp).nice();
 
-		// propertyNames = [];
-
-
-
-		// for (var name in data[0]) {
-		// 	if (name == "date") {
-		// 		continue;
-		// 	}
-
-		// 	var max = d3.max(data, function(d) {return d[name]})
-		// 	propertyNames.push(name)
-		// }
-
-		// console.log("maxElements = ", maxElements)
-
 		propertyNames = ["cases", "deaths"]
 		propertyMaxes = [maxCases, maxDeaths]
-
-		// console.log(propertyNames)
 
 		// var colors = d3.schemeCategory10;
 		var colors = ["red", "blue"]
 
 
-		for (var i = 0; i < propertyNames.length; i++) {
-		// for (var i = 0; i < 2; i++) {
-			// plotVariable(propertyNames[i], d3.schemeCategory10[i])
-		}
-
+		// for (var i = 0; i < propertyNames.length; i++) {
+		// 	plotVariable(propertyNames[i], d3.schemeCategory10[i])
+		// }
 
 		plotVariable("cases", colors[0])
 		plotVariable("deaths", colors[1])
-
-
-		for (var i = 0; i < propertyNames.length; i++) {
-		// for (var i = 0; i < 2; i++) {
-			// plotVariable(propertyNames[i], d3.schemeCategory10[i])
-		}
-
-		// plotVariable("cases", colors[1])
-		// plotVariable("deaths", colors[2])
 
 		var xAxisGroup = chart
 			.append('g')
@@ -276,7 +159,6 @@ $( document ).ready(function() {
 				.style("font-size", "24px")
 				.style("text-de`coration", "underline")
 				.text(entity + " County COVID-19 Cases");
-
 
 
 		function circlePoints(propertyNames, dataGroup){
@@ -321,6 +203,7 @@ $( document ).ready(function() {
 			xGridlines(gridx);
 		}
 
+
 		function plotVariable(propertyName, color) {
 
 			var line2 = d3.line()
@@ -338,47 +221,45 @@ $( document ).ready(function() {
 				.attr("stroke-width", "1.5")
 		}
 
+
 		function drawLegend(propertyNames, chart, max, county) {
 			d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000)).then(function(d){
 
-				console.log("in drawLegend", county)
-
-				var pop;
+				let pop;
 
 				d.forEach(function(row){
 					if( row.county == county){
-						console.log(row.population)
 						pop = row.population
 					}
 				})
 
 
 
-				var legendElements = [];
+				let legendElements = [];
 
-				var legend = chart
+				let legend = chart
 					.append("g")
 
-				var elementHeight = 4;
+				let elementHeight = 4;
 
-				var xMargin = 5;
-				var yMargin = 5;
-				var xOrigin = 40;
-				var yOrigin = 20;
-				var boxMargin = 8
-				var width = 140 + boxMargin * 2;
+				let xMargin = 5;
+				let yMargin = 5;
+				let xOrigin = 40;
+				let yOrigin = 20;
+				let boxMargin = 8
+				let width = 140 + boxMargin * 2;
 
-				// var height = propertyNames.length * elementHeight * 6+ (2 * yMargin);
-				var height = 40;
+				// let height = propertyNames.length * elementHeight * 6+ (2 * yMargin);
+				let height = 40;
 
-				var elementWidth = 40;
+				let elementWidth = 40;
 
 				legend
 					.append("rect")
 					.attr("x", xOrigin)
 					.attr("y", yOrigin)
 					.attr("id", "legend-box")
-					// .attr("stroke", "gray")
+					// .attr("stroke", "black")
 					.attr("radius", "5")
 					// .attr("fill", "grey")
 					.attr("fill", "white")
@@ -397,9 +278,6 @@ $( document ).ready(function() {
 
 						}
 					legendElements.push(element)
-
-					// console.dir(element)
-
 				}
 
 				currentY = yOrigin + yMargin;
@@ -415,8 +293,7 @@ $( document ).ready(function() {
 						.append("title")
 						.text(x.title)
 
-					// var title = x.title.length < 5 ? x.title : x.title.substring(0, 5) + "..."
-					var title = capitalize(x.title) + ":   " + x.max
+					let title = capitalize(x.title) + ":   " + x.max
 
 					legend.append("text")
 						.text(title)
@@ -431,6 +308,19 @@ $( document ).ready(function() {
 
 				});
 
+				// console.log("pop", typeof parseFloat(pop))
+
+				if (pop){
+					pop = parseFloat(pop.split(",").join(""));
+				}
+
+				if (pop >= 1000000) {
+					pop = (pop / 1000000).toFixed(1)
+					pop = pop.toString() + " million"
+				} else {
+					pop =  pop.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				}
+
 				legend.append("text")
 					.text("Population: " + pop)
 					.attr("font-size", "10pt")
@@ -439,10 +329,9 @@ $( document ).ready(function() {
 					.attr("y", boxMargin + 60)
 					.attr("dx", elementWidth + xMargin + 8)
 					.attr("dy", yMargin)
-
-
 			})
 		}
+
 
 		function capitalize(s) {
 			if (typeof s !== 'string') return ''

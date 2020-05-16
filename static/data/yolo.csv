@@ -66,3 +66,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-09,Yolo,California,6113.0,172,20,0.0
 2020-05-10,Yolo,California,6113.0,173,20,1.0
 2020-05-11,Yolo,California,6113.0,174,20,1.0
+2020-05-12,Yolo,California,6113.0,177,22,3.0
+2020-05-13,Yolo,California,6113.0,179,22,2.0
+2020-05-14,Yolo,California,6113.0,182,22,3.0
