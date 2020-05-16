@@ -1,3 +1,3 @@
-web: gunicorn showdata_flask_2:app
+web: gunicorn wsgi:app
 heroku ps:scale web=1
 

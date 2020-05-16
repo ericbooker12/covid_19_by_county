@@ -186,7 +186,7 @@ $( document ).ready(function() {
 		});
 
 		var x = d3.scaleTime()
-			.domain(d3.extent(data, function(d) { return d.date; })) //returns min and max
+			.domain(d3.extent(data, function(d) {return d.date; })) //returns min and max
 			.range([0, width]);
 
 		var maxCases = d3.max(data, function(d) {return d.cases})
@@ -339,7 +339,7 @@ $( document ).ready(function() {
 		}
 
 		function drawLegend(propertyNames, chart, max, county) {
-			d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000).then(function(d){
+			d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000)).then(function(d){
 
 				console.log("in drawLegend", county)
 
