@@ -45,3 +45,9 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-06,Merced,California,6047.0,152,3,6.0
 2020-05-07,Merced,California,6047.0,155,3,3.0
 2020-05-08,Merced,California,6047.0,163,3,8.0
+2020-05-09,Merced,California,6047.0,163,3,0.0
+2020-05-10,Merced,California,6047.0,163,3,0.0
+2020-05-11,Merced,California,6047.0,173,3,10.0
+2020-05-12,Merced,California,6047.0,177,4,4.0
+2020-05-13,Merced,California,6047.0,180,4,3.0
+2020-05-14,Merced,California,6047.0,189,4,9.0

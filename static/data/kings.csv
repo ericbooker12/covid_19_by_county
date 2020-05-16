@@ -47,3 +47,4 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-11,Kings,California,6031.0,319,1,32.0
 2020-05-12,Kings,California,6031.0,325,1,6.0
 2020-05-13,Kings,California,6031.0,348,1,23.0
+2020-05-14,Kings,California,6031.0,358,1,10.0

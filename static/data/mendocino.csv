@@ -55,3 +55,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-10,Mendocino,California,6045.0,12,0,0.0
 2020-05-11,Mendocino,California,6045.0,12,0,0.0
 2020-05-12,Mendocino,California,6045.0,12,0,0.0
+2020-05-13,Mendocino,California,6045.0,13,0,1.0
+2020-05-14,Mendocino,California,6045.0,13,0,0.0

@@ -62,16 +62,95 @@ $( document ).ready(function() {
 
 	function makeData(inputData, source, exp, entity){
 
+		// let popData;
+
+		async function getCSV(){
+			return await d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000))
+
+
+					// d.forEach(function(record){
+					// 	if (record.county == entity) {
+					// 		addPop(record.population)
+					// 	}
+					// })
+
+					// popData = d;
+					// return d;
+
+					// console.log(d)
+
+		}
+		// let csvData;
+
+		getCSV().then(function(x){
+			d(x);
+		})
+
+		// let csvData = getCSV();
+
+		// console.log("csvData = ",  csvData)
+
+		let csvData;
+
+		function d(x){
+			// console.log(x)
+			csvData = x;
+		}
+
+		console.log(csvData)
+
+
+
+		// async function hello() {
+		//   return greeting = await Promise.resolve("Hello");
+		// };
+
+		// d = hello().then();
+
+
+
+
+		// const promise1 = new Promise((resolve, reject) => {
+		//   resolve('Success!');
+		// });
+
+		// promise1.then((value) => {
+		//   console.log(value);
+		//   // expected output: "Success!"
+		// });
+
+		// console.log("pop:", popData)
+
+		// var dataset;  //Global var
+
+		// d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000), function(error, data) {
+		// 		// If error is not null, something went wrong.
+		// 		if (error) {
+		// 					// console.log("error", error);  //Log the error.
+		// 		} else {
+		// 					// console.log(data);   //Log the data.
+		// 					dataset = data; // Give the data a global scope
+		// 					//Call some other functions that generate the visualization
+		// 		}
+		// });
+
+		// console.log("dataset", dataset)
+
+
 		$("#range-value").html(`Y-scale = <span id='range-value-bold'>y^` + exp + `</span>`);
 		$("#slider-table").removeAttr('hidden');
 
 		d3.select(".chart-svg").remove();
+
+		// console.log("data is from " + source)
+		// console.log("ajax", inputData[0])
 
 		var data = {};
 
 		if (source == "ajax"){
 			data = inputData
 			data = JSON.parse(data);
+			console.log("ajax", data[data.length - 1])
 		}
 
 		if (source == "csv"){
@@ -86,6 +165,8 @@ $( document ).ready(function() {
 				}
 			}
 		}
+
+		// console.log(data)
 
 		var margin = 50;
 		var width = 600;
@@ -105,26 +186,63 @@ $( document ).ready(function() {
 		});
 
 		var x = d3.scaleTime()
-			.domain(d3.extent(data, function(d) {return d.date; })) //returns min and max
+			.domain(d3.extent(data, function(d) { return d.date; })) //returns min and max
 			.range([0, width]);
 
 		var maxCases = d3.max(data, function(d) {return d.cases})
 		var maxDeaths = d3.max(data, function(d) {return d.deaths})
 		var minCases = d3.min(data, function(d) {return d.cases})
+		// console.log("max cases = ", maxCases)
+		// console.log("min cases = ", minCases)
 
 		var y  = d3.scalePow()
+			// .domain(d3.extent(data, function(d) {return d.cases}))
 			.domain([0, maxCases])
+			// d3.max([3, 2, 1, 1, 6, 2, 4])
 			.range([height, 0])
 			.exponent(exp).nice();
+
+		// propertyNames = [];
+
+
+
+		// for (var name in data[0]) {
+		// 	if (name == "date") {
+		// 		continue;
+		// 	}
+
+		// 	var max = d3.max(data, function(d) {return d[name]})
+		// 	propertyNames.push(name)
+		// }
+
+		// console.log("maxElements = ", maxElements)
 
 		propertyNames = ["cases", "deaths"]
 		propertyMaxes = [maxCases, maxDeaths]
 
+		// console.log(propertyNames)
+
 		// var colors = d3.schemeCategory10;
 		var colors = ["red", "blue"]
 
+
+		for (var i = 0; i < propertyNames.length; i++) {
+		// for (var i = 0; i < 2; i++) {
+			// plotVariable(propertyNames[i], d3.schemeCategory10[i])
+		}
+
+
 		plotVariable("cases", colors[0])
 		plotVariable("deaths", colors[1])
+
+
+		for (var i = 0; i < propertyNames.length; i++) {
+		// for (var i = 0; i < 2; i++) {
+			// plotVariable(propertyNames[i], d3.schemeCategory10[i])
+		}
+
+		// plotVariable("cases", colors[1])
+		// plotVariable("deaths", colors[2])
 
 		var xAxisGroup = chart
 			.append('g')
@@ -146,7 +264,7 @@ $( document ).ready(function() {
 		drawGridlines();
 		circlePoints(propertyNames, chart);
 
-		drawLegend(propertyNames, chart, propertyMaxes);
+		drawLegend(propertyNames, chart, propertyMaxes, entity);
 
 		d3.selectAll(".xAxisGroup .tick text")
 			.attr("transform", "rotate(-15)")
@@ -158,6 +276,7 @@ $( document ).ready(function() {
 				.style("font-size", "24px")
 				.style("text-de`coration", "underline")
 				.text(entity + " County COVID-19 Cases");
+
 
 
 		function circlePoints(propertyNames, dataGroup){
@@ -219,85 +338,110 @@ $( document ).ready(function() {
 				.attr("stroke-width", "1.5")
 		}
 
-		function drawLegend(propertyNames, chart, max) {
-			console.log("max cases = ", max)
-			var legendElements = [];
+		function drawLegend(propertyNames, chart, max, county) {
+			d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000).then(function(d){
 
-			var legend = chart
-				.append("g")
+				console.log("in drawLegend", county)
 
-			var elementHeight = 4;
+				var pop;
 
-			var xMargin = 5;
-			var yMargin = 5;
-			var xOrigin = 40;
-			var yOrigin = 20;
-			var boxMargin = 8
-			var width = 140 + boxMargin * 2;
-
-			// var height = propertyNames.length * elementHeight * 6+ (2 * yMargin);
-			var height = 40;
-
-			var elementWidth = 40;
-
-			legend
-				.append("rect")
-				.attr("x", xOrigin)
-				.attr("y", yOrigin)
-				.attr("id", "legend-box")
-				// .attr("stroke", "gray")
-				.attr("radius", "5")
-				// .attr("fill", "#ddd")
-				.attr("fill", "white")
-				.attr("width", width)
-				.attr("height", height)
-				.attr("rx", 5)
-				.attr("opacity", .1)
-
-
-			for (var i = 0; i < propertyNames.length; i++) {
-				var element =
-					{
-						color: colors[i],
-						title: propertyNames[i],
-						max: max[i]
-
+				d.forEach(function(row){
+					if( row.county == county){
+						console.log(row.population)
+						pop = row.population
 					}
-				legendElements.push(element)
+				})
 
-				// console.dir(element)
 
-			}
 
-			currentY = yOrigin + yMargin;
+				var legendElements = [];
 
-			legendElements.forEach(function(x) {
+				var legend = chart
+					.append("g")
 
-				legend.append("rect")
-					.attr("fill", x.color)
-					.attr("x", xOrigin + xMargin + 8)
-					.attr("y", currentY + boxMargin)
-					.attr("width", elementWidth)
-					.attr("height", elementHeight)
-					.append("title")
-					.text(x.title)
+				var elementHeight = 4;
 
-				// var title = x.title.length < 5 ? x.title : x.title.substring(0, 5) + "..."
-				var title = capitalize(x.title) + ":   " + x.max
+				var xMargin = 5;
+				var yMargin = 5;
+				var xOrigin = 40;
+				var yOrigin = 20;
+				var boxMargin = 8
+				var width = 140 + boxMargin * 2;
+
+				// var height = propertyNames.length * elementHeight * 6+ (2 * yMargin);
+				var height = 40;
+
+				var elementWidth = 40;
+
+				legend
+					.append("rect")
+					.attr("x", xOrigin)
+					.attr("y", yOrigin)
+					.attr("id", "legend-box")
+					// .attr("stroke", "gray")
+					.attr("radius", "5")
+					// .attr("fill", "grey")
+					.attr("fill", "white")
+					.attr("width", width)
+					.attr("height", height)
+					.attr("rx", 5)
+					.attr("opacity", .1)
+
+
+				for (var i = 0; i < propertyNames.length; i++) {
+					var element =
+						{
+							color: colors[i],
+							title: propertyNames[i],
+							max: max[i]
+
+						}
+					legendElements.push(element)
+
+					// console.dir(element)
+
+				}
+
+				currentY = yOrigin + yMargin;
+
+				legendElements.forEach(function(x) {
+
+					legend.append("rect")
+						.attr("fill", x.color)
+						.attr("x", xOrigin + xMargin + 8)
+						.attr("y", currentY + boxMargin)
+						.attr("width", elementWidth)
+						.attr("height", elementHeight)
+						.append("title")
+						.text(x.title)
+
+					// var title = x.title.length < 5 ? x.title : x.title.substring(0, 5) + "..."
+					var title = capitalize(x.title) + ":   " + x.max
+
+					legend.append("text")
+						.text(title)
+						.attr("font-size", "10pt")
+						.attr("fill", "black")
+						.attr("x", elementWidth + xMargin + 10)
+						.attr("y", currentY + boxMargin)
+						.attr("dx", elementWidth + xMargin + 8)
+						.attr("dy", yMargin)
+
+					currentY += elementHeight + 10
+
+				});
 
 				legend.append("text")
-					.text(title)
+					.text("Population: " + pop)
 					.attr("font-size", "10pt")
 					.attr("fill", "black")
-					.attr("x", elementWidth + xMargin + 10)
-					.attr("y", currentY + boxMargin)
+					.attr("x", 0)
+					.attr("y", boxMargin + 60)
 					.attr("dx", elementWidth + xMargin + 8)
 					.attr("dy", yMargin)
 
-				currentY += elementHeight + 10
 
-			});
-
+			})
 		}
 
 		function capitalize(s) {
