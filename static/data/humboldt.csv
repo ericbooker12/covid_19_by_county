@@ -84,3 +84,8 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-12,Humboldt,California,6023.0,64,0,3.0
 2020-05-13,Humboldt,California,6023.0,67,0,3.0
 2020-05-14,Humboldt,California,6023.0,68,0,1.0
+2020-05-15,Humboldt,California,6023.0,72,0,4.0
+2020-05-16,Humboldt,California,6023.0,77,0,5.0
+2020-05-17,Humboldt,California,6023.0,77,0,0.0
+2020-05-18,Humboldt,California,6023.0,81,0,4.0
+2020-05-19,Humboldt,California,6023.0,86,0,5.0
