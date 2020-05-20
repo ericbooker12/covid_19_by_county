@@ -35,7 +35,8 @@ def index():
 @app.route("/<county>", methods=["GET", "POST"])
 def show_data(county):
 
-	print("In show_data")
+
+	print(county)
 
 	county_data = get_county_data(county)
 	county_data_json = county_data.to_json(orient="records")
@@ -60,43 +61,6 @@ def process():
 
 	return render_template("counties.html", counties = counties )
 
-
-	# lang = request.args.get('language')
-	# return jsonify({'name': "ERIC"})
-	# return '<h1>The language is : {}</h1>'.format(lang)
-	# return request.args
-
-
-
-
-
-@app.route("/processXX", methods=["POST"])
-def processXX():
-	print("*" * 20)
-	print("in Process")
-	print("request.form = ", request.form)
-	print("request.args = ", request.args)
-	print(request.method)
-	print("*" * 20)
-
-
-	email = request.form['email']
-	name = request.form['name']
-
-	print("*" * 20)
-	print("name1 = ", name1)
-	print("*" * 20)
-
-	if name and email:
-		print("*" * 20)
-		print("in If")
-		print("*" * 20)
-
-		newName = name[::-1]
-
-		return jsonify({'name': newName})
-
-	return jsonify({'error': "Missing data."})
 
 if __name__ == '__main__':
 	app.run(debug=True)

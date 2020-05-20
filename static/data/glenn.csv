@@ -47,3 +47,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-12,Glenn,California,6021.0,6,0,0.0
 2020-05-13,Glenn,California,6021.0,7,0,1.0
 2020-05-14,Glenn,California,6021.0,9,0,2.0
+2020-05-15,Glenn,California,6021.0,9,0,0.0
+2020-05-16,Glenn,California,6021.0,9,0,0.0

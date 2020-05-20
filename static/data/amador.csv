@@ -55,3 +55,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-12,Amador,California,6005.0,7,0,0.0
 2020-05-13,Amador,California,6005.0,8,0,1.0
 2020-05-14,Amador,California,6005.0,8,0,0.0
+2020-05-15,Amador,California,6005.0,8,0,0.0
+2020-05-16,Amador,California,6005.0,8,0,0.0

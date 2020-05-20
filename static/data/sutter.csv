@@ -47,3 +47,7 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-09,Sutter,California,6101.0,33,2,1.0
 2020-05-10,Sutter,California,6101.0,33,2,0.0
 2020-05-11,Sutter,California,6101.0,34,2,1.0
+2020-05-12,Sutter,California,6101.0,35,2,1.0
+2020-05-13,Sutter,California,6101.0,36,2,1.0
+2020-05-14,Sutter,California,6101.0,37,2,1.0
+2020-05-15,Sutter,California,6101.0,37,2,0.0

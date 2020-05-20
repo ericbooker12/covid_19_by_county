@@ -55,3 +55,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-12,Imperial,California,6025.0,603,12,39.0
 2020-05-13,Imperial,California,6025.0,647,13,44.0
 2020-05-14,Imperial,California,6025.0,712,14,65.0
+2020-05-15,Imperial,California,6025.0,786,14,74.0
+2020-05-16,Imperial,California,6025.0,786,14,0.0
