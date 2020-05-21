@@ -70,12 +70,12 @@ class D3Map {
 
 		let title = this.svg
 			.append('text')
-			.attr("x", 20)
+			.attr("x", 30)
 			.attr("y",  50)
-		// 	.attr("text-anchor", "middle")
-		// 	.style("font-size", "24px")
-		// 	.style("text-de`coration", "underline")
-			.text("Click on a county.");
+			// .attr("text-anchor", "middle")
+			.style("font-size", "18px")
+			.style("text-de`coration", "underline")
+			.text("Click a county");
 
 		const countyGroup = this.svg
 			.append('g')
@@ -236,8 +236,10 @@ function makeData(inputData, source, exp, entity){
 
 	var parseTime = d3.timeParse("%Y-%m-%d");
 
+	let numOfDataPoints = 0;
+
 	data.forEach(function (d){
-		console.log(d.date)
+		numOfDataPoints += 1
 		d.date = parseTime(d.date);
 	});
 
@@ -248,6 +250,9 @@ function makeData(inputData, source, exp, entity){
 	var maxCases = d3.max(data, function(d) {return d.cases})
 	var maxDeaths = d3.max(data, function(d) {return d.deaths})
 	var minCases = d3.min(data, function(d) {return d.cases})
+	// var numOfDataPoints = d3.min(data, function(d) {return d.date})
+
+	console.log("numOfDataPoints: ", numOfDataPoints)
 
 	var y  = d3.scalePow()
 		.domain([0, maxCases])
@@ -333,7 +338,7 @@ function makeData(inputData, source, exp, entity){
 		yGridlines(gridy);
 
 		var xGridlines = d3.axisBottom(x)
-			.ticks(30)
+			.ticks(numOfDataPoints)
 			.tickFormat("")
 			.tickSize(height)
 
