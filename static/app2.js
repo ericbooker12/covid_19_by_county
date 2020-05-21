@@ -66,7 +66,8 @@ class D3Map {
 
 
 		this.counties = geojson.features
-		this.projection = d3.geoAlbers()
+		// this.projection = d3.geoAlbers() //set rotate to -30
+		this.projection = d3.geoMercator()
 		this.projection
 			.fitExtent([
 				[ 0, 0 ],
@@ -81,6 +82,15 @@ class D3Map {
 	drawCounties(){
 		const path = d3.geoPath().projection(this.projection)
 
+		let title = this.svg
+			.append('text')
+			.attr("x", 20)
+			.attr("y",  50)
+		// 	.attr("text-anchor", "middle")
+		// 	.style("font-size", "24px")
+		// 	.style("text-de`coration", "underline")
+			.text("Select a county from\nstate image.");
+
 		const countyGroup = this.svg
 			.append('g')
 			.attr('class', 'counties')
@@ -93,18 +103,42 @@ class D3Map {
 			.attr('stroke', 'white')
 			.attr('transform', 'rotate(-25)')
 			// .attr('transform', 'translate(0, 20)')
-			.attr("transform", "translate(0, 100) rotate(-15) scale(.75)")
+			.attr("transform", "translate(20, 0) rotate(0) scale(1)")
 			// .attr("transform", "scale(.75)")
 			// .on('mouseover', this.showCounty.bind(this))
 			.on('click', this.showData.bind(this))
-			.on('mouseover', this.showCounty.bind(this))
+			.on('mouseover', this.showCountyLabel.bind(this))
+			.on('mouseout', this.removeCountyLabel.bind(this))
+			// .on('mouseover', function(d, i){
+				// labels(countyGroup, path.centroid(d)[0], path.centroid(d)[1], d.properties.name)
+			// })
+
+			function labels(svg, x, y, name){
+				console.log(x, y, name)
+				console.log(joinCountyName(name))
+
+				let joinedName = joinCountyName(name)
+
+
+				svg
+					.append('text')
+					.attr('id', joinedName)
+					// .attr('x', function(d){ return path.centroid(d)[0] })
+					// .attr('x', function(d){ return path.centroid(d)[0] })
+					.attr('x', 3)
+					.attr('y', 5)
+					.attr('font-size', '60px')
+					// .attr('transform', `translate(7, ${textSize / 2})`)
+					// .text(county.properties.name) //namelsad
+					.text("Hello") //namelsad
+				}
 
 		return countyGroup
 	}
 
 	showData(entity, i, counties){
 		let county = entity.properties.name
-		console.log(county)
+		// console.log(county)
 
 		$("#countyBtn").removeClass()
 		$("#countyBtn").addClass(county);
@@ -127,6 +161,50 @@ class D3Map {
 		// console.log(i)
 		// console.log(counties)
 	}
+
+	showCountyLabel(county, i, counties){
+
+
+		const coords = county.geometry.coordinates[0][0][0]
+		const x = this.projection(coords)[0]
+		const y = this.projection(coords)[1]
+
+		let textSize = 10;
+		this.svg
+			.append('text')
+			.attr('id', countyLabel(county, i))
+			.attr('x', x)
+			.attr('y', y)
+			.attr("class", "selected")
+			.attr('font-size', '12px')
+			.attr('transform', `translate(7, ${textSize / 2})`)
+			.text(county.properties.namelsad) //namelsad
+
+		d3.select(counties[i])
+			// .attr("fill", "lightblue")
+			.attr("class", "selected")
+
+			console.log(counties[i])
+
+	}
+
+		removeCountyLabel(county, i, counties){
+			console.log(countyLabel(county, i))
+			d3.select('#' + countyLabel(county, i)).remove()
+			// d3.select(counties[i]).attr("fill", "lightblue")
+
+	}
+
+}
+
+function countyLabel(county) {
+	joinedCounty = joinCountyName(county.properties.name)
+	return `label_${joinedCounty}`
+}
+
+function joinCountyName(county) {
+	county = county.toLowerCase().split(" ").join("_")
+	return county
 }
 
 
@@ -410,6 +488,8 @@ function makeData(inputData, source, exp, entity){
 		if (typeof s !== 'string') return ''
 		return s.charAt(0).toUpperCase() + s.slice(1)
 	}
+
+
 
 }
 

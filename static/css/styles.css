@@ -4,6 +4,10 @@ body {
 
 }
 
+.selected {
+	background-color: 'yellow';
+}
+
 .grid line {
 	stroke: lightgrey;
 	stroke-opacity: 0.6;
