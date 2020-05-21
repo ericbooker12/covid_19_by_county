@@ -50,7 +50,7 @@ function renderChart(value){
 		.then(function(data) {
 			makeData(data, 'csv', value, county)
 		});
-	}
+}
 
 function getData(data, type){
 	csvJSON(data)
@@ -181,7 +181,7 @@ function makeData(inputData, source, exp, entity){
 	function drawGridlines() {
 
 		var yGridlines = d3.axisLeft(y)
-			.ticks(30)
+			// .ticks(30)
 			.tickFormat("")
 			.tickSize(-width)
 			// .attr("fill", "grey")

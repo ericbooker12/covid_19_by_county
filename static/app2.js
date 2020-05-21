@@ -10,6 +10,21 @@ $( document ).ready(function() {
 			// map.drawBubbles(countryGroup)
 			// map.drawCapitals(capitals)
 			// map.drawLegend()
+
+		// 	$.ajax({
+		// 		data: $(this).text(),
+		// 		type: 'POST',
+		// 		url: '/' + county
+		// 	})
+		// 	.done(function(response){
+
+		// 	// console.log(response)
+		// 	makeData(response, "ajax", .5, county)
+
+			// });
+
+
+
 		})
 		.catch((err) => console.error('error fetching topojson:', err))
 
@@ -82,6 +97,7 @@ class D3Map {
 			// .attr("transform", "scale(.75)")
 			// .on('mouseover', this.showCounty.bind(this))
 			.on('click', this.showData.bind(this))
+			.on('mouseover', this.showCounty.bind(this))
 
 		return countyGroup
 	}
@@ -94,6 +110,8 @@ class D3Map {
 		$("#countyBtn").addClass(county);
 		$("#render_scale").removeClass()
 		$("#render_scale").addClass(county);
+
+		console.log("this: ",  $(this).text())
 
 		$.ajax({
 			data: $(this).text(),
