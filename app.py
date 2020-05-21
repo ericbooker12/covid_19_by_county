@@ -39,6 +39,7 @@ def show_data(county):
 	print(county)
 
 	county_data = get_county_data(county)
+
 	county_data_json = county_data.to_json(orient="records")
 
 	create_csv(county, county_data)
@@ -46,9 +47,14 @@ def show_data(county):
 	return county_data_json
 
 
-@app.route("/d3")
-def graph():
-	return render_template("svg.html")
+@app.route("/all_data")
+def all_data():
+
+	data = get_all_data()
+
+	print(data)
+
+	return render_template("all_data.html")
 
 @app.route("/process", methods=["GET", "POST"])
 def process():

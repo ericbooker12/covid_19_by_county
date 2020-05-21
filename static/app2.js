@@ -11,20 +11,6 @@ $( document ).ready(function() {
 			// map.drawCapitals(capitals)
 			// map.drawLegend()
 
-		// 	$.ajax({
-		// 		data: $(this).text(),
-		// 		type: 'POST',
-		// 		url: '/' + county
-		// 	})
-		// 	.done(function(response){
-
-		// 	// console.log(response)
-		// 	makeData(response, "ajax", .5, county)
-
-			// });
-
-
-
 		})
 		.catch((err) => console.error('error fetching topojson:', err))
 
@@ -84,12 +70,12 @@ class D3Map {
 
 		let title = this.svg
 			.append('text')
-			.attr("x", 20)
+			.attr("x", 30)
 			.attr("y",  50)
-		// 	.attr("text-anchor", "middle")
-		// 	.style("font-size", "24px")
-		// 	.style("text-de`coration", "underline")
-			.text("Select a county from\nstate image.");
+			// .attr("text-anchor", "middle")
+			.style("font-size", "18px")
+			.style("text-de`coration", "underline")
+			.text("Click a county");
 
 		const countyGroup = this.svg
 			.append('g')
@@ -181,7 +167,7 @@ class D3Map {
 			.text(county.properties.namelsad) //namelsad
 
 		d3.select(counties[i])
-			// .attr("fill", "lightblue")
+			.attr("fill", "lightblue")
 			.attr("class", "selected")
 
 			console.log(counties[i])
@@ -191,7 +177,7 @@ class D3Map {
 		removeCountyLabel(county, i, counties){
 			console.log(countyLabel(county, i))
 			d3.select('#' + countyLabel(county, i)).remove()
-			// d3.select(counties[i]).attr("fill", "lightblue")
+			d3.select(counties[i]).attr("fill", "lightgrey")
 
 	}
 
@@ -250,8 +236,10 @@ function makeData(inputData, source, exp, entity){
 
 	var parseTime = d3.timeParse("%Y-%m-%d");
 
+	let numOfDataPoints = 0;
+
 	data.forEach(function (d){
-		console.log(d.date)
+		numOfDataPoints += 1
 		d.date = parseTime(d.date);
 	});
 
@@ -262,6 +250,9 @@ function makeData(inputData, source, exp, entity){
 	var maxCases = d3.max(data, function(d) {return d.cases})
 	var maxDeaths = d3.max(data, function(d) {return d.deaths})
 	var minCases = d3.min(data, function(d) {return d.cases})
+	// var numOfDataPoints = d3.min(data, function(d) {return d.date})
+
+	console.log("numOfDataPoints: ", numOfDataPoints)
 
 	var y  = d3.scalePow()
 		.domain([0, maxCases])
@@ -347,7 +338,7 @@ function makeData(inputData, source, exp, entity){
 		yGridlines(gridy);
 
 		var xGridlines = d3.axisBottom(x)
-			.ticks(30)
+			.ticks(numOfDataPoints)
 			.tickFormat("")
 			.tickSize(height)
 

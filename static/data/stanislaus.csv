@@ -61,3 +61,11 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-09,Stanislaus,California,6099.0,488,19,0.0
 2020-05-10,Stanislaus,California,6099.0,501,21,13.0
 2020-05-11,Stanislaus,California,6099.0,501,21,0.0
+2020-05-12,Stanislaus,California,6099.0,517,22,16.0
+2020-05-13,Stanislaus,California,6099.0,526,23,9.0
+2020-05-14,Stanislaus,California,6099.0,537,23,11.0
+2020-05-15,Stanislaus,California,6099.0,544,24,7.0
+2020-05-16,Stanislaus,California,6099.0,559,24,15.0
+2020-05-17,Stanislaus,California,6099.0,571,24,12.0
+2020-05-18,Stanislaus,California,6099.0,571,24,0.0
+2020-05-19,Stanislaus,California,6099.0,593,26,22.0
