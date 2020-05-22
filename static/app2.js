@@ -1,9 +1,14 @@
 $( document ).ready(function() {
 
-	Promise.all( [d3.json('./static/topodata/cal_counties.topo.json')] )
-		.then(([topology]) => {
+	Promise.all([
+			d3.json('./static/topodata/cal_counties.topo.json'),
+			d3.csv('./static/data/all_counties.csv'),
+			d3.csv('./static/data/population_by_county.csv')
+		]).then(([topology, californiaData, populationData]) => {
 
-			const counties = new D3Map(topology)
+			console.log(californiaData)
+
+			const counties = new D3Map(topology, californiaData, populationData)
 
 			const countyGroup = counties.drawCounties()
 			// map.colorCountries(countryGroup)
@@ -21,15 +26,15 @@ $( document ).ready(function() {
 
 function renderChart(value){
 
-	console.log(value)
+	// console.log(value)
 
 	let county = $("#render_scale").attr("class");
-	console.log(county)
+	// console.log(county)
 	county_joined = county.toLowerCase().split(' ').join('_')
 
 	let source = "csv"
 
-	console.log(county_joined)
+	// console.log(county_joined)
 
 	d3.csv("/static/data/" + county_joined + ".csv")
 		.then(function(data) {
@@ -38,7 +43,9 @@ function renderChart(value){
 }
 
 class D3Map {
-	constructor(topology) {
+	constructor(topology, covidData) {
+		// let c = topology.objects.california_counties.geometries[0].properties
+
 		this.svg = d3.select('.sidebar')
 			.append('svg')
 			.attr('id', 'map')
@@ -48,7 +55,7 @@ class D3Map {
 		let {height, width} = document.getElementById('map').getBoundingClientRect()
 		const geojson = topojson.feature(topology, topology.objects['california_counties'])
 
-		console.log([height, width])
+		// console.log([height, width])
 
 
 		this.counties = geojson.features
@@ -61,7 +68,9 @@ class D3Map {
 			], geojson)
 
 
-		// console.log(this.counties)
+		function covidPerCapita(){
+
+		}
 
 	}
 
@@ -100,8 +109,8 @@ class D3Map {
 			// })
 
 			function labels(svg, x, y, name){
-				console.log(x, y, name)
-				console.log(joinCountyName(name))
+				// console.log(x, y, name)
+				// console.log(joinCountyName(name))
 
 				let joinedName = joinCountyName(name)
 
@@ -131,7 +140,7 @@ class D3Map {
 		$("#render_scale").removeClass()
 		$("#render_scale").addClass(county);
 
-		console.log("this: ",  $(this).text())
+		// console.log("this: ",  $(this).text())
 
 		$.ajax({
 			data: $(this).text(),
@@ -170,12 +179,12 @@ class D3Map {
 			.attr("fill", "lightblue")
 			.attr("class", "selected")
 
-			console.log(counties[i])
+			// console.log(counties[i])
 
 	}
 
 		removeCountyLabel(county, i, counties){
-			console.log(countyLabel(county, i))
+			// console.log(countyLabel(county, i))
 			d3.select('#' + countyLabel(county, i)).remove()
 			d3.select(counties[i]).attr("fill", "lightgrey")
 
@@ -252,7 +261,7 @@ function makeData(inputData, source, exp, entity){
 	var minCases = d3.min(data, function(d) {return d.cases})
 	// var numOfDataPoints = d3.min(data, function(d) {return d.date})
 
-	console.log("numOfDataPoints: ", numOfDataPoints)
+	// console.log("numOfDataPoints: ", numOfDataPoints)
 
 	var y  = d3.scalePow()
 		.domain([0, maxCases])
@@ -369,7 +378,7 @@ function makeData(inputData, source, exp, entity){
 
 
 	function drawLegend(propertyNames, chart, max, county) {
-		d3.csv("/static/data/p.csv" +'?' + Math.floor(Math.random() * 1000)).then(function(d){
+		d3.csv("/static/data/population_by_county.csv" +'?' + Math.floor(Math.random() * 1000)).then(function(d){
 
 			let pop;
 

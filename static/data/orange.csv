@@ -107,3 +107,12 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-09,Orange,California,6059.0,3395,74,112.0
 2020-05-10,Orange,California,6059.0,3506,76,111.0
 2020-05-11,Orange,California,6059.0,3627,76,121.0
+2020-05-12,Orange,California,6059.0,3699,78,72.0
+2020-05-13,Orange,California,6059.0,3843,80,144.0
+2020-05-14,Orange,California,6059.0,4025,80,182.0
+2020-05-15,Orange,California,6059.0,4163,84,138.0
+2020-05-16,Orange,California,6059.0,4281,86,118.0
+2020-05-17,Orange,California,6059.0,4396,88,115.0
+2020-05-18,Orange,California,6059.0,4466,88,70.0
+2020-05-19,Orange,California,6059.0,4558,88,92.0
+2020-05-20,Orange,California,6059.0,4746,98,188.0

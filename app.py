@@ -8,6 +8,7 @@ from model import	format_date
 from model import	get_counties
 from model import get_county_data
 from model import create_csv
+from model import get_california_data
 
 import io
 import random
@@ -28,6 +29,12 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
 	# get all data here, separate data by county and save them to csv files to be used in d3
+	# get all county data here and save to csv
+	california_data = get_california_data()
+
+	create_csv("All Counties", california_data)
+
+
 	counties = get_counties()
 
 	return render_template("counties.html", counties = counties)
@@ -47,7 +54,7 @@ def show_data(county):
 	return county_data_json
 
 
-@app.route("/all_data")
+@app.route("/all_data", methods=["GET", "POST"])
 def all_data():
 
 	data = get_all_data()

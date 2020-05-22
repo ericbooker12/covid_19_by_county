@@ -79,3 +79,4 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-17,Alameda,California,6001.0,2413,85,41.0
 2020-05-18,Alameda,California,6001.0,2478,85,65.0
 2020-05-19,Alameda,California,6001.0,2543,88,65.0
+2020-05-20,Alameda,California,6001.0,2581,88,38.0

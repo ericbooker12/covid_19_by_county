@@ -8,6 +8,53 @@ def get_all_data():
 
 	return pd.read_csv(url)
 
+def get_california_data():
+	data = get_all_data()
+	filter = data.loc[:, "state"] == "California"
+
+	data = data.loc[filter, :]
+	# .reset_index(drop=True)
+	# print(data)
+
+	data = add_population(data)
+
+	return data
+
+
+def add_population(data):
+	population_data = pd.read_csv("./static/data/population_data/population_data.csv")
+
+	pop_values = list(population_data.loc[:, "population"])
+	county_values = list(population_data.loc[:, "county"])
+
+	population_dict = lists_to_dict(county_values, pop_values)
+
+	population_data = []
+
+	for index, row in data.iterrows():
+		county = row['county']
+
+		if(county == "Unknown"):
+			population_data.append(0)
+			continue
+
+		population = int(population_dict[county].replace(",",""))
+
+		population_data.append(population)
+
+	# print(population_data)
+
+
+	data.loc[:, 'population'] = population_data
+
+	print(data)
+
+
+	return data
+
+def lists_to_dict(list1, list2):
+	return dict(zip(list1, list2))
+
 
 def get_county_data(county):
 
@@ -16,11 +63,6 @@ def get_county_data(county):
 	# & data.loc[:, "state"] == "California"
 	county_data = data.loc[filter, :]
 	county_data = county_data.reset_index(drop=True)
-
-	print(county)
-	print(county_data.count())
-	# print(county_data.info())
-
 
 
 	new_cases = get_new_cases(county_data)
@@ -101,7 +143,6 @@ def format_date(dates):
 def get_new_cases(data):
 
 	cases = data.loc[:, "cases"]
-	# first = data.loc[0, "cases"]
 
 	cases = np.array(cases)
 	df = pd.DataFrame(data = cases)
@@ -109,9 +150,6 @@ def get_new_cases(data):
 	df = df.fillna(0)
 
 	new_cases = np.array(df)
-	# print("****************")
-	# print(new_cases)
-	# print("****************")
 
 	return new_cases
 
@@ -120,11 +158,11 @@ def get_counties():
 	counties = ['Alameda','Alpine','Amador','Butte','Calaveras','Colusa',
 							'Contra Costa','Del Norte','El Dorado','Fresno','Glenn',
 							'Humboldt','Imperial','Inyo','Kern','Kings','Lake','Los Angeles',
-							'Madera','Marin','Mendocino','Merced','Mono','Monterey','Napa','Nevada',
+							'Madera','Marin','Mendocino','Merced', 'Modoc', 'Mono','Monterey','Napa','Nevada',
 							'Orange','Placer','Plumas','Riverside','Sacramento','San Benito','San Bernardino',
 							'San Diego','San Francisco','San Joaquin','San Luis Obispo','San Mateo',
 							'Santa Barbara','Santa Clara','Santa Cruz','Shasta','Siskiyou','Solano',
-							'Sonoma','Stanislaus','Sutter','Tehama','Tulare','Tuolumne','Unknown',
+							'Sonoma','Stanislaus','Sutter','Tehama','Tulare','Tuolumne',
 							'Ventura','Yolo','Yuba']
 
 	return counties
@@ -144,12 +182,12 @@ def get_county_dict(counties):
 
 	return county_dict
 
-def create_csv(county, data):
-	county_string = county.lower().split(' ')
+def create_csv(name, data):
+	name_string = name.lower().split(' ')
 	dash = "_"
-	county_string = dash.join(county_string)
+	name_string = dash.join(name_string)
 
-	data.to_csv(path_or_buf='static/data/' + county_string + '.csv', index=False)
+	data.to_csv(path_or_buf='static/data/' + name_string + '.csv', index=False)
 
 
 

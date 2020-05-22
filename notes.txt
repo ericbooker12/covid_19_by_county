@@ -1,5 +1,5 @@
-python -m venv venv
-pip freeze > requirements.txt
+python3 -m venv venv
+pip3 freeze > requirements.txt
 export FLASK_ENV=development
 export FLASK_APP=app.py
 
@@ -7,3 +7,5 @@ heroku config:set FLASK_APP=app.py
 
 
 web: gunicorn -b :$PORT app:app
+
+google analitics tracking id: UA-167368534-1
