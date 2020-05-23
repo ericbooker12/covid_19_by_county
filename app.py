@@ -59,7 +59,6 @@ def all_data():
 
 	data = get_all_data()
 
-	print(data)
 
 	return render_template("all_data.html")
 

@@ -3,18 +3,22 @@ $( document ).ready(function() {
 	Promise.all([
 			d3.json('./static/topodata/cal_counties.topo.json'),
 			d3.csv('./static/data/all_counties.csv'),
-			d3.csv('./static/data/population_by_county.csv')
-		]).then(([topology, californiaData, populationData]) => {
+			d3.csv('./static/data/population_data/cases_per_capita.csv')
+		]).then(([topology, californiaData, perCapita]) => {
 
-			console.log(californiaData)
+			console.log(perCapita)
 
-			const counties = new D3Map(topology, californiaData, populationData)
+			const counties = new D3Map(topology, californiaData)
 
 			const countyGroup = counties.drawCounties()
 			// map.colorCountries(countryGroup)
 			// map.drawBubbles(countryGroup)
 			// map.drawCapitals(capitals)
 			// map.drawLegend()
+
+		const { min, max } = getCasesPerCapitaRange(californiaData)
+		this.min = min
+		this.max = max
 
 		})
 		.catch((err) => console.error('error fetching topojson:', err))
@@ -23,6 +27,42 @@ $( document ).ready(function() {
 
 
 })
+
+function getScale(min, max){
+	const scale = d3.scaleSequential(d3.interpolatePurples)
+	scale.domain([min, max])
+
+	return scale
+}
+
+function casesPerCapita(county){
+	return county.cases * 1e6 / county.population
+}
+
+function getCasesPerCapitaRange(county, i, counties){
+	let min = Infinity;
+	let max = -Infinity;
+
+	// last_county = counties[-1]
+
+	console.log("counties", counties)
+	console.log(i)
+	console.log(county)
+
+	// counties.forEach((county) => {
+		// console.log(county)
+	// 	const cpc = casesPerCapita(county)
+	// 	if (cpc < min) {
+	// 		min = cpc
+	// 	}
+	// 	if (cpc > max) {
+	// 		max = cpc
+	// 	}
+
+	// })
+	return { min, max }
+}
+
 
 function renderChart(value){
 

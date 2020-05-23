@@ -3830,3 +3830,58 @@ date,county,state,fips,cases,deaths,population
 2020-05-20,Ventura,California,6111.0,861,29,846006
 2020-05-20,Yolo,California,6113.0,185,22,220500
 2020-05-20,Yuba,California,6115.0,28,1,78668
+2020-05-21,Alameda,California,6001.0,2630,90,1671329
+2020-05-21,Alpine,California,6003.0,2,0,1129
+2020-05-21,Amador,California,6005.0,9,0,39752
+2020-05-21,Butte,California,6007.0,31,0,219186
+2020-05-21,Calaveras,California,6009.0,13,0,45905
+2020-05-21,Colusa,California,6011.0,4,0,21547
+2020-05-21,Contra Costa,California,6013.0,1234,36,1153526
+2020-05-21,Del Norte,California,6015.0,20,0,27812
+2020-05-21,El Dorado,California,6017.0,67,0,192843
+2020-05-21,Fresno,California,6019.0,1372,22,999101
+2020-05-21,Glenn,California,6021.0,12,0,28393
+2020-05-21,Humboldt,California,6023.0,88,2,135558
+2020-05-21,Imperial,California,6025.0,1076,20,181215
+2020-05-21,Inyo,California,6027.0,20,1,18039
+2020-05-21,Kern,California,6029.0,1654,27,900202
+2020-05-21,Kings,California,6031.0,488,2,152940
+2020-05-21,Lake,California,6033.0,12,0,64386
+2020-05-21,Los Angeles,California,6037.0,42037,2016,10039107
+2020-05-21,Madera,California,6039.0,83,2,157327
+2020-05-21,Marin,California,6041.0,352,14,258826
+2020-05-21,Mariposa,California,6043.0,15,1,17203
+2020-05-21,Mendocino,California,6045.0,15,0,86749
+2020-05-21,Merced,California,6047.0,234,6,277680
+2020-05-21,Mono,California,6051.0,34,1,14444
+2020-05-21,Monterey,California,6053.0,356,8,434061
+2020-05-21,Napa,California,6055.0,96,3,137744
+2020-05-21,Nevada,California,6057.0,41,1,99755
+2020-05-21,Orange,California,6059.0,4866,112,3175692
+2020-05-21,Placer,California,6061.0,176,9,398329
+2020-05-21,Plumas,California,6063.0,4,0,18807
+2020-05-21,Riverside,California,6065.0,6343,284,2470546
+2020-05-21,Sacramento,California,6067.0,1265,57,1552058
+2020-05-21,San Benito,California,6069.0,66,2,62808
+2020-05-21,San Bernardino,California,6071.0,3984,164,2180085
+2020-05-21,San Diego,California,6073.0,6378,262,3338330
+2020-05-21,San Francisco,California,6075.0,2202,37,881549
+2020-05-21,San Joaquin,California,6077.0,733,33,762148
+2020-05-21,San Luis Obispo,California,6079.0,251,1,283111
+2020-05-21,San Mateo,California,6081.0,1739,75,766573
+2020-05-21,Santa Barbara,California,6083.0,1533,11,446499
+2020-05-21,Santa Clara,California,6085.0,2508,140,1927852
+2020-05-21,Santa Cruz,California,6087.0,174,3,273213
+2020-05-21,Shasta,California,6089.0,34,4,180080
+2020-05-21,Siskiyou,California,6093.0,6,0,43539
+2020-05-21,Solano,California,6095.0,454,19,447643
+2020-05-21,Sonoma,California,6097.0,433,4,494336
+2020-05-21,Stanislaus,California,6099.0,598,26,550660
+2020-05-21,Sutter,California,6101.0,40,2,96971
+2020-05-21,Tehama,California,6103.0,2,1,65084
+2020-05-21,Trinity,California,6105.0,2,0,12285
+2020-05-21,Tulare,California,6107.0,1603,74,466195
+2020-05-21,Tuolumne,California,6109.0,2,0,54478
+2020-05-21,Ventura,California,6111.0,883,29,846006
+2020-05-21,Yolo,California,6113.0,186,22,220500
+2020-05-21,Yuba,California,6115.0,28,1,78668

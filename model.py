@@ -2,24 +2,82 @@ import pandas as pd
 import numpy as np
 import datetime
 
-url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
+# url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
+
+url = "./static/data/all_counties.csv"
+
+
 
 def get_all_data():
 
 	return pd.read_csv(url)
 
 def get_california_data():
+	# population_data = pd.read_csv("./static/data/population_data/population_data.csv")
+
 	data = get_all_data()
 	filter = data.loc[:, "state"] == "California"
 
 	data = data.loc[filter, :]
-	# .reset_index(drop=True)
-	# print(data)
 
-	data = add_population(data)
+	counties = list(data.loc[:, 'county'].unique())
+
+	populations = population_dict()
+	print("alpine = " + populations["Alpine"])
+
+	county_list = []
+	population_list = []
+
+	for county in counties:
+		if(county == "Unknown"):
+			continue
+		county_list.append(county)
+		# print(populations[county])
+		# population_list.append(populations[county])
+
+	for county in counties:
+		if(county == "Unknown"):
+			continue
+		pop = (populations[county].replace(",",""))
+
+		population_list.append(int(pop))
+
+	cases = data.groupby(['county'], sort=False)['cases'].max()
+	case_list = list(cases)
+
+	# data for datafrom: case_list, county_list, population_list
+
+	df_list = [county_list, case_list, population_list]
+	df_list = list(map(list, zip(*df_list))) #transpose list
+
+	# print(df_list)
+
+
+	df = pd.DataFrame(df_list, columns =['county', 'cases', 'population'])
+
+	df['cases_per_capita'] = (df['cases'] * 100000 / df['population']).astype(int)
+
+	# df = df["cases_per_capita"].astype(int)
+	print(df)
+
+	df.to_csv(path_or_buf='static/data/population_data/cases_per_capita.csv', index=False)
+
+
+# 1532, 4187
+
 
 	return data
 
+
+def population_dict():
+	population_data = pd.read_csv("./static/data/population_data/population_data.csv")
+
+	pop_values = list(population_data.loc[:, "population"])
+	county_values = list(population_data.loc[:, "county"])
+
+	population_dict = lists_to_dict(county_values, pop_values)
+
+	return population_dict
 
 def add_population(data):
 	population_data = pd.read_csv("./static/data/population_data/population_data.csv")
@@ -47,7 +105,7 @@ def add_population(data):
 
 	data.loc[:, 'population'] = population_data
 
-	print(data)
+	# print(data)
 
 
 	return data
@@ -188,6 +246,12 @@ def create_csv(name, data):
 	name_string = dash.join(name_string)
 
 	data.to_csv(path_or_buf='static/data/' + name_string + '.csv', index=False)
+
+def snake_it(name):
+	name = name.lower().split(" ")
+	joiner = "_"
+	name = "_".join(name)
+	return name
 
 
 
