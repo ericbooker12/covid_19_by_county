@@ -16,7 +16,8 @@ $( document ).ready(function() {
 	 			d3.interpolateYlOrRd, //5
 				d3.interpolateHsl, //6
 				d3.interpolateLab, //7
-				d3.interpolateBuPu //8
+				d3.interpolateBuPu, //8
+				d3.interpolateBuGn //9
 			]
 
 
@@ -87,7 +88,7 @@ function renderChart(value){
 
 	// console.log(county_joined)
 
-	d3.csv("/static/data/" + county_joined + ".csv")
+	d3.csv("/static/county_data/" + county_joined + ".csv")
 		.then(function(data) {
 			makeData(data, 'csv', value, county)
 		});
