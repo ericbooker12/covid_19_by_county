@@ -7,7 +7,9 @@ $( document ).ready(function() {
 		]).then(([topology, californiaData, perCapita]) => {
 
 
-			let colorScheme = d3.interpolateReds
+			// let colorScheme = d3.interpolateReds
+			let colorScheme = d3.interpolatePurples
+
 			const countyMap = new D3Map(topology, californiaData, perCapita)
 
 			const countyGroup = countyMap.drawCounties()
@@ -108,8 +110,6 @@ class D3Map {
 
 		let {height, width} = document.getElementById('map').getBoundingClientRect()
 		const geojson = topojson.feature(topology, topology.objects['california_counties'])
-
-		let colorScheme = d3.interpolateReds
 
 		this.counties = geojson.features
 		// this.projection = d3.geoAlbers() //set rotate to -30
@@ -274,8 +274,8 @@ class D3Map {
 
 
 
-		const lowColor = d3.interpolateReds(0)
-		const highColor = d3.interpolateReds(1)
+		const lowColor = colorScheme(0)
+		const highColor = colorScheme(1)
 		gradient.append('stop')
 			.attr('offset', '0%')
 			.attr('stop-color', highColor)
