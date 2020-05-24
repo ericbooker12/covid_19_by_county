@@ -28,8 +28,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-	# get all data here, separate data by county and save them to csv files to be used in d3
-	# get all county data here and save to csv
+
 	california_data = get_california_data()
 
 	create_csv("All Counties", california_data)
