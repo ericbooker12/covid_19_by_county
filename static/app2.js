@@ -7,14 +7,15 @@ $( document ).ready(function() {
 		]).then(([topology, californiaData, perCapita]) => {
 
 
-
+			let colorScheme = d3.interpolateReds
 			const countyMap = new D3Map(topology, californiaData, perCapita)
 
 			const countyGroup = countyMap.drawCounties()
-			countyMap.colorCounties(countyGroup)
+
+			countyMap.colorCounties(countyGroup, colorScheme)
 			// map.drawBubbles(countryGroup)
 			// map.drawCapitals(capitals)
-			countyMap.drawLegend()
+			countyMap.drawLegend(colorScheme)
 
 		// const { min, max, minCounty, maxCounty } = getCasesPerCapitaRange(percapita)
 		// this.min = min
@@ -28,11 +29,12 @@ $( document ).ready(function() {
 
 })
 
-function getScale(min, max){
+function getScale(min, max, colorScheme){
+
 	const scale = d3.scaleSequential()
 		  .domain([min, max])
-  		.interpolator(d3.interpolateReds);
-	// scale.domain([min, max])
+  		.interpolator(colorScheme);
+
 
 	return scale
 }
@@ -107,8 +109,7 @@ class D3Map {
 		let {height, width} = document.getElementById('map').getBoundingClientRect()
 		const geojson = topojson.feature(topology, topology.objects['california_counties'])
 
-		// console.log([height, width])
-
+		let colorScheme = d3.interpolateReds
 
 		this.counties = geojson.features
 		// this.projection = d3.geoAlbers() //set rotate to -30
@@ -183,22 +184,18 @@ class D3Map {
 		return countyGroup
 	}
 
-	colorCounties(countyGroup) {
-		const scale = getScale(this.min, this.max)
+	colorCounties(countyGroup, colorScheme) {
+		const scale = getScale(this.min, this.max, colorScheme)
 
 		let casesPerCapita = this.perCapita
-		console.log(casesPerCapita)
 
 		// console.log(casesPerCapita)
 		countyGroup.attr('fill', function(county){
-			// console.log(county.properties)
 			let countyName = county.properties.name
-
 			let cases
 
 			casesPerCapita.forEach(function(c){
 				if (c.county == countyName){
-					// console.log(c.county)
 					cases = c.cases_per_capita
 
 				}
@@ -265,7 +262,7 @@ class D3Map {
 		// d3.select(counties[i]).attr("fill", "lightgrey")
 	}
 
-	drawLegend() {
+	drawLegend(colorScheme) {
 		const gradient = this.svg
 			.append('defs') .append('svg:linearGradient')
 			.attr('id', 'gradient')
@@ -274,6 +271,8 @@ class D3Map {
 			.attr('x2', '100%')
 			.attr('y2', '100%')
 			.attr('spreadMethod', 'pad')
+
+
 
 		const lowColor = d3.interpolateReds(0)
 		const highColor = d3.interpolateReds(1)
