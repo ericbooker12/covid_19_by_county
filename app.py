@@ -41,9 +41,6 @@ def index():
 @app.route("/<county>", methods=["GET", "POST"])
 def show_data(county):
 
-
-	print(county)
-
 	county_data = get_county_data(county)
 
 	county_data_json = county_data.to_json(orient="records")
