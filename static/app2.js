@@ -7,8 +7,17 @@ $( document ).ready(function() {
 		]).then(([topology, californiaData, perCapita]) => {
 
 
-			// let colorScheme = d3.interpolateReds
-			let colorScheme = d3.interpolatePurples
+			let colorInterpolations = [
+				d3.interpolateReds,      //0
+				d3.interpolatePurples,
+				d3.interpolateRdGy,
+				d3.interpolateOranges,
+				d3.interpolateRdPu,
+				d3.interpolateYlOrRd
+			]
+
+
+			let colorScheme = colorInterpolations[5];
 
 			const countyMap = new D3Map(topology, californiaData, perCapita)
 
@@ -19,14 +28,8 @@ $( document ).ready(function() {
 			// map.drawCapitals(capitals)
 			countyMap.drawLegend(colorScheme)
 
-		// const { min, max, minCounty, maxCounty } = getCasesPerCapitaRange(percapita)
-		// this.min = min
-		// this.max = max
-
 		})
 		.catch((err) => console.error('Error retrieving data:', err))
-
-	svg = d3.select('#map')
 
 
 })
@@ -49,16 +52,7 @@ function getCasesPerCapitaRange(counties){
 	let min = Infinity;
 	let max = -Infinity;
 
-	// last_county = counties[-1]
-
-	// console.log("counties", counties)
-	// console.log(i)
-	// console.log(county)
-
-	//max: 1718, min: 2
-
 	counties.forEach((county) => {
-	// 	// console.log(county)
 		const cpc = parseFloat(county.cases_per_capita)
 
 		if (cpc < min) {
@@ -98,9 +92,6 @@ function renderChart(value){
 
 class D3Map {
 	constructor(topology, covidData, perCapita) {
-		// let c = topology.objects.california_counties.geometries[0].properties
-
-		// console.log(perCapita)
 
 		this.svg = d3.select('.sidebar')
 			.append('svg')
@@ -149,36 +140,16 @@ class D3Map {
 			.enter()
 			.append('path')
 			.attr('d', path)
-			.attr('fill', 'lightgray')
-			.attr('stroke', 'white')
-			// .attr('transform', 'rotate(-25)')
-			// .attr('transform', 'translate(0, 20)')
+			.attr('fill', 'gray')
+			.attr('stroke', 'lightgray')
 			.attr("transform", "translate(20, 0) rotate(0) scale(1)")
 			.on('click', this.showData.bind(this))
 			.on('mouseover', this.showCountyLabel.bind(this))
 			.on('mouseout', this.removeCountyLabel.bind(this))
-			// .on('mouseover', function(d, i){
-				// labels(countyGroup, path.centroid(d)[0], path.centroid(d)[1], d.properties.name)
-			// })
 
 			function labels(svg, x, y, name){
-				// console.log(x, y, name)
-				// console.log(joinCountyName(name))
-
 				let joinedName = joinCountyName(name)
 
-
-				svg
-					.append('text')
-					.attr('id', joinedName)
-					// .attr('x', function(d){ return path.centroid(d)[0] })
-					// .attr('x', function(d){ return path.centroid(d)[0] })
-					.attr('x', 3)
-					.attr('y', 5)
-					.attr('font-size', '60px')
-					// .attr('transform', `translate(7, ${textSize / 2})`)
-					// .text(county.properties.name) //namelsad
-					.text("Hello") //namelsad
 				}
 
 		return countyGroup
@@ -227,12 +198,9 @@ class D3Map {
 			makeData(response, "ajax", .5, county)
 		});
 
-		// console.log(i)
-		// console.log(counties)
 	}
 
 	showCountyLabel(county, i, counties){
-
 
 		const coords = county.geometry.coordinates[0][0][0]
 		const x = this.projection(coords)[0]
@@ -252,14 +220,10 @@ class D3Map {
 		d3.select(counties[i])
 			// .attr("fill", "lightblue")
 			.attr("class", "selected")
-
-			// console.log(counties[i])
 	}
 
 	removeCountyLabel(county, i, counties){
-		// console.log(countyLabel(county, i))
 		d3.select('#' + countyLabel(county, i)).remove()
-		// d3.select(counties[i]).attr("fill", "lightgrey")
 	}
 
 	drawLegend(colorScheme) {
@@ -299,7 +263,7 @@ class D3Map {
 
 		let fontSize = 14
 		legend.append('text')
-			.attr("x", -10)
+			.attr("x", -13)
 			.attr("y", -(fontSize))
 			.attr("dy", ".35em")
 			.style("font-size", fontSize)

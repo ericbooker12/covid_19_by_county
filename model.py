@@ -2,9 +2,9 @@ import pandas as pd
 import numpy as np
 import datetime
 
-# url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
+url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
 
-url = "./static/county_data/all_counties.csv"
+# url = "./static/county_data/all_counties.csv"
 
 
 
