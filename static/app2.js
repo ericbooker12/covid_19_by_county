@@ -9,11 +9,14 @@ $( document ).ready(function() {
 
 			let colorInterpolations = [
 				d3.interpolateReds,      //0
-				d3.interpolatePurples,
-				d3.interpolateRdGy,
-				d3.interpolateOranges,
-				d3.interpolateRdPu,
-				d3.interpolateYlOrRd
+				d3.interpolatePurples, //1
+				d3.interpolateRdGy, //2
+				d3.interpolateOranges, //3
+				d3.interpolateRdPu, //4
+	 			d3.interpolateYlOrRd, //5
+				d3.interpolateHsl, //6
+				d3.interpolateLab, //7
+				d3.interpolateBuPu //8
 			]
 
 
