@@ -59,7 +59,7 @@ class Tooltip {
 				countyName = d.county
 				cases = d.cases
 				deaths = d.deaths
-				population = numberWithCommas(d.population)
+				population = d.population
 			}
 		})
 
@@ -73,7 +73,7 @@ class Tooltip {
 				<strong class='title'>${countyName} County</strong><br/>
 				<span>Cases: ${cases}</span><br/>
 				<span>Deaths: ${deaths}</span><br/>
-				<span>Population: ${population}</span><br/>
+				<span>Population: ${numberWithCommas(population)}</span><br/>
 				<span>Cases per 100k: ${perCapita}</span><br/>
 			`)
 				// .style('left', x + this.svgX + 'px')
@@ -102,11 +102,7 @@ class Tooltip {
 				// .style('top', y + this.svgY + 'px')
 				.style('left', '20px')
 				.style('top', '600px')
-
-
-
 	}
-		//
 
 	remove() {
 		this.div.transition().duration(200).style('opacity', 0)
@@ -125,9 +121,8 @@ class D3Map {
 
 		let { height, width, x, y } = document.getElementById('map')
 			.getBoundingClientRect()
-		const geojson = topojson.feature(topology, topology.objects['california_counties'])
 
-		// console.log(geojson.features[0].geometry.coordinates)
+		const geojson = topojson.feature(topology, topology.objects['california_counties'])
 
 		this.counties = geojson.features
 		// this.projection = d3.geoAlbers() //set rotate to -30
@@ -182,22 +177,26 @@ class D3Map {
 
 			})
 			.on('mouseover', (d, i, counties) => {
-			 d3.select(counties[i]).transition().attr('fill', 'lightblue')
-			 const [ x, y ] = path.centroid(d)
+				d3.select(counties[i]).transition().duration(200)
+					.attr('fill', 'lightblue')
+					.attr('stroke', 'lightblue')
 
-			 this.tooltip.showStats(x, y, d)
+			const [ x, y ] = path.centroid(d)
+
+			this.tooltip.showStats(x, y, d)
 			})
 			.on('mouseout', (d, i, counties) => {
-				d3.select(counties[i]).transition()
-				.attr('fill', function(county){
-					let countyName = county.properties.name;
-					let cases;
+				d3.select(counties[i]).transition().duration(200)
+					.attr('stroke', 'lightgray')
+					.attr('fill', function(county){
+				let countyName = county.properties.name;
+				let cases;
 
-					casesPerCapita.forEach(function(c){
-						if (c.county == countyName){
-							cases = c.cases_per_capita
-						}
-					})
+				casesPerCapita.forEach(function(c){
+					if (c.county == countyName){
+						cases = c.cases_per_capita
+					}
+				})
 
 						return scale(cases)
 
