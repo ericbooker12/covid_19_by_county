@@ -59,7 +59,7 @@ class Tooltip {
 				countyName = d.county
 				cases = d.cases
 				deaths = d.deaths
-				population = d.population
+				population = numberWithCommas(d.population)
 			}
 		})
 
@@ -732,7 +732,7 @@ function makeData(inputData, source, exp, entity){
 				pop = (pop / 1000000).toFixed(1)
 				pop = pop.toString() + " million"
 			} else {
-				pop =  pop.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				pop =  numberWithCommas(pop);
 			}
 
 			legend.append("text")
@@ -765,6 +765,10 @@ function makeData(inputData, source, exp, entity){
 
 function snake_it(name){
 	return name.toLowerCase().split(" ").join("_")
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 
