@@ -34,13 +34,10 @@ $( document ).ready(function() {
 
 		})
 		.catch((err) => console.error('Error retrieving data:', err))
-
-
 })
 
 class Tooltip {
 	constructor (svgX, svgY, data) {
-		console.log("Tool Tip Called")
 		this.data = data
 		this.svgX = svgX
 		this.svgY = svgY
@@ -52,8 +49,6 @@ class Tooltip {
 	showStats(x, y, county) {
 
 		this.remove()
-
-		console.log(county.properties)
 
 		let countyName;
 		let cases;
@@ -72,9 +67,6 @@ class Tooltip {
 		})
 
 		let perCapita = ((cases * 100000) / population).toFixed(1)
-
-		// console.log(this.div)
-
 
 		this.div.transition().duration(200).style('opacity', 1)
 		this.div
