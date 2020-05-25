@@ -13,7 +13,7 @@ $( document ).ready(function() {
 				d3.interpolateRdGy, //2
 				d3.interpolateOranges, //3
 				d3.interpolateRdPu, //4
-	 			d3.interpolateYlOrRd, //5
+				d3.interpolateYlOrRd, //5
 				d3.interpolateHsl, //6
 				d3.interpolateLab, //7
 				d3.interpolateBuPu, //8
@@ -25,7 +25,7 @@ $( document ).ready(function() {
 
 			const countyMap = new D3Map(topology, californiaData, perCapita)
 
-			const countyGroup = countyMap.drawCounties()
+			const countyGroup = countyMap.drawCounties(colorScheme)
 
 			countyMap.colorCounties(countyGroup, colorScheme)
 			// map.drawBubbles(countryGroup)
@@ -34,64 +34,61 @@ $( document ).ready(function() {
 
 		})
 		.catch((err) => console.error('Error retrieving data:', err))
-
-
 })
 
-function getScale(min, max, colorScheme){
+class Tooltip {
+	constructor (svgX, svgY, data) {
+		this.data = data
+		this.svgX = svgX
+		this.svgY = svgY
+		this.div = d3.select('body').append('div')
+			.attr('class', 'tooltip')
+			.style('opacity', 0)
+	}
 
-	const scale = d3.scaleSequential()
-		  .domain([min, max])
-  		.interpolator(colorScheme);
+	showStats(x, y, county) {
 
+		this.remove()
 
-	return scale
-}
+		let countyName;
+		let cases;
+		let deaths;
+		let population;
 
-function casesPerCapita(county){
-	return county.properties.name
-}
+		// cases * 100000 /pop
 
-function getCasesPerCapitaRange(counties){
-	let min = Infinity;
-	let max = -Infinity;
+		this.data.forEach((d) => {
+			if (d.county == county.properties.name){
+				countyName = d.county
+				cases = d.cases
+				deaths = d.deaths
+				population = d.population
+			}
+		})
 
-	counties.forEach((county) => {
-		const cpc = parseFloat(county.cases_per_capita)
+		let perCapita = ((cases * 100000) / population).toFixed(1)
 
-		if (cpc < min) {
-			min = cpc
-			minCounty = county.county
-		}
-		if (cpc > max) {
-			max = cpc
-			maxCounty = county.county
-		}
-	})
+		this.div.transition().duration(200).style('opacity', 1)
+		this.div
+			.html(`
+				<strong class='title'>${countyName} County</strong><br/>
+				<span>Cases: ${cases}</span><br/>
+				<span>Deaths: ${deaths}</span><br/>
+				<span>Population: ${population}</span><br/>
+				<span>Cases per 100k: ${perCapita}</span><br/>
+			`)
+				// .style('left', x + this.svgX + 'px')
+				// .style('top', y + this.svgY + 'px')
+				.style('left', '20px')
+				.style('top', '500px')
 
-	// max = 50
+	}
+		//
 
-	console.log(min, max)
+	remove() {
+		this.div.transition().duration(200).style('opacity', 0)
+	}
 
-	return { min, max }
-}
-
-function renderChart(value){
-
-	// console.log(value)
-
-	let county = $("#render_scale").attr("class");
-	// console.log(county)
-	county_joined = county.toLowerCase().split(' ').join('_')
-
-	let source = "csv"
-
-	// console.log(county_joined)
-
-	d3.csv("/static/county_data/" + county_joined + ".csv")
-		.then(function(data) {
-			makeData(data, 'csv', value, county)
-		});
 }
 
 class D3Map {
@@ -103,8 +100,11 @@ class D3Map {
 			.attr('height', 600)
 			.attr('width', 400)
 
-		let {height, width} = document.getElementById('map').getBoundingClientRect()
+		let { height, width, x, y } = document.getElementById('map')
+			.getBoundingClientRect()
 		const geojson = topojson.feature(topology, topology.objects['california_counties'])
+
+		// console.log(geojson.features[0].geometry.coordinates)
 
 		this.counties = geojson.features
 		// this.projection = d3.geoAlbers() //set rotate to -30
@@ -112,7 +112,7 @@ class D3Map {
 		this.projection
 			.fitExtent([
 				[ 0, 0 ],
-				[ width, height ]
+				[ width - 50, height - 50 ]
 			], geojson)
 
 		const {min, max, minCounty, maxCounty} = getCasesPerCapitaRange(perCapita)
@@ -122,16 +122,24 @@ class D3Map {
 		this.minCounty = minCounty
 		this.maxCounty = maxCounty
 		this.perCapita = perCapita
+
+		this.tooltip = new Tooltip(x, y, covidData)
 	}
 
-	drawCounties(){
+	drawTooltip(){
+
+	}
+
+	drawCounties(colorScheme){
 		const path = d3.geoPath().projection(this.projection)
+
+		const scale = getScale(this.min, this.max, colorScheme)
+		let casesPerCapita = this.perCapita
 
 		let title = this.svg
 			.append('text')
 			.attr("x", 30)
 			.attr("y",  50)
-			// .attr("text-anchor", "middle")
 			.style("font-size", "18px")
 			.style("text-de`coration", "underline")
 			.text("Click a county");
@@ -144,18 +152,42 @@ class D3Map {
 			.enter()
 			.append('path')
 			.attr('d', path)
-			.attr('fill', 'gray')
+			.attr('id', function(d){ return snake_it(d.properties.name) })
+			.attr('class', "county" )
 			.attr('stroke', 'lightgray')
 			.attr("transform", "translate(20, 0) rotate(0) scale(1)")
-			.on('click', this.showData.bind(this))
-			.on('mouseover', this.showCountyLabel.bind(this))
-			.on('mouseout', this.removeCountyLabel.bind(this))
+			.on('click', (d, i, counties) => {
+				this.showData(d, i, counties)
+				const [ x, y ] = path.centroid(d)
+			 this.tooltip.showStats(x, y, d)
+
+			})
+			.on('mouseover', (d, i, counties) => {
+			 d3.select(counties[i]).transition().attr('fill', 'lightblue')
+			 const [ x, y ] = path.centroid(d)
+
+			 this.tooltip.showStats(x, y, d)
+			 // d3.select(`#${snake_it(d.properties.name)}`).style('opacity', 1)
+			})
+			// .on('mouseout', this.removeCountyLabel.bind(this))
+			.on('mouseout', (d, i, counties) => {
+				d3.select(counties[i]).transition()
+				.attr('fill', function(county){
+					let countyName = county.properties.name
+					let cases
+
+					casesPerCapita.forEach(function(c){
+						if (c.county == countyName){
+							cases = c.cases_per_capita
+						}
+					})
+						return scale(cases)
+				})
+			})
 
 			function labels(svg, x, y, name){
 				let joinedName = joinCountyName(name)
-
-				}
-
+			}
 		return countyGroup
 	}
 
@@ -172,7 +204,6 @@ class D3Map {
 			casesPerCapita.forEach(function(c){
 				if (c.county == countyName){
 					cases = c.cases_per_capita
-
 				}
 			})
 
@@ -216,18 +247,22 @@ class D3Map {
 			.attr('id', countyLabel(county, i))
 			.attr('x', x)
 			.attr('y', y)
-			.attr("class", "selected")
 			.attr('font-size', '12px')
 			.attr('transform', `translate(7, ${textSize / 2})`)
 			.text(county.properties.namelsad, ) //namelsad
 
 		d3.select(counties[i])
-			// .attr("fill", "lightblue")
-			.attr("class", "selected")
+			// .attr("class", "selected")
+			.attr("opacity", ".5")
 	}
 
 	removeCountyLabel(county, i, counties){
 		d3.select('#' + countyLabel(county, i)).remove()
+
+		d3.select(counties[i])
+			// .attr("class", "")
+			// .attr("opacity", "1")
+
 	}
 
 	drawLegend(colorScheme) {
@@ -235,12 +270,10 @@ class D3Map {
 			.append('defs') .append('svg:linearGradient')
 			.attr('id', 'gradient')
 			.attr('x1', '100%')
-			.attr('y1', '0%')
 			.attr('x2', '100%')
+			.attr('y1', '0%')
 			.attr('y2', '100%')
 			.attr('spreadMethod', 'pad')
-
-
 
 		const lowColor = colorScheme(0)
 		const highColor = colorScheme(1)
@@ -285,6 +318,59 @@ class D3Map {
 
 	}
 
+}
+
+function getScale(min, max, colorScheme){
+
+	const scale = d3.scaleSequential()
+			.domain([min, max])
+			.interpolator(colorScheme);
+
+	return scale
+}
+
+function casesPerCapita(county){
+	return county.properties.name
+}
+
+function getCasesPerCapitaRange(counties){
+	let min = Infinity;
+	let max = -Infinity;
+
+	counties.forEach((county) => {
+		const cpc = parseFloat(county.cases_per_capita)
+
+		if (cpc < min) {
+			min = cpc
+			minCounty = county.county
+		}
+		if (cpc > max) {
+			max = cpc
+			maxCounty = county.county
+		}
+	})
+
+	// max = 50
+
+	console.log(min, max)
+
+	return { min, max }
+}
+
+function renderChart(value){
+
+	// console.log(value)
+
+	let county = $("#render_scale").attr("class");
+	// console.log(county)
+	county_joined = county.toLowerCase().split(' ').join('_')
+
+	let source = "csv"
+
+	d3.csv("/static/county_data/" + county_joined + ".csv")
+		.then(function(data) {
+			makeData(data, 'csv', value, county)
+		});
 }
 
 function countyLabel(county) {
@@ -598,10 +684,14 @@ function makeData(inputData, source, exp, entity){
 
 
 
+
+
 }
 
 
-
+function snake_it(name){
+	return name.toLowerCase().split(" ").join("_")
+}
 
 
 
