@@ -4,10 +4,30 @@ body {
 
 }
 
-path.selected {
+.tooltip {
+	postition: absolute;
+	min-width: 60px;
+	min-height: 28px;
+	padding: 4px;
+	/*background: yellow;*/
+	color: "red";
+	text-align: left;
+	font: 12px sans-serif;
+	border: 1px;
+	border-radius: 3px;
+	pointer-events: none;
+	/*border: 1px solid gray;*/
+}
+
+.tooltip .title {
+	fontsize: 14px;
+}
+
+path :hover {
 	background-color: beige;
 	fill: 'yellow';
 	border: 3px solid black;
+	stroke: 'blue';
 }
 
 .grid line {
