@@ -10,6 +10,20 @@
 	grid-column-end: content-start;
 }
 
+.control-panel {
+	padding-top: 0px;
+	width: 200px;
+	margin-left: 15px;
+	/*background-color: #F3F1C7;*/
+	color: #298383;
+	text-align: left;
+	font-weight: bold;
+	display: inline-block;
+	grid-column-start: sidebar-start;
+	grid-column-end: content-start;
+	grid-row:1 2;
+}
+
 .content{
 	padding: 15px
 	/*margin-left: 15px;*/
@@ -26,6 +40,7 @@
 	display: grid;
 	grid-template-columns: [sidebar-start] fit-content(50%) [content-start] fit-content(50%) [content-end];
 	grid-template-columns: 50% 50%
+	grid-template-rows: 90% auto
 	background-color: #F3F1C7;
 }
 

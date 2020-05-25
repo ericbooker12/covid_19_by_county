@@ -13,8 +13,8 @@
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon/hot.ico') }}">
 	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<!-- <script src="./static/app.js"></script> -->
-	<script src="./static/app2.js"></script>
-	<script src="./static/app3.js"></script>
+	<script src="./static/app.js"></script>
+	<!-- <script src="./static/app3.js"></script> -->
 </head>
 
 <body>
@@ -23,12 +23,7 @@
 			<a href="https://www.linkedin.com/in/eric-booker-29232350/" target="_blank" class="navbar-brand">
 				<img src="{{ url_for('static', filename= 'images/profile_pic.png')}}" height="40px">
 			</a>
-<!-- 			<button class="navbar-toggler" type="button"
-							data-toggle="collapse" data-target="#navbarResponsive"
-							aria-controls="navbarResponsive" aria-expanded="false"
-							aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button> -->
+
 			<ul class="header">
 			  <li><a href="https://www.linkedin.com/in/eric-booker-29232350/" target="_blank">Eric Booker</a></li>
 			  <li><a href="mailto:ericbooker12@gmail.com">ericbooker12@gmail.com</a></li>
@@ -37,9 +32,7 @@
 		</div>
 	</nav>
 
-	<!-- <div class="grid-container"> -->
 		{% block content %}{% endblock %}
-	<!-- </div> -->
 
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 	<script src="./static/topojson.min.js"></script>

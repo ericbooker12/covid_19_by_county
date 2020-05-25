@@ -76,3 +76,4 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-20,Riverside,California,6065.0,6184,274,131.0
 2020-05-21,Riverside,California,6065.0,6343,284,159.0
 2020-05-22,Riverside,California,6065.0,6464,290,121.0
+2020-05-23,Riverside,California,6065.0,6464,298,0.0

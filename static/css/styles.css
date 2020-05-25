@@ -4,6 +4,11 @@ body {
 
 }
 
+.control-panel {
+	padding-top: 30px;
+	width: 200px;
+}
+
 .tooltip {
 	postition: absolute;
 	min-width: 60px;
@@ -20,6 +25,24 @@ body {
 }
 
 .tooltip .title {
+	fontsize: 14px;
+}
+
+.chartTip {
+	min-width: 60px;
+	min-height: 28px;
+	padding: 4px;
+	background: white;
+	color: "red";
+	text-align: left;
+	font: 12px sans-serif;
+	border-radius: 2px;
+	pointer-events: none;
+	border: 1px solid gray;
+}
+
+.tooltip .date {
+	font-weight: bold;
 	fontsize: 14px;
 }
 
