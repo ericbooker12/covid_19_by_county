@@ -48,6 +48,7 @@ body {
 	border-radius: 2px;
 	pointer-events: none;
 	border: 1px solid gray;
+	box-shadow: 1px 1px #888888;
 }
 
 .tooltip .date {

@@ -610,16 +610,18 @@ function makeData(inputData, source, exp, entity){
 
 		yGridlines(gridy);
 
-		var xGridlines = d3.axisBottom(x)
-			.ticks(numOfDataPoints)
-			.tickFormat("")
-			.tickSize(height)
+		// uncomment the next 3 blocks to show xAxis gridlines
 
-		var gridx = chart.append("g")
-			.attr("class", "grid")
-			.call(xGridlines);
+		// var xGridlines = d3.axisBottom(x)
+		// 	.ticks(numOfDataPoints)
+		// 	.tickFormat("")
+		// 	.tickSize(height)
 
-		xGridlines(gridx);
+		// var gridx = chart.append("g")
+		// 	.attr("class", "grid")
+		// 	.call(xGridlines);
+
+		// xGridlines(gridx);
 	}
 
 
