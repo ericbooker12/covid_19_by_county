@@ -47,6 +47,8 @@ class Tooltip {
 
 	showStats(x, y, county) {
 
+		// console.log(county)
+
 		this.remove()
 
 		let countyName;
@@ -63,6 +65,10 @@ class Tooltip {
 			}
 		})
 
+		if (isNaN(cases)){
+			cases = 0
+		}
+
 		let perCapita = ((cases * 100000) / population).toFixed(1)
 
 		this.div.transition().duration(200).style('opacity', 1)
@@ -71,7 +77,7 @@ class Tooltip {
 		this.div
 			.html(`
 				<strong class='title'>${countyName} County</strong><br/>
-				<span>Cases: ${cases}</span><br/>
+				<span>Cases: ${numberWithCommas(cases)}</span><br/>
 				<span>Deaths: ${deaths}</span><br/>
 				<span>Population: ${numberWithCommas(population)}</span><br/>
 				<span>Cases per 100k: ${perCapita}</span><br/>
@@ -229,6 +235,8 @@ class D3Map {
 	}
 
 	showData(entity, i, counties){
+		// $("#chart").append(`<h2 id="loading">Loading ...</h2>`);
+
 		let county = entity.properties.name
 
 		$("#countyBtn").removeClass()
@@ -365,10 +373,6 @@ function getCasesPerCapitaRange(counties){
 			maxCounty = county.county
 		}
 	})
-
-	// max = 50
-
-	console.log(min, max)
 
 	return { min, max }
 }
@@ -518,12 +522,8 @@ function makeData(inputData, source, exp, entity){
 		let coords = document.getElementById('chart')
 			.getBoundingClientRect()
 
-		console.log(coords)
-
 		let xOrg =coords["x"]
 		let yOrg =coords["y"]
-
-		console.log(xOrg, yOrg)
 
 		for (var i = 0; i < propertyNames.length; i++) {
 
@@ -539,46 +539,50 @@ function makeData(inputData, source, exp, entity){
 				let ypos
 				let newDate
 
+				let color = colors[i]
+
 				let circle = dataGroup.append("circle")
-					.attr("fill", colors[i])
+					.attr("fill", color)
 					.attr("r", 2)
 					.attr("cx", x(point.date))
 					.attr("cy", y(point[propertyName]))
 
 
-					circle.on('mouseover', () => {
-						circle.transition().duration(200).attr("r", 5)
-						date = point.date.toString().split(" ")
-						// console.log(date)
-						newDate = date[1] + ' ' + date[2] + ', ' + date[3]
-						// console.log(newDate)
-						cases = point.cases
-						deaths = point.deaths
-						xpos = x(point.date)
-						ypos = y(point[propertyName])
-
-						let x0 = x(data[0].date)
-						// console.log(x0)
-
-						// console.log([xpos, ypos], x0)
-
-						chartTooltipDiv.transition().duration(200).style('opacity', 1)
-						chartTooltipDiv
-							.html(`
-								<strong class="">${newDate}</strong><br/>
-								<span>Cases: ${cases}</span><br/>
-								<span>Deaths: ${deaths}</span><br/>
-							`)
-								.style('left', xOrg + xpos - 10 + 'px')
-								.style('top', yOrg + ypos + 20 + 'px')
-								// .style('left', '20px')
-								// .style('top', '600px')
 
 
+				circle.on('mouseover', () => {
+					color = circle.attr("fill")
+					circle.transition().duration(200)
+						.attr("r", 10)
+						.attr("fill", "darkgray")
+
+
+				date = point.date.toString().split(" ")
+				newDate = date[1] + ' ' + date[2] + ', ' + date[3]
+				cases = point.cases
+				deaths = point.deaths
+				xpos = x(point.date)
+				ypos = y(point[propertyName])
+
+				let x0 = x(data[0].date)
+
+				chartTooltipDiv.transition().duration(200).style('opacity', 1)
+				chartTooltipDiv
+					.html(`
+						<strong class="">${newDate}</strong><br/>
+						<span>Cases: ${cases}</span><br/>
+						<span>Deaths: ${deaths}</span><br/>
+					`)
+						.style('left', xOrg + xpos - 10 + 'px')
+						.style('top', yOrg + ypos + 20 + 'px')
+						// .style('left', '20px')
+						// .style('top', '600px')
 					})
-					.on('mouseout', () => {
+
+					circle.on('mouseout', () => {
 						chartTooltipDiv.transition().duration(200).style('opacity', 0)
 						circle.transition().duration(200).attr("r", 2)
+						.attr("fill", color)
 
 
 					})
@@ -589,15 +593,12 @@ function makeData(inputData, source, exp, entity){
 	}
 
 
-
-
 	function drawGridlines() {
 
 		var yGridlines = d3.axisLeft(y)
 			.ticks(30)
 			.tickFormat("")
 			.tickSize(-width)
-			// .attr("fill", "grey")
 
 		var gridy = chart.append("g")
 			.attr("class", "grid")

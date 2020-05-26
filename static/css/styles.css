@@ -4,6 +4,15 @@ body {
 
 }
 
+#loading {
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top: 180px;
+	margin-left: 80px;
+	/*width: 90%;*/
+	padding: 10px;
+	text-align: center;
+}
+
 .control-panel {
 	padding-top: 30px;
 	width: 200px;
