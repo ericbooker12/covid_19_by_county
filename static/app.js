@@ -235,7 +235,10 @@ class D3Map {
 	}
 
 	showData(entity, i, counties){
-		// $("#chart").append(`<h2 id="loading">Loading ...</h2>`);
+		$("#slider-table").attr('hidden', true);
+		$(".chart-svg").attr('hidden', true);
+		$("#chart").append(`<h2 id="loading">Loading ...</h2>`);
+		// $("#loading").attr('hidden', false);
 
 		let county = entity.properties.name
 
@@ -253,7 +256,7 @@ class D3Map {
 		})
 		.done(function(response){
 
-			// console.log(response)
+			$("#loading").remove();
 			makeData(response, "ajax", .5, county)
 		});
 
