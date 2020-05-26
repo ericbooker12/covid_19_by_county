@@ -1,28 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from model import get_state_list
-from model import	get_all_data
-from model import	get_county_list
-from model import	get_all_data
-from model import	get_dataset
-from model import	format_date
-from model import	get_counties
-from model import get_county_data
-from model import create_csv
-from model import get_california_data
 
 import io
 import random
 from flask import Flask, Response, request
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-from matplotlib.backends.backend_svg import FigureCanvasSVG
 import numpy as np
 
-from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import figure
-
-# do this to keep program from crashing after plotting
-plt.switch_backend('Agg')
+from model import get_state_list, get_all_data, get_county_list, get_all_data, get_dataset, format_date, get_counties, get_county_data, create_csv, get_california_data
 
 app = Flask(__name__)
 
@@ -30,10 +13,7 @@ app = Flask(__name__)
 def index():
 
 	california_data = get_california_data()
-
 	create_csv("All Counties", california_data)
-
-
 	counties = get_counties()
 
 	return render_template("counties.html", counties = counties)
@@ -68,7 +48,6 @@ def process():
 		return "<h1>{} was submitted</h1>".format(newName)
 
 	return render_template("counties.html", counties = counties )
-
 
 if __name__ == '__main__':
 	app.run(debug=True)

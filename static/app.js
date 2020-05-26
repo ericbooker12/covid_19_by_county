@@ -235,12 +235,13 @@ class D3Map {
 	}
 
 	showData(entity, i, counties){
+		let county = entity.properties.name
+
 		$("#slider-table").attr('hidden', true);
 		$(".chart-svg").attr('hidden', true);
-		$("#chart").append(`<h2 id="loading">Loading ...</h2>`);
+		$("#chart").append(`<p id="loading">Fetching data for <strong>${county} County</strong>.\n Please standby...</p>`);
 		// $("#loading").attr('hidden', false);
 
-		let county = entity.properties.name
 
 		$("#countyBtn").removeClass()
 		$("#countyBtn").addClass(county);
