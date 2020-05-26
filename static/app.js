@@ -519,6 +519,8 @@ function makeData(inputData, source, exp, entity){
 
 	function circlePoints(propertyNames, dataGroup, data){
 
+		let transitionTime = 300;
+
 		chartTooltipDiv = d3.select('#chart').append('div')
 			.attr('class', 'tooltip chartTip')
 			.style('opacity', 0);
@@ -556,7 +558,7 @@ function makeData(inputData, source, exp, entity){
 
 				circle.on('mouseover', () => {
 					color = circle.attr("fill")
-					circle.transition().duration(200)
+					circle.transition().ease(d3.easeCubicOut).duration(transitionTime)
 						.attr("r", 10)
 						.attr("fill", "darkgray")
 
@@ -570,7 +572,7 @@ function makeData(inputData, source, exp, entity){
 
 				let x0 = x(data[0].date)
 
-				chartTooltipDiv.transition().duration(200).style('opacity', 1)
+				chartTooltipDiv.transition().duration(transitionTime).style('opacity', 1)
 				chartTooltipDiv
 					.html(`
 						<strong class="">${newDate}</strong><br/>
@@ -584,8 +586,8 @@ function makeData(inputData, source, exp, entity){
 					})
 
 					circle.on('mouseout', () => {
-						chartTooltipDiv.transition().duration(200).style('opacity', 0)
-						circle.transition().duration(200).attr("r", 2)
+						chartTooltipDiv.transition().duration(transitionTime).style('opacity', 0)
+						circle.transition().ease(d3.easeCubicOut).duration(200).attr("r", 2)
 						.attr("fill", color)
 
 
