@@ -104,3 +104,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-22,San Diego,California,6073.0,6497,262,119.0
 2020-05-23,San Diego,California,6073.0,6622,271,125.0
 2020-05-24,San Diego,California,6073.0,6764,275,142.0
+2020-05-25,San Diego,California,6073.0,6860,275,96.0
+2020-05-26,San Diego,California,6073.0,6945,275,85.0
+2020-05-27,San Diego,California,6073.0,7046,290,101.0
