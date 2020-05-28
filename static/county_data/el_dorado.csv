@@ -64,3 +64,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-22,El Dorado,California,6017.0,74,0,7.0
 2020-05-23,El Dorado,California,6017.0,74,0,0.0
 2020-05-24,El Dorado,California,6017.0,74,0,0.0
+2020-05-25,El Dorado,California,6017.0,78,0,4.0
+2020-05-26,El Dorado,California,6017.0,80,0,2.0
+2020-05-27,El Dorado,California,6017.0,81,0,1.0

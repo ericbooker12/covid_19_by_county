@@ -179,13 +179,15 @@ class D3Map {
 			.on('click', (d, i, counties) => {
 				this.showData(d, i, counties)
 				const [ x, y ] = path.centroid(d)
-			 this.tooltip.showStats(x, y, d)
+				this.tooltip.showStats(x, y, d)
 
 			})
 			.on('mouseover', (d, i, counties) => {
 				d3.select(counties[i]).transition().duration(200)
 					.attr('fill', 'lightblue')
 					.attr('stroke', 'lightblue')
+					.attr('class', 'shadow')
+
 
 			const [ x, y ] = path.centroid(d)
 
@@ -439,7 +441,7 @@ function makeData(inputData, source, exp, entity){
 
 	let margin = 50;
 	let width = 600;
-	let height = 500;
+	let height = 400;
 
 	let chart = d3.select("#chart").append("svg")
 		.attr("class", "chart-svg" )
@@ -495,7 +497,7 @@ function makeData(inputData, source, exp, entity){
 		.attr("class", "yAxisGroup");
 
 	var yAxis = d3.axisLeft(y)
-		.ticks(20);
+		.ticks(10);
 
 	yAxis(yAxisGroup);
 	xAxis(xAxisGroup);
@@ -513,9 +515,23 @@ function makeData(inputData, source, exp, entity){
 			.attr("y",  -15)
 			.attr("text-anchor", "middle")
 			.style("font-size", "24px")
-			.style("text-de`coration", "underline")
+			.style("text-decoration", "none")
 			.text(entity + " County COVID-19 Cases");
 
+	// chart.append("text")
+	// 		.attr("x", 0)
+	// 		.attr("y",  height + margin - 10)
+	// 		.attr("text-anchor", "left")
+	// 		.style("font-size", "12px")
+	// 		.style("text-de`coration", "underline")
+	// 		.text("Data Source: https://github.com/nytimes/covid-19-data");
+
+	d3.select("#chart")
+	  .append("div")
+	  .attr("target", "_")
+		.style("font-size", "12px")
+		.style("color", "black")
+	  .html("Data Source: <a id='source' target='_blank' href='https://github.com/nytimes/covid-19-data'>https://github.com/nytimes/covid-19-data</a>")
 
 	function circlePoints(propertyNames, dataGroup, data){
 
@@ -550,9 +566,6 @@ function makeData(inputData, source, exp, entity){
 					.attr("r", 2)
 					.attr("cx", x(point.date))
 					.attr("cy", y(point[propertyName]))
-
-
-
 
 				circle.on('mouseover', () => {
 					color = circle.attr("fill")

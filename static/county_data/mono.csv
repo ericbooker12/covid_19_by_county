@@ -61,3 +61,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-22,Mono,California,6051.0,34,1,0.0
 2020-05-23,Mono,California,6051.0,34,1,0.0
 2020-05-24,Mono,California,6051.0,34,1,0.0
+2020-05-25,Mono,California,6051.0,34,1,0.0
+2020-05-26,Mono,California,6051.0,35,1,1.0
+2020-05-27,Mono,California,6051.0,35,1,0.0

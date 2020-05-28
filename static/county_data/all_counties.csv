@@ -4055,3 +4055,176 @@ date,county,state,fips,cases,deaths
 2020-05-24,Ventura,California,6111.0,961,30
 2020-05-24,Yolo,California,6113.0,194,22
 2020-05-24,Yuba,California,6115.0,28,1
+2020-05-25,Alameda,California,6001.0,2895,93
+2020-05-25,Alpine,California,6003.0,2,0
+2020-05-25,Amador,California,6005.0,9,0
+2020-05-25,Butte,California,6007.0,35,0
+2020-05-25,Calaveras,California,6009.0,13,0
+2020-05-25,Colusa,California,6011.0,5,0
+2020-05-25,Contra Costa,California,6013.0,1336,37
+2020-05-25,Del Norte,California,6015.0,37,0
+2020-05-25,El Dorado,California,6017.0,78,0
+2020-05-25,Fresno,California,6019.0,1482,22
+2020-05-25,Glenn,California,6021.0,12,0
+2020-05-25,Humboldt,California,6023.0,94,2
+2020-05-25,Imperial,California,6025.0,1369,22
+2020-05-25,Inyo,California,6027.0,20,1
+2020-05-25,Kern,California,6029.0,1881,31
+2020-05-25,Kings,California,6031.0,688,2
+2020-05-25,Lake,California,6033.0,12,0
+2020-05-25,Lassen,California,6035.0,4,0
+2020-05-25,Los Angeles,California,6037.0,46018,2116
+2020-05-25,Madera,California,6039.0,85,2
+2020-05-25,Marin,California,6041.0,417,14
+2020-05-25,Mariposa,California,6043.0,15,1
+2020-05-25,Mendocino,California,6045.0,22,0
+2020-05-25,Merced,California,6047.0,258,6
+2020-05-25,Mono,California,6051.0,34,1
+2020-05-25,Monterey,California,6053.0,413,8
+2020-05-25,Napa,California,6055.0,105,3
+2020-05-25,Nevada,California,6057.0,41,1
+2020-05-25,Orange,California,6059.0,5469,131
+2020-05-25,Placer,California,6061.0,185,9
+2020-05-25,Plumas,California,6063.0,4,0
+2020-05-25,Riverside,California,6065.0,7004,304
+2020-05-25,Sacramento,California,6067.0,1301,57
+2020-05-25,San Benito,California,6069.0,72,2
+2020-05-25,San Bernardino,California,6071.0,4365,176
+2020-05-25,San Diego,California,6073.0,6860,275
+2020-05-25,San Francisco,California,6075.0,2389,40
+2020-05-25,San Joaquin,California,6077.0,760,33
+2020-05-25,San Luis Obispo,California,6079.0,259,1
+2020-05-25,San Mateo,California,6081.0,1925,76
+2020-05-25,Santa Barbara,California,6083.0,1573,12
+2020-05-25,Santa Clara,California,6085.0,2652,140
+2020-05-25,Santa Cruz,California,6087.0,200,3
+2020-05-25,Shasta,California,6089.0,36,4
+2020-05-25,Sierra,California,6091.0,1,0
+2020-05-25,Siskiyou,California,6093.0,6,0
+2020-05-25,Solano,California,6095.0,460,20
+2020-05-25,Sonoma,California,6097.0,515,4
+2020-05-25,Stanislaus,California,6099.0,659,28
+2020-05-25,Sutter,California,6101.0,42,2
+2020-05-25,Tehama,California,6103.0,3,1
+2020-05-25,Trinity,California,6105.0,2,0
+2020-05-25,Tulare,California,6107.0,1684,75
+2020-05-25,Tuolumne,California,6109.0,3,0
+2020-05-25,Ventura,California,6111.0,982,30
+2020-05-25,Yolo,California,6113.0,198,22
+2020-05-25,Yuba,California,6115.0,28,1
+2020-05-26,Alameda,California,6001.0,3007,93
+2020-05-26,Alpine,California,6003.0,2,0
+2020-05-26,Amador,California,6005.0,10,0
+2020-05-26,Butte,California,6007.0,40,0
+2020-05-26,Calaveras,California,6009.0,15,0
+2020-05-26,Colusa,California,6011.0,5,0
+2020-05-26,Contra Costa,California,6013.0,1353,37
+2020-05-26,Del Norte,California,6015.0,40,0
+2020-05-26,El Dorado,California,6017.0,80,0
+2020-05-26,Fresno,California,6019.0,1535,26
+2020-05-26,Glenn,California,6021.0,13,0
+2020-05-26,Humboldt,California,6023.0,94,2
+2020-05-26,Imperial,California,6025.0,1369,23
+2020-05-26,Inyo,California,6027.0,20,1
+2020-05-26,Kern,California,6029.0,1890,31
+2020-05-26,Kings,California,6031.0,688,2
+2020-05-26,Lake,California,6033.0,13,0
+2020-05-26,Lassen,California,6035.0,4,0
+2020-05-26,Los Angeles,California,6037.0,47822,2143
+2020-05-26,Madera,California,6039.0,90,2
+2020-05-26,Marin,California,6041.0,420,14
+2020-05-26,Mariposa,California,6043.0,16,1
+2020-05-26,Mendocino,California,6045.0,23,0
+2020-05-26,Merced,California,6047.0,273,7
+2020-05-26,Modoc,California,6049.0,1,0
+2020-05-26,Mono,California,6051.0,35,1
+2020-05-26,Monterey,California,6053.0,429,8
+2020-05-26,Napa,California,6055.0,110,3
+2020-05-26,Nevada,California,6057.0,41,1
+2020-05-26,Orange,California,6059.0,5601,131
+2020-05-26,Placer,California,6061.0,188,9
+2020-05-26,Plumas,California,6063.0,4,0
+2020-05-26,Riverside,California,6065.0,7139,309
+2020-05-26,Sacramento,California,6067.0,1309,57
+2020-05-26,San Benito,California,6069.0,76,2
+2020-05-26,San Bernardino,California,6071.0,4567,176
+2020-05-26,San Diego,California,6073.0,6945,275
+2020-05-26,San Francisco,California,6075.0,2402,40
+2020-05-26,San Joaquin,California,6077.0,771,33
+2020-05-26,San Luis Obispo,California,6079.0,263,1
+2020-05-26,San Mateo,California,6081.0,1938,82
+2020-05-26,Santa Barbara,California,6083.0,1597,12
+2020-05-26,Santa Clara,California,6085.0,2675,141
+2020-05-26,Santa Cruz,California,6087.0,200,3
+2020-05-26,Shasta,California,6089.0,36,4
+2020-05-26,Sierra,California,6091.0,1,0
+2020-05-26,Siskiyou,California,6093.0,6,0
+2020-05-26,Solano,California,6095.0,504,20
+2020-05-26,Sonoma,California,6097.0,524,4
+2020-05-26,Stanislaus,California,6099.0,670,28
+2020-05-26,Sutter,California,6101.0,42,2
+2020-05-26,Tehama,California,6103.0,4,1
+2020-05-26,Trinity,California,6105.0,2,0
+2020-05-26,Tulare,California,6107.0,1771,79
+2020-05-26,Tuolumne,California,6109.0,4,0
+2020-05-26,Ventura,California,6111.0,1020,32
+2020-05-26,Yolo,California,6113.0,200,22
+2020-05-26,Yuba,California,6115.0,28,1
+2020-05-27,Alameda,California,6001.0,3070,97
+2020-05-27,Alpine,California,6003.0,2,0
+2020-05-27,Amador,California,6005.0,10,0
+2020-05-27,Butte,California,6007.0,40,0
+2020-05-27,Calaveras,California,6009.0,15,0
+2020-05-27,Colusa,California,6011.0,5,0
+2020-05-27,Contra Costa,California,6013.0,1375,37
+2020-05-27,Del Norte,California,6015.0,43,0
+2020-05-27,El Dorado,California,6017.0,81,0
+2020-05-27,Fresno,California,6019.0,1631,30
+2020-05-27,Glenn,California,6021.0,13,0
+2020-05-27,Humboldt,California,6023.0,98,2
+2020-05-27,Imperial,California,6025.0,1443,25
+2020-05-27,Inyo,California,6027.0,20,1
+2020-05-27,Kern,California,6029.0,1951,36
+2020-05-27,Kings,California,6031.0,698,3
+2020-05-27,Lake,California,6033.0,19,0
+2020-05-27,Lassen,California,6035.0,5,0
+2020-05-27,Los Angeles,California,6037.0,48700,2195
+2020-05-27,Madera,California,6039.0,94,2
+2020-05-27,Marin,California,6041.0,430,14
+2020-05-27,Mariposa,California,6043.0,16,1
+2020-05-27,Mendocino,California,6045.0,25,0
+2020-05-27,Merced,California,6047.0,278,7
+2020-05-27,Modoc,California,6049.0,1,0
+2020-05-27,Mono,California,6051.0,35,1
+2020-05-27,Monterey,California,6053.0,441,8
+2020-05-27,Napa,California,6055.0,110,3
+2020-05-27,Nevada,California,6057.0,41,1
+2020-05-27,Orange,California,6059.0,5651,136
+2020-05-27,Placer,California,6061.0,194,9
+2020-05-27,Plumas,California,6063.0,4,0
+2020-05-27,Riverside,California,6065.0,7252,314
+2020-05-27,Sacramento,California,6067.0,1318,57
+2020-05-27,San Benito,California,6069.0,83,2
+2020-05-27,San Bernardino,California,6071.0,4777,183
+2020-05-27,San Diego,California,6073.0,7046,290
+2020-05-27,San Francisco,California,6075.0,2411,40
+2020-05-27,San Joaquin,California,6077.0,834,34
+2020-05-27,San Luis Obispo,California,6079.0,266,1
+2020-05-27,San Mateo,California,6081.0,1967,82
+2020-05-27,Santa Barbara,California,6083.0,1616,12
+2020-05-27,Santa Clara,California,6085.0,2688,141
+2020-05-27,Santa Cruz,California,6087.0,205,3
+2020-05-27,Shasta,California,6089.0,37,4
+2020-05-27,Sierra,California,6091.0,1,0
+2020-05-27,Siskiyou,California,6093.0,6,0
+2020-05-27,Solano,California,6095.0,507,21
+2020-05-27,Sonoma,California,6097.0,530,4
+2020-05-27,Stanislaus,California,6099.0,677,28
+2020-05-27,Sutter,California,6101.0,42,2
+2020-05-27,Tehama,California,6103.0,4,1
+2020-05-27,Trinity,California,6105.0,2,0
+2020-05-27,Tulare,California,6107.0,1796,79
+2020-05-27,Tuolumne,California,6109.0,4,0
+2020-05-27,Ventura,California,6111.0,1033,32
+2020-05-27,Yolo,California,6113.0,205,22
+2020-05-27,Yuba,California,6115.0,28,1

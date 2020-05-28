@@ -4,6 +4,13 @@ body {
 
 }
 
+a#source {
+	text-decoration: none;
+	color: black;
+}
+
+a#source:hover { color:blue; }
+
 #loading {
 	font-family: Arial, Helvetica, sans-serif;
 	margin-top: 180px;
@@ -35,6 +42,14 @@ body {
 
 .tooltip .title {
 	fontsize: 14px;
+}
+
+.shadow{
+	box-shadow: 1px 1px #888888;
+}
+
+#selected{
+	box-shadow: 1px 1px #888888;
 }
 
 .chartTip {
@@ -116,6 +131,6 @@ li {
 .chart-svg {
 	/*background-color: #ddd;*/
 	border: 1px solid gray;
-	border-radius: 5px;
+	border-radius: 3px;
 }
 

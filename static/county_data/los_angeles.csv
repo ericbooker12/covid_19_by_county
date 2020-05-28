@@ -119,3 +119,6 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-22,Los Angeles,California,6037.0,43052,2049,1015.0
 2020-05-23,Los Angeles,California,6037.0,44055,2090,1003.0
 2020-05-24,Los Angeles,California,6037.0,44988,2104,933.0
+2020-05-25,Los Angeles,California,6037.0,46018,2116,1030.0
+2020-05-26,Los Angeles,California,6037.0,47822,2143,1804.0
+2020-05-27,Los Angeles,California,6037.0,48700,2195,878.0
