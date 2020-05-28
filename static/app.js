@@ -239,11 +239,10 @@ class D3Map {
 	showData(entity, i, counties){
 		let county = entity.properties.name
 
+		$("#data-source").remove();
 		$("#slider-table").attr('hidden', true);
 		$(".chart-svg").attr('hidden', true);
-		$("#chart").append(`<p id="loading">Fetching data for <strong>${county} County</strong>.\n Please standby...</p>`);
-		// $("#loading").attr('hidden', false);
-
+		$("#chart").append(`<p id="loading">Fetching data for <strong>${county} County</strong>.\n Standby...</p>`);
 
 		$("#countyBtn").removeClass()
 		$("#countyBtn").addClass(county);
@@ -395,6 +394,7 @@ function renderChart(value){
 
 	d3.csv("/static/county_data/" + county_joined + ".csv")
 		.then(function(data) {
+			d3.select("#data-source").remove();
 			makeData(data, 'csv', value, county)
 		});
 }
@@ -418,6 +418,8 @@ function makeData(inputData, source, exp, entity){
 	$("#slider-table").removeAttr('hidden');
 
 	d3.select(".chart-svg").remove();
+	d3.select("#data-source").remove();
+	d3.select("#loading").remove();
 
 	let data = {};
 
@@ -528,6 +530,7 @@ function makeData(inputData, source, exp, entity){
 
 	d3.select("#chart")
 	  .append("div")
+	  .attr("id", "data-source")
 	  .attr("target", "_")
 		.style("font-size", "12px")
 		.style("color", "black")
