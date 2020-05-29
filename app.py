@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask_caching import Cache
 
 import io
 import random
@@ -7,7 +8,10 @@ import numpy as np
 
 from model import get_state_list, get_all_data, get_county_list, get_all_data, get_dataset, format_date, get_counties, get_county_data, create_csv, get_california_data
 
+
 app = Flask(__name__)
+
+cache = Cache(app, config={'CACHE_TYPE': 'null'})
 
 @app.route("/", methods=["GET", "POST"])
 def index():
