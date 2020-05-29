@@ -12,7 +12,6 @@ from model import get_state_list, get_all_data, get_county_list, get_all_data, g
 
 app = Flask(__name__)
 
-cache = Cache(app, config={'CACHE_TYPE': 'null'})
 
 @app.route("/", methods=["GET", "POST"])
 def index():
