@@ -1,7 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-
-from flask_caching import Cache
-
 import io
 import random
 from flask import Flask, Response, request
