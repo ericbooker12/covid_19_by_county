@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+
 from flask_caching import Cache
 
 import io
@@ -41,6 +42,7 @@ def all_data():
 
 
 	return render_template("all_data.html")
+
 
 @app.route("/process", methods=["GET", "POST"])
 def process():

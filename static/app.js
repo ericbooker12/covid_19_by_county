@@ -17,7 +17,8 @@ $( document ).ready(function() {
 				d3.interpolateHsl, //6
 				d3.interpolateLab, //7
 				d3.interpolateBuPu, //8
-				d3.interpolateBuGn //9
+				d3.interpolateBuGn, //9
+				d3.interpolateBuGn //10
 			]
 
 			let colorScheme = colorInterpolations[5];
