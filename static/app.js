@@ -3,9 +3,15 @@ $(document).ready(function() {
     Promise.all([
             d3.json('./static/topodata/cal_counties.topo.json'),
             d3.csv('./static/data/all_counties.csv'),
-            d3.csv('./static/data/population_data/cases_per_capita.csv')
-        ]).then(([topology, californiaData, perCapita]) => {
+            d3.csv('./static/data/population_data/cases_per_capita.csv'),
+            d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
+        ]).then(([topology, californiaData, perCapita, covidData]) => {
 
+            covidData = covidData.filter(d => {
+                return (
+                    d.state == "California"
+                );
+            });
 
             let colorInterpolations = [
                 d3.interpolateReds, //0
@@ -17,12 +23,11 @@ $(document).ready(function() {
                 d3.interpolateHsl, //6
                 d3.interpolateLab, //7
                 d3.interpolateBuPu, //8
-                d3.interpolateBuGn, //9
-                d3.interpolateBuGn //10
+                d3.interpolateBuGn //9
             ]
 
             let colorScheme = colorInterpolations[5];
-            let countyMap = new D3Map(topology, californiaData, perCapita)
+            let countyMap = new D3Map(topology, californiaData, perCapita, covidData)
             let countyGroup = countyMap.drawCounties(colorScheme)
 
             countyMap.colorCounties(countyGroup, colorScheme)
@@ -118,7 +123,14 @@ class Tooltip {
 }
 
 class D3Map {
-    constructor(topology, covidData, perCapita) {
+    constructor(topology, covidData, perCapita, covidData2) {
+
+        this.covidData2 = covidData2
+
+
+        // Get population data from perCapita
+
+        // console.log(perCapita)
 
         this.svg = d3.select('.sidebar')
             .append('svg')
@@ -141,6 +153,7 @@ class D3Map {
             ], geojson)
 
         const { min, max, minCounty, maxCounty } = getCasesPerCapitaRange(perCapita)
+
 
         this.min = min
         this.max = max
@@ -178,9 +191,21 @@ class D3Map {
             .attr('stroke', 'lightgray')
             .attr("transform", "translate(20, 0) rotate(0) scale(1)")
             .on('click', (d, i, counties) => {
-                this.showData(d, i, counties)
+
+                // console.log(counties)
+
+                let countyName = d.properties.name
+
+                // let countyData = this.covidData2.filter(data => {
+                //     return (
+                //         data.county == countyName
+                //     );
+                // });
+
                 const [x, y] = path.centroid(d)
                 this.tooltip.showStats(x, y, d)
+
+                this.showData(d, i, counties)
 
             })
             .on('mouseover', (d, i, counties) => {
@@ -237,31 +262,43 @@ class D3Map {
         })
     }
 
-    showData(entity, i, counties) {
-        let county = entity.properties.name
+    showData(entity, i, counties, covidData) {
+
+        let countyName = entity.properties.name
+
+        let countyData = this.covidData2.filter(data => {
+            return (
+                data.county == countyName
+            );
+        });
+
+        // let countyName = entity.properties.name
 
         $("#data-source").remove();
         $("#slider-table").attr('hidden', true);
         $(".chart-svg").attr('hidden', true);
-        $("#chart").append(`<p id="loading">Fetching data for <strong>${county} County</strong>.\n Standby...</p>`);
+        $("#chart").append(`<p id="loading">Fetching data for <strong>${countyName} County</strong>.\n Standby...</p>`);
 
         $("#countyBtn").removeClass()
-        $("#countyBtn").addClass(county);
+        $("#countyBtn").addClass(countyName);
         $("#render_scale").removeClass()
-        $("#render_scale").addClass(county);
+        $("#render_scale").addClass(countyName);
 
         // console.log("this: ",  $(this).text())
 
+        makeData(countyData, "json", 1, countyName)
+
+        // Make ajax request to app to create and store csv file for current data.
         $.ajax({
                 data: $(this).text(),
                 type: 'POST',
-                url: '/' + county
+                url: '/' + countyName
             })
-            .done(function(response) {
+            //     .done(function(response) {
 
-                $("#loading").remove();
-                makeData(response, "ajax", 1, county)
-            });
+        //         $("#loading").remove();
+        //         makeData(response, "ajax", .5, countyName)
+        //     });
 
     }
 
@@ -339,7 +376,7 @@ class D3Map {
 
         const axisScale = d3.scaleLinear()
             .range([h, 0])
-            .domain([this.min, this.max])
+            .domain([0, this.max])
 
         const axis = d3.axisRight(axisScale)
         legend.append('g')
@@ -413,7 +450,10 @@ function joinCountyName(county) {
 
 function makeData(inputData, source, exp, entity) {
 
-    // console.log(inputData)
+    // console.log("data", inputData)
+    // console.log("source", source)
+    // console.log("entity", entity)
+
 
     $("#range-value").html(`Y-scale = <span id='range-value-bold'>y^` + exp + `</span>`);
     $("#slider-table").removeAttr('hidden');
@@ -430,7 +470,7 @@ function makeData(inputData, source, exp, entity) {
         // console.log("ajax", data[data.length - 1])
     }
 
-    if (source == "csv") {
+    if (source == "csv" || source == "json") {
         data = inputData
 
         for (let i = 0; i < data.length; i++) {
@@ -453,13 +493,15 @@ function makeData(inputData, source, exp, entity) {
         .append('g')
         .attr("transform", "translate(" + margin + ", " + margin + ")");
 
+
     let parseTime = d3.timeParse("%Y-%m-%d");
 
-    let numOfDataPoints = 0;
+
 
     data.forEach(function(d) {
-        numOfDataPoints += 1
-        d.date = parseTime(d.date);
+        if (typeof d.date == 'string') {
+            d.date = parseTime(d.date);
+        }
     });
 
     var x = d3.scaleTime()

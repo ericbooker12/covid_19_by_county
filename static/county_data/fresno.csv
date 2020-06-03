@@ -81,3 +81,8 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-25,Fresno,California,6019.0,1482,22,0.0
 2020-05-26,Fresno,California,6019.0,1535,26,53.0
 2020-05-27,Fresno,California,6019.0,1631,30,96.0
+2020-05-28,Fresno,California,6019.0,1658,32,27.0
+2020-05-29,Fresno,California,6019.0,1714,35,56.0
+2020-05-30,Fresno,California,6019.0,1743,35,29.0
+2020-05-31,Fresno,California,6019.0,1744,35,1.0
+2020-06-01,Fresno,California,6019.0,1882,36,138.0

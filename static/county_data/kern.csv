@@ -71,3 +71,8 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-25,Kern,California,6029.0,1881,31,47.0
 2020-05-26,Kern,California,6029.0,1890,31,9.0
 2020-05-27,Kern,California,6029.0,1951,36,61.0
+2020-05-28,Kern,California,6029.0,2017,37,66.0
+2020-05-29,Kern,California,6029.0,2086,37,69.0
+2020-05-30,Kern,California,6029.0,2155,38,69.0
+2020-05-31,Kern,California,6029.0,2260,38,105.0
+2020-06-01,Kern,California,6029.0,2332,38,72.0

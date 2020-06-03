@@ -1,49 +1,33 @@
-{% extends 'base.html' %}
-{% set active_page = 'home' %}
-
-{% block content %}
+{% extends 'base.html' %} {% set active_page = 'home' %} {% block content %}
 <div class="grid-container">
-  <div class="box sidebar">
-<!-- 	<div class=control-panel>
+    <div class="box sidebar">
+        <!-- 	<div class=control-panel>
 		<input type="checkbox" name="chlorpleth" id="checkbox-chloropleth"> Display Chloropleth<br />
 	</div> -->
 
-	</div>
+    </div>
 
-	<div class="box content" id="chart">
-			<div id="exp-slider">
-			<table id="slider-table" hidden=true>
-				<tr>
-					<td>
-						<span>Emphasize Lower Range</span>
-					</td>
-					<td>
-						<input onchange="renderChart(this.value)" id="render_scale" type="range" min=".1" max="5" value="1" step=".1" class="render_chart san_diego" id="myRange">
-					</td>
-					<td>
-						<span>Emphasize Upper Range</span>
-					</td>
-					<td>
-						<span>&nbsp;|&nbsp;</span>
-						<span id="range-value"></span>
-					</td>
-				</tr>
-			</table>
-			</div>
-	</div>
+    <div class="box content" id="chart">
+        <div id="exp-slider">
+            <table id="slider-table" hidden=true>
+                <tr>
+                    <td>
+                        <span>Emphasize Lower Range</span>
+                    </td>
+                    <td>
+                        <input onchange="renderChart(this.value)" id="render_scale" type="range" min=".1" max="5" value="1" step=".1" class="render_chart san_diego" id="myRange">
+                    </td>
+                    <td>
+                        <span>Emphasize Upper Range</span>
+                    </td>
+                    <td>
+                        <span>&nbsp;|&nbsp;</span>
+                        <span id="range-value"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
