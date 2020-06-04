@@ -2,10 +2,12 @@ $(document).ready(function() {
 
     Promise.all([
             d3.json('./static/topodata/cal_counties.topo.json'),
-            d3.csv('./static/data/all_counties.csv'),
+            d3.csv('./static/county_data/all_counties.csv'),
             d3.csv('./static/data/population_data/cases_per_capita.csv'),
             d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
         ]).then(([topology, californiaData, perCapita, covidData]) => {
+
+
 
             covidData = covidData.filter(d => {
                 return (
@@ -45,8 +47,6 @@ class Tooltip {
         this.svgX = svgX
         this.svgY = svgY
         this.perCapita = perCapitaData
-
-
 
         this.div = d3.select('body').append('div')
             .attr('class', 'tooltip')
@@ -169,6 +169,7 @@ class D3Map {
         this.perCapita = perCapita
 
         this.tooltip = new Tooltip(x, y, covidData, perCapita)
+
     }
 
     drawCounties(colorScheme) {
@@ -565,21 +566,13 @@ function makeData(inputData, source, exp, entity) {
         .style("text-decoration", "none")
         .text(entity + " County COVID-19 Cases");
 
-    // chart.append("text")
-    // 		.attr("x", 0)
-    // 		.attr("y",  height + margin - 10)
-    // 		.attr("text-anchor", "left")
-    // 		.style("font-size", "12px")
-    // 		.style("text-de`coration", "underline")
-    // 		.text("Data Source: https://github.com/nytimes/covid-19-data");
-
     d3.select("#chart")
         .append("div")
         .attr("id", "data-source")
         .attr("target", "_")
         .style("font-size", "12px")
         .style("color", "black")
-        .html("Data Source: <a id='source' target='_blank' href='https://github.com/nytimes/covid-19-data'>https://github.com/nytimes/covid-19-data</a>")
+        .html("Data Source: <a id='source' href='https://github.com/nytimes/covid-19-data'>https://github.com/nytimes/covid-19-data</a>")
 
     function circlePoints(propertyNames, dataGroup, data) {
 

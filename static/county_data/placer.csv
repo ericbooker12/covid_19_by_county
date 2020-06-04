@@ -91,3 +91,4 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-30,Placer,California,6061.0,214,9,15.0
 2020-05-31,Placer,California,6061.0,215,9,1.0
 2020-06-01,Placer,California,6061.0,217,9,2.0
+2020-06-02,Placer,California,6061.0,228,9,11.0

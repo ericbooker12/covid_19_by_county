@@ -1,136 +1,136 @@
 body {
-	padding-top: 80px;
-	padding-right: 50px;
-
+    padding-top: 80px;
+    padding-right: 50px;
 }
 
 a#source {
-	text-decoration: none;
-	color: black;
+    /* text-decoration: none; */
+    color: black;
 }
 
-a#source:hover { color:blue; }
+a#source:hover {
+    color: blue;
+}
 
 #loading {
-	font-family: Arial, Helvetica, sans-serif;
-	margin-top: 180px;
-	margin-left: 80px;
-	/*width: 90%;*/
-	padding: 10px;
-	text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 180px;
+    margin-left: 80px;
+    /*width: 90%;*/
+    padding: 10px;
+    text-align: center;
 }
 
 .control-panel {
-	padding-top: 30px;
-	width: 200px;
+    padding-top: 30px;
+    width: 200px;
 }
 
 .tooltip {
-	postition: absolute;
-	min-width: 60px;
-	min-height: 28px;
-	padding: 4px;
-	/*background: yellow;*/
-	color: "red";
-	text-align: left;
-	font: 12px sans-serif;
-	border: 1px;
-	border-radius: 3px;
-	pointer-events: none;
-	/*border: 1px solid gray;*/
+    postition: absolute;
+    min-width: 60px;
+    min-height: 28px;
+    padding: 4px;
+    /*background: yellow;*/
+    color: "red";
+    text-align: left;
+    font: 12px sans-serif;
+    border: 1px;
+    border-radius: 3px;
+    pointer-events: none;
+    /*border: 1px solid gray;*/
 }
 
 .tooltip .title {
-	fontsize: 14px;
+    fontsize: 14px;
 }
 
-.shadow{
-	box-shadow: 1px 1px #888888;
+.shadow {
+    box-shadow: 1px 1px #888888;
 }
 
-#selected{
-	box-shadow: 1px 1px #888888;
+#selected {
+    box-shadow: 1px 1px #888888;
 }
 
 .chartTip {
-	min-width: 60px;
-	min-height: 28px;
-	padding: 4px;
-	background: white;
-	color: "red";
-	text-align: left;
-	font: 12px sans-serif;
-	border-radius: 2px;
-	pointer-events: none;
-	border: 1px solid gray;
-	box-shadow: 1px 1px #888888;
+    min-width: 60px;
+    min-height: 28px;
+    padding: 4px;
+    background: white;
+    color: "red";
+    text-align: left;
+    font: 12px sans-serif;
+    border-radius: 2px;
+    pointer-events: none;
+    border: 1px solid gray;
+    box-shadow: 1px 1px #888888;
 }
 
 .tooltip .date {
-	font-weight: bold;
-	fontsize: 14px;
+    font-weight: bold;
+    fontsize: 14px;
 }
 
 path :hover {
-	background-color: beige;
-	fill: 'yellow';
-	border: 3px solid black;
-	stroke: 'blue';
+    background-color: beige;
+    fill: 'yellow';
+    border: 3px solid black;
+    stroke: 'blue';
 }
 
 .grid line {
-	stroke: lightgrey;
-	stroke-opacity: 0.6;
-	shape-rendering: crispEdges
+    stroke: lightgrey;
+    stroke-opacity: 0.6;
+    shape-rendering: crispEdges
 }
 
 #legend-box {
-	border: 1px solid gray;
-	border-radius: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
 }
 
 #range-value-bold {
-	/*float: right;*/
-  font-weight: bold;
+    /*float: right;*/
+    font-weight: bold;
 }
 
 #plot_png {
-	/*height: 600px;*/
+    /*height: 600px;*/
 }
 
 .selectCounty {
-	margin-right: 20px;
+    margin-right: 20px;
 }
 
 button.link {
-	font-family: "Verdana" sans-serif;
-	font-size: 1em;
-	text-align: left;
-	color: white;
-	background: none;
-	margin: 0;
-	padding: 0;
-	border: none;
-	cursor: pointer;
+    font-family: "Verdana" sans-serif;
+    font-size: 1em;
+    text-align: left;
+    color: white;
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
 }
 
 li {
-	text-decoration: none;
-	color: white;
+    text-decoration: none;
+    color: white;
 }
 
-	ul {
-		list-style-type: none;
-		float: right;
-	}
+ul {
+    list-style-type: none;
+    float: right;
+}
 
 .header {
-	color: white;
+    color: white;
 }
 
 .chart-svg {
-	/*background-color: #ddd;*/
-	border: 1px solid gray;
-	border-radius: 3px;
+    /*background-color: #ddd;*/
+    border: 1px solid gray;
+    border-radius: 3px;
 }
-

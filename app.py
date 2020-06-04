@@ -14,6 +14,7 @@ app = Flask(__name__)
 def index():
 
 	california_data = get_california_data()
+	print("california data: ", california_data)
 	create_csv("All Counties", california_data)
 	counties = get_counties()
 

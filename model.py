@@ -20,6 +20,10 @@ def get_california_data():
 
 	data = data.loc[filter, :]
 
+	data = add_population(data)
+
+	print(data)
+
 	counties = list(data.loc[:, 'county'].unique())
 	complete_county_list = get_counties()
 
@@ -51,12 +55,6 @@ def get_california_data():
 		pop = (populations[county].replace(",",""))
 		population_with_no_cases.append(int(pop))
 		non_case_list.append(0)
-
-
-
-	# print(counties_with_no_cases)
-	# print(population_with_no_cases)
-	# print(non_case_list)
 
 
 	# for county in complete_county_list:
@@ -97,7 +95,7 @@ def get_california_data():
 	df = pd.DataFrame(df_list, columns =['county', 'cases', 'population'])
 
 	df['cases_per_capita'] = (df['cases'] * 100000 / df['population']).astype(int)
-	# df['cases_per_capita'] = (df['cases'] * 100000 / df['population'])
+
 
 	df = df.sort_values(by=['county'])
 
@@ -122,9 +120,11 @@ def population_dict():
 
 def add_population(data):
 	population_data = pd.read_csv("./static/data/population_data/population_data.csv")
-
+	print("in add population")
 	pop_values = list(population_data.loc[:, "population"])
 	county_values = list(population_data.loc[:, "county"])
+
+	
 
 	population_dict = lists_to_dict(county_values, pop_values)
 
@@ -143,6 +143,8 @@ def add_population(data):
 
 
 	data.loc[:, 'population'] = population_data
+
+	print(data)
 
 	return data
 
@@ -245,15 +247,15 @@ def get_new_cases(data):
 
 def get_counties():
 	counties = ['Alameda','Alpine','Amador','Butte','Calaveras','Colusa',
-							'Contra Costa','Del Norte','El Dorado','Fresno','Glenn',
-							'Humboldt','Imperial','Inyo','Kern','Kings','Lake', 'Lassen',
-							'Los Angeles','Madera', 'Marin', 'Mariposa','Mendocino','Merced',
-							'Modoc', 'Mono','Monterey','Napa', 'Nevada','Orange','Placer',
-							'Plumas','Riverside','Sacramento','San Benito','San Bernardino',
-							'San Diego','San Francisco','San Joaquin','San Luis Obispo',
-							'San Mateo', 'Santa Barbara','Santa Clara','Santa Cruz','Shasta',
-							'Sierra', 'Siskiyou','Solano', 'Sonoma','Stanislaus','Sutter',
-							'Tehama', 'Trinity', 'Tulare','Tuolumne', 'Ventura', 'Yolo', 'Yuba']
+				'Contra Costa','Del Norte','El Dorado','Fresno','Glenn',
+				'Humboldt','Imperial','Inyo','Kern','Kings','Lake', 'Lassen',
+				'Los Angeles','Madera', 'Marin', 'Mariposa','Mendocino','Merced',
+				'Modoc', 'Mono','Monterey','Napa', 'Nevada','Orange','Placer',
+				'Plumas','Riverside','Sacramento','San Benito','San Bernardino',
+				'San Diego','San Francisco','San Joaquin','San Luis Obispo',
+				'San Mateo', 'Santa Barbara','Santa Clara','Santa Cruz','Shasta',
+				'Sierra', 'Siskiyou','Solano', 'Sonoma','Stanislaus','Sutter',
+				'Tehama', 'Trinity', 'Tulare','Tuolumne', 'Ventura', 'Yolo', 'Yuba']
 
 	return counties
 
