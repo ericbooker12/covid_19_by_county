@@ -2,7 +2,7 @@
   ![screenshot](static/images/COVID-19_screenshot.png)
 
 ### Summary
-Using Python, Flask JavaScript and D3.js, to create a graphical representation of COVID-19 cases in California by county. It uses the flask frame work which downloads currrent data from https://github.com/nytimes/covid-19-data and processes the data using Python's pandas library. A graphical representation is created on the front end with javascript and the D3 library. Topojson was used to create the clickable map.
+Using Python, Flask JavaScript and D3.js I created a web app that graphical representation of COVID-19 cases in California by county. It uses the flask framework on the backend where data is downloaded from https://github.com/nytimes/covid-19-data. Python's pandas library is used to processes the data. A graphical representation is created on the front end with javascript and the D3 library. Topo.json was used to create the clickable map.
 
 Live at: https://showdata-flask2.herokuapp.com/
 
