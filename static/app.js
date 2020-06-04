@@ -239,11 +239,9 @@ class D3Map {
 								cases = c.cases_per_capita
 							}
 						})
-
 						return scale(cases)
-
 					})
-					.attr('opacity', .8)
+
 			})
 
 		function labels(svg, x, y, name) {
@@ -434,13 +432,16 @@ function renderChart(value) {
 
 	let county = $("#render_scale").attr("class");
 
+	console.log(county)
+
 	county_joined = county.toLowerCase().split(' ').join('_')
 
 	let source = "csv"
 
-	d3.csv("/static/county_data/" + county_joined + ".csv")
+	d3.csv("/static/county_data/" + county_joined + ".csv" + '?' + Math.floor(Math.random() * 100))
 		.then(function(data) {
 			d3.select("#data-source").remove();
+
 			makeData(data, 'csv', value, county)
 		});
 }
@@ -457,6 +458,8 @@ function joinCountyName(county) {
 
 
 function makeData(inputData, source, exp, entity) {
+
+		console.log(inputData)
 
 	$("#range-value").html(`Y-scale = <span id='range-value-bold'>y^` + exp + `</span>`);
 	$("#slider-table").removeAttr('hidden');
