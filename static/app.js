@@ -629,7 +629,7 @@ function makeData(inputData, source, exp, entity) {
                     chartTooltipDiv.transition().duration(transitionTime).style('opacity', 1)
                     chartTooltipDiv
                         .html(`
-						<strong class="">${newDate}</strong><br/>
+                        <strong class="">${newDate}</strong><br/>
 						<span>Cases: ${cases}</span><br/>
 						<span>Deaths: ${deaths}</span><br/>
 					`)
@@ -726,8 +726,6 @@ function makeData(inputData, source, exp, entity) {
             let yOrigin = 20;
             let boxMargin = 8
             let width = 140 + boxMargin * 2;
-
-            // let height = propertyNames.length * elementHeight * 6+ (2 * yMargin);
             let height = 40;
 
             let elementWidth = 40;
@@ -770,7 +768,9 @@ function makeData(inputData, source, exp, entity) {
                     .append("title")
                     .text(x.title)
 
-                let title = capitalize(x.title) + ":   " + x.max
+                let title = capitalize(x.title) + ":   " + numberWithCommas(x.max)
+
+                console.log(title)
 
                 legend.append("text")
                     .text(title)
@@ -828,6 +828,6 @@ function snake_it(name) {
     return name.toLowerCase().split(" ").join("_")
 }
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
