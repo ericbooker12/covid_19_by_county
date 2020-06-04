@@ -373,13 +373,13 @@ class D3Map {
             .attr('height', h)
             .style('fill', 'url(#gradient')
 
-        let fontSize = 14
+        let fontSize = 12
         legend.append('text')
             .attr("x", -13)
-            .attr("y", -(fontSize))
+            .attr("y", -(fontSize + 4))
             .attr("dy", ".35em")
             .style("font-size", fontSize)
-            .style("font-weight", "bold")
+            // .style("font-weight", "bold")
             .text("Cases per 100k");
 
         const axisScale = d3.scaleLinear()
@@ -389,7 +389,8 @@ class D3Map {
         const axis = d3.axisLeft(axisScale)
         legend.append('g')
             .attr('class', 'axis')
-            // .attr('transform', `translate(${0}, 0)`).call(axis)
+            .attr('transform', `translate(0, 0)`)
+            .call(axis)
 
     }
 
