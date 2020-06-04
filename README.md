@@ -10,7 +10,7 @@ Live at: https://showdata-flask2.herokuapp.com/
 * Hover over a county to show COVID-19 and population stats
 * Click on a county to see a chart reprenting cases and deaths over time
 * Counties are colored in varying intensity based on cases per capita
-* Use the slider to alter the scale exponentially. 
+* Use the slider to alter the y-scale exponentially. 
   - This feature emphasizes (exaggerates) the upper or lower range. Because the number deaths tend to appear as a flat line when compared to the number of cases, an exponential scale allows you to zoom in to show more detail. 
 
 ### Built with
