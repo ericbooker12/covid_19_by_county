@@ -97,6 +97,7 @@ def get_california_data():
 	df = pd.DataFrame(df_list, columns =['county', 'cases', 'population'])
 
 	df['cases_per_capita'] = (df['cases'] * 100000 / df['population']).astype(int)
+	# df['cases_per_capita'] = (df['cases'] * 100000 / df['population'])
 
 	df = df.sort_values(by=['county'])
 

@@ -40,10 +40,13 @@ $(document).ready(function() {
 })
 
 class Tooltip {
-    constructor(svgX, svgY, data) {
+    constructor(svgX, svgY, data, perCapitaData) {
         this.data = data
         this.svgX = svgX
         this.svgY = svgY
+        this.perCapita = perCapitaData
+
+
 
         this.div = d3.select('body').append('div')
             .attr('class', 'tooltip')
@@ -61,6 +64,7 @@ class Tooltip {
         let cases;
         let deaths;
         let population;
+        let perCapita;
 
         this.data.forEach((d) => {
             if (d.county == county.properties.name) {
@@ -75,10 +79,13 @@ class Tooltip {
             cases = 0
         }
 
-        let perCapita = ((cases * 100000) / population).toFixed(1)
+        this.perCapita.forEach(function(x) {
+            if (x.county == countyName) {
+                perCapita = x.cases_per_capita
+            }
+        })
 
         this.div.transition().duration(200).style('opacity', 1)
-
 
         this.div
             .html(`
@@ -161,7 +168,7 @@ class D3Map {
         this.maxCounty = maxCounty
         this.perCapita = perCapita
 
-        this.tooltip = new Tooltip(x, y, covidData)
+        this.tooltip = new Tooltip(x, y, covidData, perCapita)
     }
 
     drawCounties(colorScheme) {
@@ -175,7 +182,6 @@ class D3Map {
             .attr("x", 30)
             .attr("y", 50)
             .style("font-size", "18px")
-            .style("text-de`coration", "underline")
             .text("Click a county");
 
         const countyGroup = this.svg
@@ -209,10 +215,11 @@ class D3Map {
 
             })
             .on('mouseover', (d, i, counties) => {
-                d3.select(counties[i]).transition().duration(200)
+                d3.select(counties[i]).transition().duration(100)
                     .attr('fill', 'lightblue')
-                    .attr('stroke', 'lightblue')
+                    // .attr('stroke', 'lightblue')
                     .attr('class', 'shadow')
+                    .attr('opacity', 1)
 
 
                 const [x, y] = path.centroid(d)
@@ -220,7 +227,7 @@ class D3Map {
                 this.tooltip.showStats(x, y, d)
             })
             .on('mouseout', (d, i, counties) => {
-                d3.select(counties[i]).transition().duration(200)
+                d3.select(counties[i]).transition().duration(100)
                     .attr('stroke', 'lightgray')
                     .attr('fill', function(county) {
                         let countyName = county.properties.name;
@@ -235,6 +242,7 @@ class D3Map {
                         return scale(cases)
 
                     })
+                    .attr('opacity', .8)
             })
 
         function labels(svg, x, y, name) {
@@ -248,18 +256,21 @@ class D3Map {
 
         let casesPerCapita = this.perCapita
 
-        countyGroup.attr('fill', function(county) {
-            let countyName = county.properties.name
-            let cases
+        countyGroup
+            .attr('fill', function(county) {
+                let countyName = county.properties.name
+                let cases
 
-            casesPerCapita.forEach(function(c) {
-                if (c.county == countyName) {
-                    cases = c.cases_per_capita
-                }
+                casesPerCapita.forEach(function(c) {
+                    if (c.county == countyName) {
+                        cases = c.cases_per_capita
+                    }
+                })
+
+
+                return scale(cases)
             })
-
-            return scale(cases)
-        })
+            .attr('opacity', '.8')
     }
 
     showData(entity, i, counties, covidData) {
@@ -272,8 +283,6 @@ class D3Map {
             );
         });
 
-        // let countyName = entity.properties.name
-
         $("#data-source").remove();
         $("#slider-table").attr('hidden', true);
         $(".chart-svg").attr('hidden', true);
@@ -283,8 +292,6 @@ class D3Map {
         $("#countyBtn").addClass(countyName);
         $("#render_scale").removeClass()
         $("#render_scale").addClass(countyName);
-
-        // console.log("this: ",  $(this).text())
 
         makeData(countyData, "json", 1, countyName)
 
@@ -344,6 +351,7 @@ class D3Map {
 
         const lowColor = colorScheme(0)
         const highColor = colorScheme(1)
+
         gradient.append('stop')
             .attr('offset', '0%')
             .attr('stop-color', highColor)
@@ -378,10 +386,10 @@ class D3Map {
             .range([h, 0])
             .domain([0, this.max])
 
-        const axis = d3.axisRight(axisScale)
+        const axis = d3.axisLeft(axisScale)
         legend.append('g')
             .attr('class', 'axis')
-            .attr('transform', `translate(${w}, 0)`).call(axis)
+            // .attr('transform', `translate(${0}, 0)`).call(axis)
 
     }
 
@@ -422,10 +430,8 @@ function getCasesPerCapitaRange(counties) {
 
 function renderChart(value) {
 
-    // console.log(value)
-
     let county = $("#render_scale").attr("class");
-    // console.log(county)
+
     county_joined = county.toLowerCase().split(' ').join('_')
 
     let source = "csv"
@@ -449,11 +455,6 @@ function joinCountyName(county) {
 
 
 function makeData(inputData, source, exp, entity) {
-
-    // console.log("data", inputData)
-    // console.log("source", source)
-    // console.log("entity", entity)
-
 
     $("#range-value").html(`Y-scale = <span id='range-value-bold'>y^` + exp + `</span>`);
     $("#slider-table").removeAttr('hidden');

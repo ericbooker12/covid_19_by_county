@@ -4513,3 +4513,60 @@ date,county,state,fips,cases,deaths
 2020-06-01,Ventura,California,6111.0,1152,34
 2020-06-01,Yolo,California,6113.0,212,24
 2020-06-01,Yuba,California,6115.0,30,1
+2020-06-02,Alameda,California,6001.0,3536,104
+2020-06-02,Alpine,California,6003.0,2,0
+2020-06-02,Amador,California,6005.0,10,0
+2020-06-02,Butte,California,6007.0,51,1
+2020-06-02,Calaveras,California,6009.0,15,0
+2020-06-02,Colusa,California,6011.0,7,0
+2020-06-02,Contra Costa,California,6013.0,1506,38
+2020-06-02,Del Norte,California,6015.0,47,0
+2020-06-02,El Dorado,California,6017.0,96,0
+2020-06-02,Fresno,California,6019.0,1914,37
+2020-06-02,Glenn,California,6021.0,17,0
+2020-06-02,Humboldt,California,6023.0,103,4
+2020-06-02,Imperial,California,6025.0,2366,28
+2020-06-02,Inyo,California,6027.0,20,1
+2020-06-02,Kern,California,6029.0,2386,39
+2020-06-02,Kings,California,6031.0,1137,5
+2020-06-02,Lake,California,6033.0,26,0
+2020-06-02,Lassen,California,6035.0,5,0
+2020-06-02,Los Angeles,California,6037.0,57118,2443
+2020-06-02,Madera,California,6039.0,117,3
+2020-06-02,Marin,California,6041.0,506,17
+2020-06-02,Mariposa,California,6043.0,16,1
+2020-06-02,Mendocino,California,6045.0,30,0
+2020-06-02,Merced,California,6047.0,308,7
+2020-06-02,Mono,California,6051.0,37,1
+2020-06-02,Monterey,California,6053.0,571,10
+2020-06-02,Napa,California,6055.0,115,3
+2020-06-02,Nevada,California,6057.0,48,1
+2020-06-02,Orange,California,6059.0,6640,150
+2020-06-02,Placer,California,6061.0,228,9
+2020-06-02,Plumas,California,6063.0,4,0
+2020-06-02,Riverside,California,6065.0,8155,344
+2020-06-02,Sacramento,California,6067.0,1438,58
+2020-06-02,San Benito,California,6069.0,90,2
+2020-06-02,San Bernardino,California,6071.0,5501,208
+2020-06-02,San Diego,California,6073.0,7737,312
+2020-06-02,San Francisco,California,6075.0,2590,43
+2020-06-02,San Joaquin,California,6077.0,982,35
+2020-06-02,San Luis Obispo,California,6079.0,278,1
+2020-06-02,San Mateo,California,6081.0,2190,84
+2020-06-02,Santa Barbara,California,6083.0,1686,12
+2020-06-02,Santa Clara,California,6085.0,2819,145
+2020-06-02,Santa Cruz,California,6087.0,217,3
+2020-06-02,Shasta,California,6089.0,40,4
+2020-06-02,Sierra,California,6091.0,1,0
+2020-06-02,Siskiyou,California,6093.0,7,0
+2020-06-02,Solano,California,6095.0,552,22
+2020-06-02,Sonoma,California,6097.0,579,4
+2020-06-02,Stanislaus,California,6099.0,767,30
+2020-06-02,Sutter,California,6101.0,46,2
+2020-06-02,Tehama,California,6103.0,6,1
+2020-06-02,Trinity,California,6105.0,2,0
+2020-06-02,Tulare,California,6107.0,2004,89
+2020-06-02,Tuolumne,California,6109.0,4,0
+2020-06-02,Ventura,California,6111.0,1164,34
+2020-06-02,Yolo,California,6113.0,213,24
+2020-06-02,Yuba,California,6115.0,31,1

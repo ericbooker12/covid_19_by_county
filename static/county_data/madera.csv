@@ -78,3 +78,11 @@ date,county,state,fips,cases,deaths,new_cases
 2020-05-22,Madera,California,6039.0,82,2,-1.0
 2020-05-23,Madera,California,6039.0,84,2,2.0
 2020-05-24,Madera,California,6039.0,84,2,0.0
+2020-05-25,Madera,California,6039.0,85,2,1.0
+2020-05-26,Madera,California,6039.0,90,2,5.0
+2020-05-27,Madera,California,6039.0,94,2,4.0
+2020-05-28,Madera,California,6039.0,98,2,4.0
+2020-05-29,Madera,California,6039.0,104,2,6.0
+2020-05-30,Madera,California,6039.0,104,2,0.0
+2020-05-31,Madera,California,6039.0,106,2,2.0
+2020-06-01,Madera,California,6039.0,114,2,8.0
