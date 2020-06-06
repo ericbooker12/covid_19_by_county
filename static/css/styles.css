@@ -80,9 +80,12 @@ path :hover {
 }
 
 .grid line {
-    stroke: lightgrey;
-    stroke-opacity: 0.6;
+    stroke: lightblue;
+    stroke-opacity: 0.4;
     shape-rendering: crispEdges
+    /* stroke: #bbb; */
+    stroke-width: 0.5;
+    /* stroke-dasharray: 6, 2; */
 }
 
 #legend-box {
