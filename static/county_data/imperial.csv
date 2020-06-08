@@ -76,3 +76,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-06-02,Imperial,California,6025.0,2366,28,169.0
 2020-06-03,Imperial,California,6025.0,2459,28,93.0
 2020-06-04,Imperial,California,6025.0,2540,28,81.0
+2020-06-05,Imperial,California,6025.0,2631,29,91.0
+2020-06-06,Imperial,California,6025.0,2778,32,147.0

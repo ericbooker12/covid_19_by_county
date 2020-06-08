@@ -480,6 +480,13 @@ function makeData(inputData, source, exp, entity) {
         }
     }
 
+    let parseTime = d3.timeParse("%Y-%m-%d");
+    data.forEach(function(d) {
+        if (typeof d.date == 'string') {
+            d.date = parseTime(d.date);
+        }
+    });
+
     let margin = 80;
     let width = 600;
     let height = 400;
@@ -492,15 +499,6 @@ function makeData(inputData, source, exp, entity) {
         .attr("transform", "translate(" + margin + ", " + margin + ")");
 
 
-    let parseTime = d3.timeParse("%Y-%m-%d");
-
-
-
-    data.forEach(function(d) {
-        if (typeof d.date == 'string') {
-            d.date = parseTime(d.date);
-        }
-    });
 
     var x = d3.scaleTime()
         .domain(d3.extent(data, function(d) { return d.date; })) //returns min and max
@@ -509,7 +507,7 @@ function makeData(inputData, source, exp, entity) {
     var maxCases = d3.max(data, function(d) { return d.cases })
     var maxDeaths = d3.max(data, function(d) { return d.deaths })
     var minCases = d3.min(data, function(d) { return d.cases })
-        // var numOfDataPoints = d3.min(data, function(d) {return d.date})
+    var numOfDataPoints = d3.min(data, function(d) { return d.date })
 
     // console.log("numOfDataPoints: ", numOfDataPoints)
 
@@ -533,7 +531,8 @@ function makeData(inputData, source, exp, entity) {
         .attr("transform", "translate(0, " + height + ")")
 
     var xAxis = d3.axisBottom(x)
-        .tickFormat(d3.timeFormat("%Y-%m-%d"));
+        .tickFormat(d3.timeFormat("%b %d"))
+
 
     var yAxisGroup = chart
         .append('g')
