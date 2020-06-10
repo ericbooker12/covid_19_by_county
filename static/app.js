@@ -85,6 +85,7 @@ class Tooltip {
 
         this.div.transition().duration(100).style('opacity', 1)
 
+        //Map tooltip.
         this.div
             .html(`
 				<strong class='title'>${countyName} County</strong><br/>
@@ -93,14 +94,12 @@ class Tooltip {
 				<span>Population: ${numberWithCommas(population)}</span><br/>
 				<span>Cases per 100k: ${perCapita}</span><br/>
 			`)
-            // .style('left', x + this.svgX + 'px')
-            // .style('top', y + this.svgY + 'px')
-            .style('left', '20px')
+
+        .style('left', '20px')
             .style('top', '500px')
     }
 
     showChartStats(x, y, county) {
-        // console.log(x, y, county)
 
         let date = county.date
         let cases = county.cases
@@ -111,7 +110,7 @@ class Tooltip {
         this.div.html(`
             <strong>${date} County</strong><br/>
             <span>Cases: ${cases}</span><br/>
-            <span>Deaths: ${deaths}</span><br/>
+            <span>XXXDeaths: XXX${deaths}</span><br/>
         `)
             // .style('left', x + this.svgX + 'px')
             // .style('top', y + this.svgY + 'px')
@@ -506,9 +505,6 @@ function makeData(inputData, source, exp, entity) {
     var maxCases = d3.max(data, function(d) { return d.cases })
     var maxDeaths = d3.max(data, function(d) { return d.deaths })
     var minCases = d3.min(data, function(d) { return d.cases })
-        // var numOfDataPoints = d3.min(data, function(d) {return d.date})
-
-    // console.log("numOfDataPoints: ", numOfDataPoints)
 
     var y = d3.scalePow()
         .domain([0, maxCases])
@@ -622,17 +618,20 @@ function makeData(inputData, source, exp, entity) {
 
                     let x0 = x(data[0].date)
 
-                    chartTooltipDiv.transition().duration(transitionTime).style('opacity', 1)
+                    console.log(xOrg, yOrg)
+
+                    chartTooltipDiv
+                        .transition().duration(transitionTime)
+                        .style('opacity', .8)
+
                     chartTooltipDiv
                         .html(`
 						<strong class="">${newDate}</strong><br/>
-						<span>Cases: ${cases}</span><br/>
-						<span>Deaths: ${deaths}</span><br/>
+						<span>Cases: ${numberWithCommas(cases)}</span><br/>
+						<span>Deaths: ${numberWithCommas(deaths)}</span><br/>
 					`)
                         .style('left', xOrg + xpos - 10 + 'px')
-                        .style('top', yOrg + ypos + 20 + 'px')
-                        // .style('left', '20px')
-                        // .style('top', '600px')
+                        .style('top', yOrg + ypos + 60 + 'px')
                 })
 
                 circle.on('mouseout', () => {
@@ -692,7 +691,7 @@ function makeData(inputData, source, exp, entity) {
             .attr("fill", "none")
             .attr("stroke", color)
             .attr("d", line2)
-            .attr("stroke-width", "1.5")
+            .attr("stroke-width", "2")
     }
 
 

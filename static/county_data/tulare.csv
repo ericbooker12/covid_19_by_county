@@ -84,3 +84,7 @@ date,county,state,fips,cases,deaths,new_cases
 2020-06-02,Tulare,California,6107.0,2004,89,107.0
 2020-06-03,Tulare,California,6107.0,2026,90,22.0
 2020-06-04,Tulare,California,6107.0,2083,92,57.0
+2020-06-05,Tulare,California,6107.0,2116,92,33.0
+2020-06-06,Tulare,California,6107.0,2180,92,64.0
+2020-06-07,Tulare,California,6107.0,2213,92,33.0
+2020-06-08,Tulare,California,6107.0,2220,94,7.0

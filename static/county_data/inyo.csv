@@ -71,3 +71,7 @@ date,county,state,fips,cases,deaths,new_cases
 2020-06-02,Inyo,California,6027.0,20,1,0.0
 2020-06-03,Inyo,California,6027.0,20,1,0.0
 2020-06-04,Inyo,California,6027.0,20,1,0.0
+2020-06-05,Inyo,California,6027.0,20,1,0.0
+2020-06-06,Inyo,California,6027.0,21,1,1.0
+2020-06-07,Inyo,California,6027.0,21,1,0.0
+2020-06-08,Inyo,California,6027.0,21,1,0.0
