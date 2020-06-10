@@ -635,20 +635,18 @@ function makeData(inputData, source, exp, entity) {
 						<span>Cases: ${numberWithCommas(cases)}</span><br/>
 						<span>Deaths: ${numberWithCommas(deaths)}</span><br/>
 					`)
-                        .style('left', xOrg + xpos - 10 + 'px')
-                        .style('top', yOrg + ypos + 60 + 'px')
+                        .style('left', xOrg + xpos - 20 + 'px')
+                        .style('top', yOrg + ypos + 50 + 'px')
                 })
 
                 circle.on('mouseout', () => {
-                        chartTooltipDiv.transition().duration(transitionTime).style('opacity', 0)
-                        circle.transition()
-                            .ease(d3.easeCubicOut).duration(200)
-                            .attr("r", 4)
-                            .attr("fill", color)
-                            .attr('opacity', 0);
-                    })
-                    .append("title")
-                    .text("Date: " + d3.timeFormat("%Y-%m-%d")(point.date) + "\n" + propertyNames[i] + ": " + point[propertyNames[i]])
+                    chartTooltipDiv.transition().duration(transitionTime).style('opacity', 0)
+                    circle.transition()
+                        .ease(d3.easeCubicOut).duration(200)
+                        .attr("r", 4)
+                        .attr("fill", color)
+                        .attr('opacity', 0);
+                })
             })
         }
     }
