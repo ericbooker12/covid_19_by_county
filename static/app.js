@@ -491,10 +491,7 @@ function makeData(inputData, source, exp, entity) {
         .append('g')
         .attr("transform", "translate(" + margin + ", " + margin + ")");
 
-
     let parseTime = d3.timeParse("%Y-%m-%d");
-
-
 
     data.forEach(function(d) {
         if (typeof d.date == 'string') {
@@ -533,7 +530,7 @@ function makeData(inputData, source, exp, entity) {
         .attr("transform", "translate(0, " + height + ")")
 
     var xAxis = d3.axisBottom(x)
-        .tickFormat(d3.timeFormat("%Y-%m-%d"));
+        .tickFormat(d3.timeFormat("%b %d"));
 
     var yAxisGroup = chart
         .append('g')
@@ -611,7 +608,7 @@ function makeData(inputData, source, exp, entity) {
                 circle.on('mouseover', () => {
                     color = circle.attr("fill")
                     circle.transition().ease(d3.easeCubicOut).duration(transitionTime)
-                        .attr("r", 10)
+                        .attr("r", 8)
                         .attr("fill", "darkgray")
                         .attr('opacity', 1)
 
@@ -642,7 +639,7 @@ function makeData(inputData, source, exp, entity) {
                         chartTooltipDiv.transition().duration(transitionTime).style('opacity', 0)
                         circle.transition()
                             .ease(d3.easeCubicOut).duration(200)
-                            .attr("r", 5)
+                            .attr("r", 4)
                             .attr("fill", color)
                             .attr('opacity', 0);
                     })
