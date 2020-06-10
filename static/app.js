@@ -498,7 +498,11 @@ function makeData(inputData, source, exp, entity) {
         .append('g')
         .attr("transform", "translate(" + margin + ", " + margin + ")");
 
-
+    data.forEach(function(d) {
+        if (typeof d.date == 'string') {
+            d.date = parseTime(d.date);
+        }
+    });
 
     var x = d3.scaleTime()
         .domain(d3.extent(data, function(d) { return d.date; })) //returns min and max
@@ -531,8 +535,7 @@ function makeData(inputData, source, exp, entity) {
         .attr("transform", "translate(0, " + height + ")")
 
     var xAxis = d3.axisBottom(x)
-        .tickFormat(d3.timeFormat("%b %d"))
-
+        .tickFormat(d3.timeFormat("%b %d"));
 
     var yAxisGroup = chart
         .append('g')
@@ -570,9 +573,10 @@ function makeData(inputData, source, exp, entity) {
 
     function circlePoints(propertyNames, dataGroup, data) {
 
-        let transitionTime = 300;
 
-        chartTooltipDiv = d3.select('#chart').append('div')
+
+        chartTooltipDiv = d3.select('#chart')
+            .append('div')
             .attr('class', 'tooltip chartTip')
             .style('opacity', 0);
 
@@ -584,31 +588,34 @@ function makeData(inputData, source, exp, entity) {
 
         for (var i = 0; i < propertyNames.length; i++) {
 
-
-            let propertyName = propertyNames[i]
+            let propertyName = propertyNames[i];
 
             data.forEach((point) => {
 
-                let date
-                let cases
-                let deaths
-                let xpos
-                let ypos
-                let newDate
+                let date;
+                let cases;
+                let deaths;
+                let xpos;
+                let ypos;
+                let newDate;
 
-                let color = colors[i]
+                let color = colors[i];
 
                 let circle = dataGroup.append("circle")
                     .attr("fill", color)
-                    .attr("r", 2)
+                    .attr("r", 5)
                     .attr("cx", x(point.date))
                     .attr("cy", y(point[propertyName]))
+                    .attr('opacity', 0);
+
+                let transitionTime = 300;
 
                 circle.on('mouseover', () => {
                     color = circle.attr("fill")
                     circle.transition().ease(d3.easeCubicOut).duration(transitionTime)
-                        .attr("r", 10)
+                        .attr("r", 8)
                         .attr("fill", "darkgray")
+                        .attr('opacity', 1)
 
 
                     date = point.date.toString().split(" ")
@@ -635,10 +642,11 @@ function makeData(inputData, source, exp, entity) {
 
                 circle.on('mouseout', () => {
                         chartTooltipDiv.transition().duration(transitionTime).style('opacity', 0)
-                        circle.transition().ease(d3.easeCubicOut).duration(200).attr("r", 2)
+                        circle.transition()
+                            .ease(d3.easeCubicOut).duration(200)
+                            .attr("r", 4)
                             .attr("fill", color)
-
-
+                            .attr('opacity', 0);
                     })
                     .append("title")
                     .text("Date: " + d3.timeFormat("%Y-%m-%d")(point.date) + "\n" + propertyNames[i] + ": " + point[propertyNames[i]])
