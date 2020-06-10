@@ -510,12 +510,6 @@ function makeData(inputData, source, exp, entity) {
     var maxCases = d3.max(data, function(d) { return d.cases })
     var maxDeaths = d3.max(data, function(d) { return d.deaths })
     var minCases = d3.min(data, function(d) { return d.cases })
-<<<<<<< HEAD
-    var numOfDataPoints = d3.min(data, function(d) { return d.date })
-
-    // console.log("numOfDataPoints: ", numOfDataPoints)
-=======
->>>>>>> development
 
     var y = d3.scalePow()
         .domain([0, maxCases])

@@ -4798,8 +4798,6 @@ date,county,state,fips,cases,deaths,population
 2020-06-06,Ventura,California,6111.0,1274,35,846006
 2020-06-06,Yolo,California,6113.0,221,24,220500
 2020-06-06,Yuba,California,6115.0,32,1,78668
-<<<<<<< HEAD
-=======
 2020-06-07,Alameda,California,6001.0,3895,104,1671329
 2020-06-07,Alpine,California,6003.0,2,0,1129
 2020-06-07,Amador,California,6005.0,9,0,39752
@@ -4914,4 +4912,3 @@ date,county,state,fips,cases,deaths,population
 2020-06-08,Ventura,California,6111.0,1341,35,846006
 2020-06-08,Yolo,California,6113.0,225,24,220500
 2020-06-08,Yuba,California,6115.0,32,1,78668
->>>>>>> development
