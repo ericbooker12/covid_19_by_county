@@ -1,4 +1,5 @@
 county,cases,population,cases_per_capita
+<<<<<<< HEAD
 Alameda,3826,1671329,228
 Alpine,2,1129,177
 Amador,10,39752,25
@@ -56,4 +57,63 @@ Tulare,2180,466195,467
 Tuolumne,7,54478,12
 Ventura,1274,846006,150
 Yolo,221,220500,100
+=======
+Alameda,3966,1671329,237
+Alpine,2,1129,177
+Amador,10,39752,25
+Butte,68,219186,31
+Calaveras,19,45905,41
+Colusa,7,21547,32
+Contra Costa,1706,1153526,147
+Del Norte,47,27812,168
+El Dorado,109,192843,56
+Fresno,2216,999101,221
+Glenn,19,28393,66
+Humboldt,112,135558,82
+Imperial,3048,181215,1681
+Inyo,21,18039,116
+Kern,2804,900202,311
+Kings,1567,152940,1024
+Lake,30,64386,46
+Lassen,8,30573,26
+Los Angeles,64644,10039107,643
+Madera,172,157327,109
+Marin,625,258826,241
+Mariposa,16,17203,93
+Mendocino,40,86749,46
+Merced,367,277680,132
+Modoc,1,8841,11
+Mono,38,14444,263
+Monterey,751,434061,173
+Napa,154,137744,111
+Nevada,50,99755,50
+Orange,7643,3175692,240
+Placer,294,398329,73
+Plumas,5,18807,26
+Riverside,9206,2470546,372
+Sacramento,1587,1552058,102
+San Benito,109,62808,173
+San Bernardino,6247,2180085,286
+San Diego,8682,3338330,260
+San Francisco,2782,881549,315
+San Joaquin,1244,762148,163
+San Luis Obispo,299,283111,105
+San Mateo,2399,766573,312
+Santa Barbara,1818,446499,407
+Santa Clara,2973,1927852,154
+Santa Cruz,234,273213,85
+Shasta,46,180080,25
+Sierra,1,3005,33
+Siskiyou,12,43539,27
+Solano,595,447643,132
+Sonoma,664,494336,134
+Stanislaus,937,550660,170
+Sutter,65,96971,67
+Tehama,8,65084,12
+Trinity,3,12285,24
+Tulare,2220,466195,476
+Tuolumne,7,54478,12
+Ventura,1341,846006,158
+Yolo,225,220500,102
+>>>>>>> development
 Yuba,32,78668,40

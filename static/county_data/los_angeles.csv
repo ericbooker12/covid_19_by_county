@@ -129,3 +129,8 @@ date,county,state,fips,cases,deaths,new_cases
 2020-06-01,Los Angeles,California,6037.0,55968,2384,972.0
 2020-06-02,Los Angeles,California,6037.0,57118,2443,1150.0
 2020-06-03,Los Angeles,California,6037.0,58234,2489,1116.0
+2020-06-04,Los Angeles,California,6037.0,59650,2531,1416.0
+2020-06-05,Los Angeles,California,6037.0,61045,2565,1395.0
+2020-06-06,Los Angeles,California,6037.0,62338,2620,1293.0
+2020-06-07,Los Angeles,California,6037.0,63844,2645,1506.0
+2020-06-08,Los Angeles,California,6037.0,64644,2655,800.0

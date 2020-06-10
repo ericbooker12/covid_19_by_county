@@ -28,8 +28,8 @@ a#source:hover {
 
 .tooltip {
     postition: absolute;
-    min-width: 60px;
-    min-height: 28px;
+    min-width: 120px;
+    min-height: 60px;
     padding: 4px;
     /*background: yellow;*/
     color: "red";
@@ -54,7 +54,7 @@ a#source:hover {
 }
 
 .chartTip {
-    min-width: 60px;
+    min-width: 100px;
     min-height: 28px;
     padding: 4px;
     background: white;
