@@ -3,6 +3,16 @@ body {
     padding-right: 50px;
 }
 
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+#bubbles {
+    height: 600px;
+    width: 100%
+}
+
 a#source {
     /* text-decoration: none; */
     color: black;

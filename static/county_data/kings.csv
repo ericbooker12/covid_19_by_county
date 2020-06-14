@@ -73,3 +73,7 @@ date,county,state,fips,cases,deaths,new_cases
 2020-06-06,Kings,California,6031.0,1492,6,40.0
 2020-06-07,Kings,California,6031.0,1538,6,46.0
 2020-06-08,Kings,California,6031.0,1567,6,29.0
+2020-06-09,Kings,California,6031.0,1637,6,70.0
+2020-06-10,Kings,California,6031.0,1688,6,51.0
+2020-06-11,Kings,California,6031.0,1688,6,0.0
+2020-06-12,Kings,California,6031.0,1724,6,36.0

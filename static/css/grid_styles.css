@@ -1,63 +1,61 @@
-.sidebar{
-	padding: 15px
-	margin-left: 15px;
-	background-color: #F3F1C7;
-	color: #298383;
-	text-align: left;
-	font-weight: bold;
-	display: inline-block;
-	grid-column-start: sidebar-start;
-	grid-column-end: content-start;
+.sidebar {
+    padding: 15px;
+    margin-left: 15px;
+    background-color: #F3F1C7;
+    color: #298383;
+    text-align: left;
+    font-weight: bold;
+    display: inline-block;
+    grid-column-start: sidebar-start;
+    grid-column-end: content-start;
 }
 
 .control-panel {
-	padding-top: 0px;
-	width: 200px;
-	margin-left: 15px;
-	/*background-color: #F3F1C7;*/
-	color: #298383;
-	text-align: left;
-	font-weight: bold;
-	display: inline-block;
-	grid-column-start: sidebar-start;
-	grid-column-end: content-start;
-	grid-row:1 2;
+    padding-top: 0px;
+    width: 200px;
+    margin-left: 15px;
+    /*background-color: #F3F1C7;*/
+    color: #298383;
+    text-align: left;
+    font-weight: bold;
+    display: inline-block;
+    grid-column-start: sidebar-start;
+    grid-column-end: content-start;
+    grid-row: 1 2;
 }
 
-.content{
-	padding: 15px
-	/*margin-left: 15px;*/
-	/*background-color: #F3F1C7;*/
-	/*color: #298383;*/
-	/*text-align: left;*/
-	/*font-weight: bold;*/
-	display: inline-block;
-	grid-column-start: content-start;
-	grid-column-end: content-end;
+.content {
+    padding: 15px;
+    /*margin-left: 15px;*/
+    /*background-color: #F3F1C7;*/
+    /*color: #298383;*/
+    /*text-align: left;*/
+    /*font-weight: bold;*/
+    display: inline-block;
+    grid-column-start: content-start;
+    grid-column-end: content-end;
 }
 
 .grid-container {
-	display: grid;
-	grid-template-columns: [sidebar-start] fit-content(50%) [content-start] fit-content(50%) [content-end];
-	grid-template-columns: 50% 50%
-	grid-template-rows: 90% auto
-	background-color: #F3F1C7;
+    display: grid;
+    grid-template-columns: [sidebar-start] fit-content(50%) [content-start] fit-content(50%) [content-end];
+    grid-template-columns: 50% 50% grid-template-rows: 90% auto background-color: #F3F1C7;
 }
+
 
 /*	.header {
 		grid-area: header;
 	}*/
 
+
 /*	.footer {
 		grid-area: footer;
 	}*/
 
-
-
 .box {
-	background-color: #fff;
-	color: #000;
-	/*border-radius: 5px;*/
-	padding: 10px;
-	font-size: 100%;
+    background-color: #fff;
+    color: #000;
+    /*border-radius: 5px;*/
+    padding: 10px;
+    font-size: 100%;
 }

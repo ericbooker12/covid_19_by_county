@@ -40,6 +40,11 @@ def all_data():
 
 	return render_template("all_data.html")
 
+@app.route("/animate", methods=["GET", "POST"])
+def animate():
+
+	return render_template("animate.html")
+
 
 @app.route("/process", methods=["GET", "POST"])
 def process():

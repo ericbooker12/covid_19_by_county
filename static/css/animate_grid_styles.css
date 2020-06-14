@@ -1,0 +1,29 @@
+.animated-container {
+    display: grid;
+    grid-template-columns: 75% auto;
+}
+
+.animated-map-container {
+    /* grid-template-columns: [sidebar-start] fit-content(50%) [content-start] fit-content(50%) [content-end]; */
+    /* grid-template-columns: 25% 100px auto; */
+    display: inline-block;
+    grid-column-start: 1;
+}
+
+
+/*	.header {
+		grid-area: header;
+	}*/
+
+
+/*	.footer {
+		grid-area: footer;
+	}*/
+
+.box {
+    background-color: #fff;
+    color: #000;
+    /*border-radius: 5px;*/
+    padding: 10px;
+    font-size: 100%;
+}
