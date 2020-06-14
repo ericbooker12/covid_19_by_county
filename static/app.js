@@ -55,8 +55,6 @@ class Tooltip {
 
     showStats(x, y, county) {
 
-        // console.log(county)
-
         this.remove()
 
         let countyName;
@@ -194,7 +192,6 @@ class D3Map {
             .attr("transform", "translate(20, 0) rotate(0) scale(1)")
             .on('click', (d, i, counties) => {
 
-                // console.log(counties)
 
                 let countyName = d.properties.name
 
@@ -205,7 +202,6 @@ class D3Map {
                 // });
 
                 const [x, y] = path.centroid(d)
-                console.log(x, y)
                 this.tooltip.showStats(x, y, d)
 
                 this.showData(d, i, counties)

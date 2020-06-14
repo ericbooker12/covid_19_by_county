@@ -92,8 +92,6 @@ function drawMap(topoData, covidData) {
 
     let path = d3.geoPath().projection(projection)
 
-
-
     map_svg.selectAll('path')
         .data(counties)
         .enter()
@@ -119,7 +117,7 @@ function drawMap(topoData, covidData) {
 
     const interval = setInterval(function() {
         drawDots();
-    }, 500);
+    }, 100);
 
     // drawDots();
 
@@ -190,27 +188,13 @@ function drawMap(topoData, covidData) {
             // Add your code below this line
             .text((d) => {
                 let countyName = d.properties.name;
-
                 let day = filterData(tempDate, countyName)
-
-                // console.log(day)
-
                 let cases = 0;
-                if (day[0]) {
-                    cases = day[0].cases
-                }
-                if (cases >= 2000) {
-                    return cases
-                }
-
-
+                if (day[0]) { cases = day[0].cases }
+                if (cases >= 2000) { return cases }
             })
-            .attr("x", (d) => {
-                return path.centroid(d)[0]
-            })
-            .attr("y", (d) => {
-                return path.centroid(d)[1]
-            })
+            .attr("x", d => path.centroid(d)[0])
+            .attr("y", d => path.centroid(d)[1])
             .attr("text-anchor", "middle")
             .attr('opacity', 1)
             .attr('class', 'cases-text')

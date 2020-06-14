@@ -10,20 +10,9 @@
     grid-column-start: 1;
 }
 
-
-/*	.header {
-		grid-area: header;
-	}*/
-
-
-/*	.footer {
-		grid-area: footer;
-	}*/
-
 .box {
     background-color: #fff;
     color: #000;
-    /*border-radius: 5px;*/
     padding: 10px;
     font-size: 100%;
 }
