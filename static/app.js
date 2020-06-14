@@ -5,7 +5,8 @@ $(document).ready(function() {
             d3.csv('./static/county_data/all_counties.csv'),
             d3.csv('./static/data/population_data/cases_per_capita.csv'),
             d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
-        ]).then(([topology, californiaData, perCapita, covidData]) => {
+        ]).then(([topoData, californiaData, perCapita, covidData]) => {
+
 
             covidData = covidData.filter(d => {
                 return (
@@ -27,7 +28,7 @@ $(document).ready(function() {
             ]
 
             let colorScheme = colorInterpolations[5];
-            let countyMap = new D3Map(topology, californiaData, perCapita, covidData)
+            let countyMap = new D3Map(topoData, californiaData, perCapita, covidData)
             let countyGroup = countyMap.drawCounties(colorScheme)
 
             countyMap.colorCounties(countyGroup, colorScheme)
@@ -125,7 +126,7 @@ class Tooltip {
 }
 
 class D3Map {
-    constructor(topology, covidData, perCapita, covidData2) {
+    constructor(topoData, covidData, perCapita, covidData2) {
 
         this.covidData2 = covidData2
 
@@ -141,7 +142,8 @@ class D3Map {
         let { height, width, x, y } = document.getElementById('map')
             .getBoundingClientRect()
 
-        const geojson = topojson.feature(topology, topology.objects['california_counties'])
+        const geojson = topojson.feature(topoData, topoData.objects['california_counties'])
+
 
         this.counties = geojson.features
             // this.projection = d3.geoAlbers() //set rotate to -30
@@ -203,6 +205,7 @@ class D3Map {
                 // });
 
                 const [x, y] = path.centroid(d)
+                console.log(x, y)
                 this.tooltip.showStats(x, y, d)
 
                 this.showData(d, i, counties)

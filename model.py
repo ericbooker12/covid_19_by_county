@@ -10,19 +10,21 @@ url = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-countie
 
 def get_all_data():
 
-	return pd.read_csv(url)
+	data =  pd.read_csv(url)
+	create_csv("US Data", data)
+
+	return data
 
 def get_california_data():
 	# population_data = pd.read_csv("./static/data/population_data/population_data.csv")
 
 	data = get_all_data()
+
 	filter = data.loc[:, "state"] == "California"
 
 	data = data.loc[filter, :]
 
 	data = add_population(data)
-
-	print(data)
 
 	counties = list(data.loc[:, 'county'].unique())
 	complete_county_list = get_counties()
