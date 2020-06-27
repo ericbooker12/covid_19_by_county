@@ -93,8 +93,7 @@ class Tooltip {
 				<span>Population: ${numberWithCommas(population)}</span><br/>
 				<span>Cases per 100k: ${perCapita}</span><br/>
 			`)
-
-        .style('left', '20px')
+            .style('left', '20px')
             .style('top', '500px')
     }
 
@@ -111,8 +110,6 @@ class Tooltip {
             <span>Cases: ${cases}</span><br/>
             <span>XXXDeaths: XXX${deaths}</span><br/>
         `)
-            // .style('left', x + this.svgX + 'px')
-            // .style('top', y + this.svgY + 'px')
             .style('left', '20px')
             .style('top', '600px')
     }
@@ -485,16 +482,20 @@ function makeData(inputData, source, exp, entity) {
         }
     });
 
-    let margin = 80;
+    // let margin = 80;
+    let marginTop = 60;
+    let marginBottom = 40;
+    let marginLeft = 40;
+    let marginRight = 20;
     let width = 600;
     let height = 400;
 
     let chart = d3.select("#chart").append("svg")
         .attr("class", "chart-svg")
-        .attr("width", width + 2 * margin)
-        .attr("height", height + 2 * margin)
+        .attr("width", width + marginLeft + marginRight)
+        .attr("height", height + marginBottom + marginTop)
         .append('g')
-        .attr("transform", "translate(" + margin + ", " + margin + ")");
+        .attr("transform", "translate(" + marginLeft + ", " + marginTop + ")");
 
     data.forEach(function(d) {
         if (typeof d.date == 'string') {

@@ -1,6 +1,6 @@
 .animated-container {
     display: grid;
-    grid-template-columns: 75% auto;
+    grid-template-columns: 80% auto;
 }
 
 .animated-map-container {
@@ -15,4 +15,21 @@
     color: #000;
     padding: 10px;
     font-size: 100%;
+}
+
+.title {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+text {
+    /* font-family: 'Avenir', sans-serif; */
+}
+
+.axis .domain {
+    stroke: none;
+}
+
+.x line {
+    stroke: white;
 }

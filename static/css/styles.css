@@ -142,8 +142,13 @@ ul {
     color: white;
 }
 
-.chart-svg {
+.chart-svg,
+.bar-svg {
     /*background-color: #ddd;*/
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
     border-radius: 3px;
+}
+
+text {
+    /* font-family: 'Avenir', sans-serif; */
 }
