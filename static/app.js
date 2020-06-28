@@ -8,11 +8,15 @@ $(document).ready(function() {
         ]).then(([topoData, californiaData, perCapita, covidData]) => {
 
 
+
+
             covidData = covidData.filter(d => {
                 return (
                     d.state == "California"
                 );
             });
+
+
 
             let colorInterpolations = [
                 d3.interpolateReds, //0
@@ -189,14 +193,7 @@ class D3Map {
             .attr("transform", "translate(20, 0) rotate(0) scale(1)")
             .on('click', (d, i, counties) => {
 
-
                 let countyName = d.properties.name
-
-                // let countyData = this.covidData2.filter(data => {
-                //     return (
-                //         data.county == countyName
-                //     );
-                // });
 
                 const [x, y] = path.centroid(d)
                 this.tooltip.showStats(x, y, d)
@@ -207,13 +204,10 @@ class D3Map {
             .on('mouseover', (d, i, counties) => {
                 d3.select(counties[i]).transition().duration(300)
                     .attr('fill', 'lightblue')
-                    // .attr('stroke', 'lightblue')
                     .attr('class', 'shadow')
-                    .attr('opacity', 1)
+                    .attr('opacity', 1);
 
-
-                const [x, y] = path.centroid(d)
-
+                let [x, y] = path.centroid(d)
                 this.tooltip.showStats(x, y, d)
             })
             .on('mouseout', (d, i, counties) => {
@@ -263,13 +257,25 @@ class D3Map {
 
     showData(entity, i, counties, covidData) {
 
-        let countyName = entity.properties.name
 
+
+        let countyName = entity.properties.name
         let countyData = this.covidData2.filter(data => {
             return (
                 data.county == countyName
             );
         });
+
+        let previousCaseCount = 0;
+        let currentCaseCount = 0;
+        let newCases = 0;
+
+        countyData.forEach(function(c) {
+            currentCaseCount = c.cases;
+            newCases = currentCaseCount - previousCaseCount;
+            previousCaseCount = currentCaseCount
+            c.new_cases = newCases;
+        })
 
         $("#data-source").remove();
         $("#slider-table").attr('hidden', true);
@@ -328,7 +334,7 @@ class D3Map {
     }
 
     drawLegend(colorScheme) {
-        const gradient = this.svg
+        let gradient = this.svg
             .append('defs').append('svg:linearGradient')
             .attr('id', 'gradient')
             .attr('x1', '100%')
@@ -337,8 +343,8 @@ class D3Map {
             .attr('y2', '100%')
             .attr('spreadMethod', 'pad')
 
-        const lowColor = colorScheme(0)
-        const highColor = colorScheme(1)
+        let lowColor = colorScheme(0)
+        let highColor = colorScheme(1)
 
         gradient.append('stop')
             .attr('offset', '0%')
@@ -350,10 +356,10 @@ class D3Map {
             .attr('stop-color', lowColor)
             .attr('stop-opacity', 1)
 
-        const w = 60
-        const h = 240
+        let w = 60
+        let h = 240
 
-        const legend = this.svg.append('g')
+        let legend = this.svg.append('g')
             .attr('transform', 'translate(310, 70)')
 
         legend.append('rect')
@@ -370,11 +376,11 @@ class D3Map {
             // .style("font-weight", "bold")
             .text("Cases per 100k");
 
-        const axisScale = d3.scaleLinear()
+        let axisScale = d3.scaleLinear()
             .range([h, 0])
             .domain([0, this.max])
 
-        const axis = d3.axisLeft(axisScale)
+        let axis = d3.axisLeft(axisScale)
         legend.append('g')
             .attr('class', 'axis')
             .attr('transform', `translate(0, 0)`)
@@ -421,8 +427,6 @@ function renderChart(value) {
 
     let county = $("#render_scale").attr("class");
 
-    // console.log(county)
-
     county_joined = county.toLowerCase().split(' ').join('_')
 
     let source = "csv"
@@ -460,7 +464,7 @@ function makeData(inputData, source, exp, entity) {
     if (source == "ajax") {
         data = inputData
         data = JSON.parse(data);
-        // console.log("ajax", data[data.length - 1])
+
     }
 
     if (source == "csv" || source == "json") {
@@ -524,6 +528,8 @@ function makeData(inputData, source, exp, entity) {
 
     plotVariable("cases", colors[0])
     plotVariable("deaths", colors[1])
+        // plotVariable("new_cases", colors[1])
+        // new_cases
 
     var xAxisGroup = chart
         .append('g')
@@ -623,8 +629,6 @@ function makeData(inputData, source, exp, entity) {
 
                     let x0 = x(data[0].date)
 
-                    console.log(xOrg, yOrg)
-
                     chartTooltipDiv
                         .transition().duration(transitionTime)
                         .style('opacity', .8)
@@ -682,7 +686,7 @@ function makeData(inputData, source, exp, entity) {
 
     function plotVariable(propertyName, color) {
 
-        var line2 = d3.line()
+        var line = d3.line()
             .x(d => x(d.date))
             .y(d => y(d[propertyName]))
             .curve(d3.curveMonotoneX)
@@ -693,7 +697,7 @@ function makeData(inputData, source, exp, entity) {
             .data([data])
             .attr("fill", "none")
             .attr("stroke", color)
-            .attr("d", line2)
+            .attr("d", line)
             .attr("stroke-width", "2")
     }
 
