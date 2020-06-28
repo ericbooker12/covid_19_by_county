@@ -21,7 +21,7 @@ let colors2 = [
     "#ffba08"
 ]
 
-let idx = 45;
+let idx = 0;
 let dates = [];
 
 Promise.all([
