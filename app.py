@@ -42,8 +42,11 @@ def all_data():
 
 @app.route("/animate", methods=["GET", "POST"])
 def animate():
-
 	return render_template("animate.html")
+
+@app.route("/bar_chart", methods=["GET", "POST"])
+def bar_chart():
+	return render_template("bar_chart.html")
 
 
 @app.route("/process", methods=["GET", "POST"])
