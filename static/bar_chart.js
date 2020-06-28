@@ -43,7 +43,6 @@ Promise.all([
 
     // let initDate = covidData[idx].date
     let initDate = dates[idx]
-    console.log(covidData, initDate);
     ready(covidData, initDate);
 });
 
@@ -95,10 +94,10 @@ function formatTicks(d) {
 // Main function.
 function ready(data, date) {
 
+
     let metric = 'cases';
 
     function nextDay(date) {
-        console.log(date)
         let numToShow = 50;
 
         const dataClean = filterData(data, date)
@@ -116,7 +115,6 @@ function ready(data, date) {
                 return i < numToShow
             });
 
-        console.log(date)
         update(updatedData, date)
     }
 
@@ -129,6 +127,8 @@ function ready(data, date) {
         yScale
             .domain(data.map(d => d.county))
             .range([0, numData * 12])
+
+
 
 
         //Set up transition.
@@ -212,14 +212,10 @@ function ready(data, date) {
 
         var formatTime = d3.timeFormat("%B %d, %Y");
         let tempDate = parseDate(date)
-            // console.log(tempDate)
         tempDate = formatTime(tempDate)
 
-        // console.log(newDate)
-
-        // console.log(newDate)
-
         d3.select('#date').remove();
+
 
         let dateLabel = svg.append("text")
             .text(tempDate)
@@ -253,13 +249,12 @@ function ready(data, date) {
         .filter((d, i) => {
             let numItems;
             dataIdx += 1
-                // console.log(d, i, dataIdx)
             if (dataIdx < 20) {
                 return i < dataIdx
             }
             return i < 25
         });
-    // console.log(dataClean)
+
 
 
     // Margin Convention
@@ -271,11 +266,7 @@ function ready(data, date) {
     const xMax = d3.max(day1Data, function(d) { return d.cases })
     const yMax = d3.max(day1Data, function(d) { return d.county })
 
-    // console.log(day1Data)
-
     let numData = day1Data.length;
-
-    // console.log(day1Data)
 
     const xScale = d3.scaleLinear()
         .domain([0, xMax])
@@ -285,8 +276,7 @@ function ready(data, date) {
         .domain(day1Data.map(d => d.county))
         .range([0, numData * 12])
 
-    console.log(numData * 12)
-        //     // .paddingInner("0.25px")
+    //     // .paddingInner("0.25px")
 
     // Draw base
     const svg = d3.select('.bar-chart-container')
@@ -329,6 +319,7 @@ function ready(data, date) {
         .tickSizeOuter(0)
         // .attr('fill', 'white')
 
+
     const xAxisDraw = svg
         .append('g')
         .attr('class', 'x axis')
@@ -340,6 +331,8 @@ function ready(data, date) {
         .append('g')
         .attr('class', 'y axis')
         .call(yAxis)
+
+    d3.select('.y .tick').remove()
 
     yAxisDraw.selectAll('text').attr('dx', '-0.6em')
 
