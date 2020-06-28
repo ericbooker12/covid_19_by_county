@@ -600,6 +600,7 @@ function makeData(inputData, source, exp, entity) {
                 let xpos;
                 let ypos;
                 let newDate;
+                let newCases;
 
                 let color = colors[i];
 
@@ -620,14 +621,17 @@ function makeData(inputData, source, exp, entity) {
                         .attr('opacity', 1)
 
 
-                    date = point.date.toString().split(" ")
-                    newDate = date[1] + ' ' + date[2] + ', ' + date[3]
-                    cases = point.cases
-                    deaths = point.deaths
-                    xpos = x(point.date)
-                    ypos = y(point[propertyName])
+                    date = point.date.toString().split(" ");
+                    newDate = date[1] + ' ' + date[2] + ', ' + date[3];
+                    cases = point.cases;
+                    newCases = point.new_cases;
+                    deaths = point.deaths;
+                    xpos = x(point.date);
+                    ypos = y(point[propertyName]);
 
-                    let x0 = x(data[0].date)
+                    console.log(point)
+
+                    let x0 = x(data[0].date);
 
                     chartTooltipDiv
                         .transition().duration(transitionTime)
@@ -636,11 +640,12 @@ function makeData(inputData, source, exp, entity) {
                     chartTooltipDiv
                         .html(`
 						<strong class="">${newDate}</strong><br/>
-						<span>Cases: ${numberWithCommas(cases)}</span><br/>
+                        <span>Total Cases: ${numberWithCommas(cases)}</span><br/>
+                        <span>New Cases: ${numberWithCommas(newCases)}</span><br/>
 						<span>Deaths: ${numberWithCommas(deaths)}</span><br/>
 					`)
-                        .style('left', xOrg + xpos - 20 + 'px')
-                        .style('top', yOrg + ypos + 50 + 'px')
+                        .style('left', xOrg + xpos - 70 + 'px')
+                        .style('top', yOrg + ypos + 30 + 'px')
                 })
 
                 circle.on('mouseout', () => {
