@@ -354,10 +354,10 @@ function ready(data, date) {
     let currentIdx;
 
     function startInterval() {
-        idx += 1;
+
         nextDay(dates[idx])
 
-
+        idx += 1;
         if (idx > stopIndex) {
             myStopFunction(dates[stopIndex]);
         }
