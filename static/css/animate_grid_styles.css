@@ -33,3 +33,11 @@ text {
 .x line {
     stroke: white;
 }
+
+.controls {
+    grid-row-start: 4;
+    grid-row-end: 5;
+    margin-left: 50px;
+    margin-top: 40px;
+    /* grid-column-start: 0; */
+}
