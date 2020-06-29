@@ -103,3 +103,5 @@ date,county,state,fips,cases,deaths,new_cases
 2020-06-24,San Bernardino,California,6071.0,10407,245,397.0
 2020-06-25,San Bernardino,California,6071.0,10769,248,362.0
 2020-06-26,San Bernardino,California,6071.0,11290,249,521.0
+2020-06-27,San Bernardino,California,6071.0,11290,249,0.0
+2020-06-28,San Bernardino,California,6071.0,11501,249,211.0

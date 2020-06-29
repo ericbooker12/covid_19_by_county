@@ -224,7 +224,6 @@ class D3Map {
                         })
                         return scale(cases)
                     })
-
             })
 
         function labels(svg, x, y, name) {
@@ -256,8 +255,6 @@ class D3Map {
     }
 
     showData(entity, i, counties, covidData) {
-
-
 
         let countyName = entity.properties.name
         let countyData = this.covidData2.filter(data => {
@@ -291,16 +288,10 @@ class D3Map {
 
         // Make ajax request to app to create and store csv file for current data.
         $.ajax({
-                data: $(this).text(),
-                type: 'POST',
-                url: '/' + countyName
-            })
-            //     .done(function(response) {
-
-        //         $("#loading").remove();
-        //         makeData(response, "ajax", .5, countyName)
-        //     });
-
+            data: $(this).text(),
+            type: 'POST',
+            url: '/' + countyName
+        })
     }
 
     showCountyLabel(county, i, counties) {
@@ -385,9 +376,7 @@ class D3Map {
             .attr('class', 'axis')
             .attr('transform', `translate(0, 0)`)
             .call(axis)
-
     }
-
 }
 
 function getScale(min, max, colorScheme) {
@@ -629,7 +618,6 @@ function makeData(inputData, source, exp, entity) {
                     xpos = x(point.date);
                     ypos = y(point[propertyName]);
 
-                    console.log(point)
 
                     let x0 = x(data[0].date);
 
@@ -668,11 +656,11 @@ function makeData(inputData, source, exp, entity) {
             .tickFormat("")
             .tickSize(-width)
 
-        var gridy = chart.append("g")
+        var gridY = chart.append("g")
             .attr("class", "grid")
             .call(yGridlines);
 
-        yGridlines(gridy);
+        yGridlines(gridY);
 
         // uncomment the next 3 blocks to show xAxis gridlines
 
@@ -711,8 +699,14 @@ function makeData(inputData, source, exp, entity) {
         d3.csv("/static/data/population_data/cases_per_capita.csv" + '?' + Math.floor(Math.random() * 100)).then(function(d) {
             // d3.csv("/static/data/population_data/population_data.csv").then(function(d){
 
+            let numOfData = inputData.length;
+            let endDate = inputData[numOfData - 1].date;
+            let latestNewCases = inputData[numOfData - 1].new_cases;
             let pop;
             let casesPer;
+
+            var formatTime = d3.timeFormat("%B %d, %Y");
+            endDate = formatTime(endDate); // "June 30, 2015"
 
             d.forEach(function(row) {
                 if (row.county == county) {
@@ -731,7 +725,7 @@ function makeData(inputData, source, exp, entity) {
             let xMargin = 5;
             let yMargin = 5;
             let xOrigin = 40;
-            let yOrigin = 20;
+            let yOrigin = 40;
             let boxMargin = 8
             let width = 140 + boxMargin * 2;
             let height = 40;
@@ -750,7 +744,7 @@ function makeData(inputData, source, exp, entity) {
                 .attr("width", width)
                 .attr("height", height)
                 .attr("rx", 5)
-                .attr("opacity", .1)
+                .attr("opacity", .1);
 
 
             for (let i = 0; i < propertyNames.length; i++) {
@@ -758,7 +752,6 @@ function makeData(inputData, source, exp, entity) {
                     color: colors[i],
                     propertyName: propertyNames[i],
                     max: max[i]
-
                 }
                 legendElements.push(element)
             }
@@ -774,11 +767,19 @@ function makeData(inputData, source, exp, entity) {
                     .attr("width", elementWidth)
                     .attr("height", elementHeight)
                     .append("title")
-                    .text(x.propertyName)
+                    .text(x.propertyName);
 
-                let propertyName = capitalize(x.propertyName) + ":   " + numberWithCommas(x.max)
+                let propertyName = capitalize(x.propertyName) + ":   " + numberWithCommas(x.max);
 
-
+                legend.append("text")
+                    .text(endDate)
+                    // .attr("font-weight", "bold")
+                    .attr("font-size", "12pt")
+                    .attr("fill", "black")
+                    .attr("x", 0)
+                    .attr("y", boxMargin + 22)
+                    .attr("dx", elementWidth + xMargin + 8)
+                    .attr("dy", yMargin);
 
                 legend.append("text")
                     .text(propertyName)
@@ -787,10 +788,9 @@ function makeData(inputData, source, exp, entity) {
                     .attr("x", elementWidth + xMargin + 10)
                     .attr("y", currentY + boxMargin)
                     .attr("dx", elementWidth + xMargin + 8)
-                    .attr("dy", yMargin)
+                    .attr("dy", yMargin);
 
-                currentY += elementHeight + 10
-
+                currentY += elementHeight + 10;
             });
 
             if (pop) {
@@ -805,11 +805,20 @@ function makeData(inputData, source, exp, entity) {
             }
 
             legend.append("text")
+                .text("New cases: " + latestNewCases)
+                .attr("font-size", "10pt")
+                .attr("fill", "black")
+                .attr("x", 0)
+                .attr("y", boxMargin + 80)
+                .attr("dx", elementWidth + xMargin + 8)
+                .attr("dy", yMargin)
+
+            legend.append("text")
                 .text("Population: " + pop)
                 .attr("font-size", "10pt")
                 .attr("fill", "black")
                 .attr("x", 0)
-                .attr("y", boxMargin + 60)
+                .attr("y", boxMargin + 80 + 20)
                 .attr("dx", elementWidth + xMargin + 8)
                 .attr("dy", yMargin)
 
@@ -818,18 +827,16 @@ function makeData(inputData, source, exp, entity) {
                 .attr("font-size", "10pt")
                 .attr("fill", "black")
                 .attr("x", 0)
-                .attr("y", boxMargin + 60 + 20)
+                .attr("y", boxMargin + 80 + 40)
                 .attr("dx", elementWidth + xMargin + 8)
                 .attr("dy", yMargin)
         })
     }
 
-
     function capitalize(s) {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
     }
-
 }
 
 function snake_it(name) {
@@ -839,3 +846,13 @@ function snake_it(name) {
 function numberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+// function formatDateFromObject(date) {
+//     let monthNames = ["January", "February", "March", "April", "May", "June",
+//         "July", "August", "September", "October", "November", "December"
+//     ];
+
+//     let month =
+
+
+// }
