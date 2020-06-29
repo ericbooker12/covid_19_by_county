@@ -285,24 +285,7 @@ function ready(data, date) {
         .attr('transform', `translate(0, ${-margin.top / 2})`)
         .append('text');
 
-    const headline = header.append('tspan').text('Total Cases')
-
-    // const button = d3.select('.bar-chart-container')
-    //     .append("svg")
-    //     .attr('id', "pause-btn")
-    //     .attr('class', 'pause')
-    //     .attr("width", 60)
-    //     .attr("height", 20)
-    //     .attr("fill", "gray")
-    //     .attr('transform', `translate(${100}, ${height - 50})`)
-    //     .attr('y', 300)
-    //     .text("Pause Animation")
-
-    // header.append('tspan').text('By county')
-    //     .attr('x', 0)
-    //     .attr('y', '1.5em')
-    //     .style('font-size', '0.8em')
-    //     .style('fill', '#555')
+    const headline = header.append('tspan').text('Total Cases');
 
     // Draw bars
     const bars = svg
@@ -350,6 +333,7 @@ function ready(data, date) {
     let skipBack1Btn = d3.select("#skip-back-1-btn");
     let skipToLastBtn = d3.select("#skip-to-last-btn");
     let currentIdx;
+    let refreshRate = 1000;
 
     function startInterval() {
         nextDay(dates[idx])
@@ -361,7 +345,7 @@ function ready(data, date) {
 
     let interval = setInterval(function() {
         startInterval()
-    }, 1000)
+    }, refreshRate)
 
     pauseBtn.on("click", function() {
 
@@ -374,14 +358,11 @@ function ready(data, date) {
         if (pauseBtn.attr("class") == "start") {
             start(currentIdx)
         }
-
     });
 
     resetBtn.on("click", function() {
-
         idx = 0;
         start(currentIdx)
-
     });
 
     skipAhead5Btn.on("click", function() {
@@ -390,10 +371,7 @@ function ready(data, date) {
         if (idx >= dates.length - 1) {
             idx = dates.length - 1
         }
-
-
         nextDay(dates[idx])
-
     });
 
     skipBack5Btn.on("click", function() {
@@ -402,9 +380,7 @@ function ready(data, date) {
         if (idx < 0) {
             idx = 0
         }
-
         nextDay(dates[idx])
-
     });
 
     skipAhead1Btn.on("click", function() {
@@ -413,10 +389,7 @@ function ready(data, date) {
         if (idx >= dates.length - 1) {
             idx = dates.length - 1
         }
-
-
         nextDay(dates[idx])
-
     });
 
     skipBack1Btn.on("click", function() {
@@ -425,24 +398,19 @@ function ready(data, date) {
         if (idx < 0) {
             idx = 0
         }
-
         nextDay(dates[idx])
-
     });
 
     skipToLastBtn.on("click", function() {
         pause(idx)
         idx = dates.length - 1;
         nextDay(dates[idx])
-
     });
 
     function pause(currentIdx) {
         clearInterval(interval);
-        pauseBtn
-            .html("Resume")
-        pauseBtn
-            .attr("class", "start")
+        pauseBtn.html("Resume")
+        pauseBtn.attr("class", "start")
     }
 
     function start(currentIdx) {
@@ -451,12 +419,11 @@ function ready(data, date) {
 
         interval = setInterval(function() {
             startInterval()
-        }, 1000)
+        }, refreshRate);
     }
 
     function myStopFunction(date) {
-        interval = clearInterval(interval);
-        nextDay(date)
+        clearInterval(interval);
+        nextDay(date);
     }
-
 }
