@@ -34,22 +34,11 @@ Promise.all([
         );
     })
 
-
     let mapParams = document.getElementById('bubbles')
-        .getBoundingClientRect();
-
-    let barParams = document.getElementById('bar-container')
         .getBoundingClientRect();
 
     let mapHeight = mapParams.height;
     let mapWidth = mapParams.width;
-
-
-
-    let barHeight = barParams.height;
-    let barWidth = barParams.width - 50;
-
-
 
     const geojson = topojson.feature(topoData, topoData.objects['california_counties'])
 
@@ -76,8 +65,6 @@ Promise.all([
         parsedDates.push(date)
     })
 
-
-
     let map_svg = d3.select('.animated-map-container')
         .append('svg')
         .attr('id', 'california_map')
@@ -90,20 +77,63 @@ Promise.all([
 
     let refreshRate = 1000;
 
-    let i = 0;
+    let idx = 0;
     let dateIndex = 20;
     let numOfRecords = dates.length;
+    let pauseBtn = d3.select("#pause-btn");
+    let currentIdx;
 
-    const interval = setInterval(function() {
+    function startInterval() {
+
         drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
-
-        i += 1;
+        idx += 1;
         dateIndex += 1;
+
         if (dateIndex == numOfRecords) {
             clearInterval(interval);
         }
+    }
+
+    let interval = setInterval(function() {
+
+        startInterval()
+            // drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
+
+        // i += 1;
+        // dateIndex += 1;
+        // if (dateIndex == numOfRecords) {
+        //     clearInterval(interval);
+        // }
 
     }, refreshRate);
+
+    pauseBtn.on("click", function() {
+        console.log("Pause")
+
+        if (pauseBtn.attr("class") == "pause") {
+            currentIdx = idx;
+            pause(currentIdx)
+
+        } else if (pauseBtn.attr("class") == "start") {
+            start(currentIdx)
+        }
+
+    });
+
+    function pause(currentIdx) {
+        clearInterval(interval);
+        pauseBtn.html("Resume")
+        pauseBtn.attr("class", "start")
+    }
+
+    function start(currentIdx) {
+        pauseBtn.html("Pause")
+        pauseBtn.attr("class", "pause")
+
+        interval = setInterval(function() {
+            startInterval()
+        }, 1000)
+    }
 
 });
 
