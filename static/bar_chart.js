@@ -295,6 +295,17 @@ function ready(data, date) {
 
     const headline = header.append('tspan').text('Total Cases')
 
+    // const button = d3.select('.bar-chart-container')
+    //     .append("svg")
+    //     .attr('id', "pause-btn")
+    //     .attr('class', 'pause')
+    //     .attr("width", 60)
+    //     .attr("height", 20)
+    //     .attr("fill", "gray")
+    //     .attr('transform', `translate(${100}, ${height - 50})`)
+    //     .attr('y', 300)
+    //     .text("Pause Animation")
+
     // header.append('tspan').text('By county')
     //     .attr('x', 0)
     //     .attr('y', '1.5em')
