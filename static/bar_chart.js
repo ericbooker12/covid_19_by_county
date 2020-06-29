@@ -356,13 +356,14 @@ function ready(data, date) {
         } else
 
         if (pauseBtn.attr("class") == "start") {
+            currentIdx = idx;
             start(currentIdx)
         }
     });
 
     resetBtn.on("click", function() {
         idx = 0;
-        start(currentIdx)
+        start(idx)
     });
 
     skipAhead5Btn.on("click", function() {
