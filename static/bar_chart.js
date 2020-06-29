@@ -128,11 +128,8 @@ function ready(data, date) {
             .domain(data.map(d => d.county))
             .range([0, numData * 12])
 
-
-
-
         //Set up transition.
-        const dur = 800;
+        const dur = 500;
         const t = d3.transition().duration(dur)
 
         bars
@@ -326,7 +323,7 @@ function ready(data, date) {
         .axisTop(xScale)
         .ticks(8)
         // .tickFormat("")
-        .tickSizeInner(-height)
+        .tickSizeInner(0)
         .tickSizeOuter(0)
         // .attr('fill', 'white')
 
@@ -357,9 +354,10 @@ function ready(data, date) {
 
         nextDay(dates[idx])
 
-        idx += 1;
+        idx += 3;
         if (idx > stopIndex) {
             myStopFunction(dates[stopIndex]);
+            pauseBtn.attr("hidden", "true")
         }
     }
 
