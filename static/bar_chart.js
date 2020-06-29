@@ -34,8 +34,7 @@ Promise.all([
         );
     })
 
-    //get dates
-
+    //collect all dates
     covidData.forEach((row) => {
         if (!dates.includes(row.date))
             dates.push(row.date)
@@ -93,7 +92,6 @@ function formatTicks(d) {
 
 // Main function.
 function ready(data, date) {
-
 
     let metric = 'cases';
 
@@ -213,7 +211,6 @@ function ready(data, date) {
 
         d3.select('#date').remove();
 
-
         let dateLabel = svg.append("text")
             .text(tempDate)
             .attr("font-size", "25pt")
@@ -235,8 +232,6 @@ function ready(data, date) {
         yAxisDraw.selectAll('text').attr('dx', '-0.6em');
 
         headline.transition(t).text(`Total Cases By County on ${tempDate}`)
-
-
     }
 
     const dataClean = filterData(data, date)
@@ -357,19 +352,15 @@ function ready(data, date) {
     let currentIdx;
 
     function startInterval() {
-
         nextDay(dates[idx])
-
         idx += 1;
         if (idx > stopIndex) {
             myStopFunction(dates[stopIndex]);
-            pauseBtn.attr("hidden", "true")
         }
     }
 
     let interval = setInterval(function() {
         startInterval()
-
     }, 1000)
 
     pauseBtn.on("click", function() {
