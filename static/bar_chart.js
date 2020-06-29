@@ -129,7 +129,7 @@ function ready(data, date) {
             .range([0, numData * 12])
 
         //Set up transition.
-        const dur = 500;
+        const dur = 800;
         const t = d3.transition().duration(dur)
 
         bars
@@ -348,13 +348,18 @@ function ready(data, date) {
 
     let stopIndex = dates.length - 1;
     let pauseBtn = d3.select("#pause-btn");
+    let resetBtn = d3.select("#reset-btn");
+    let skipAhead5Btn = d3.select("#skip-ahead-5-btn");
+    let skipBack5Btn = d3.select("#skip-back-5-btn");
+    let skipAhead1Btn = d3.select("#skip-ahead-1-btn");
+    let skipBack1Btn = d3.select("#skip-back-1-btn");
     let currentIdx;
 
     function startInterval() {
 
         nextDay(dates[idx])
 
-        idx += 3;
+        idx += 1;
         if (idx > stopIndex) {
             myStopFunction(dates[stopIndex]);
             pauseBtn.attr("hidden", "true")
@@ -377,6 +382,59 @@ function ready(data, date) {
         if (pauseBtn.attr("class") == "start") {
             start(currentIdx)
         }
+
+    });
+
+    resetBtn.on("click", function() {
+
+        idx = 0;
+        start(currentIdx)
+
+    });
+
+    skipAhead5Btn.on("click", function() {
+        pause(idx)
+        idx += 5;
+        if (idx >= dates.length - 1) {
+            idx = dates.length - 1
+        }
+
+
+        nextDay(dates[idx])
+
+    });
+
+    skipBack5Btn.on("click", function() {
+        pause(idx)
+        idx -= 5;
+        if (idx < 0) {
+            idx = 0
+        }
+
+        nextDay(dates[idx])
+
+    });
+
+    skipAhead1Btn.on("click", function() {
+        pause(idx)
+        idx += 1;
+        if (idx >= dates.length - 1) {
+            idx = dates.length - 1
+        }
+
+
+        nextDay(dates[idx])
+
+    });
+
+    skipBack1Btn.on("click", function() {
+        pause(idx)
+        idx -= 1;
+        if (idx < 0) {
+            idx = 0
+        }
+
+        nextDay(dates[idx])
 
     });
 
