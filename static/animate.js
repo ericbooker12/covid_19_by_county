@@ -34,15 +34,17 @@ Promise.all([
         );
     })
 
+
+
     let mapParams = document.getElementById('bubbles')
         .getBoundingClientRect();
 
     let mapHeight = mapParams.height;
     let mapWidth = mapParams.width;
 
-    const geojson = topojson.feature(topoData, topoData.objects['california_counties'])
+    const geojson = topojson.feature(topoData, topoData.objects['california_counties']);
 
-    let counties = geojson.features
+    let counties = geojson.features;
 
     let projection = d3.geoMercator();
     projection
@@ -50,6 +52,14 @@ Promise.all([
             [0, 25],
             [mapWidth, mapHeight - 50]
         ], geojson)
+
+    let path = d3.geoPath().projection(projection);
+
+    counties.forEach(function(d) {
+        let cent = path.centroid(d)
+        d.x = cent[0]
+        d.y = cent[1]
+    });
 
     let dates = [];
     let parsedDates = [];
@@ -69,19 +79,26 @@ Promise.all([
         .append('svg')
         .attr('id', 'california_map')
 
-    let path = d3.geoPath().projection(projection)
+    let idx = 0;
 
     drawMap(path, counties, map_svg, mapHeight, mapWidth)
 
     let tempDate = dates[20];
 
-    let refreshRate = 1000;
+    let refreshRate = 750;
 
-    let idx = 0;
+
     let dateIndex = 20;
     let numOfRecords = dates.length;
-    let pauseBtn = d3.select("#pause-btn");
     let currentIdx;
+
+    let pauseBtn = d3.select("#pause-btn");
+    let resetBtn = d3.select("#reset-btn");
+    let skipAhead5Btn = d3.select("#skip-ahead-5-btn");
+    let skipBack5Btn = d3.select("#skip-back-5-btn");
+    let skipAhead1Btn = d3.select("#skip-ahead-1-btn");
+    let skipBack1Btn = d3.select("#skip-back-1-btn");
+    let skipToLastBtn = d3.select("#skip-to-last-btn");
 
     function startInterval() {
 
@@ -95,28 +112,81 @@ Promise.all([
     }
 
     let interval = setInterval(function() {
-
         startInterval()
-            // drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
-
-        // i += 1;
-        // dateIndex += 1;
-        // if (dateIndex == numOfRecords) {
-        //     clearInterval(interval);
-        // }
-
     }, refreshRate);
 
     pauseBtn.on("click", function() {
         console.log("Pause")
 
         if (pauseBtn.attr("class") == "pause") {
-            currentIdx = idx;
+            currentIdx = dateIndex;
             pause(currentIdx)
 
         } else if (pauseBtn.attr("class") == "start") {
             start(currentIdx)
         }
+
+    });
+
+    resetBtn.on("click", function() {
+        console.log("reset")
+        dateIndex = 0;
+        pause(dateIndex)
+        start(dateIndex)
+
+    });
+
+    skipAhead5Btn.on("click", function() {
+        pause(idx)
+        dateIndex += 5;
+        if (dateIndex >= dates.length - 1) {
+            dateIndex = dates.length - 1
+        }
+
+
+        drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
+
+    });
+
+    skipBack5Btn.on("click", function() {
+        pause(dateIndex)
+        dateIndex -= 5;
+        if (dateIndex < 0) {
+            dateIndex = 0
+        }
+
+        drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
+
+    });
+
+    skipAhead1Btn.on("click", function() {
+        pause(dateIndex)
+        dateIndex += 1;
+        if (dateIndex >= dates.length - 1) {
+            dateIndex = dates.length - 1
+        }
+
+
+        drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
+
+    });
+
+    skipBack1Btn.on("click", function() {
+        pause(dateIndex)
+        dateIndex -= 1;
+        if (dateIndex < 0) {
+            dateIndex = 0
+        }
+
+        drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
+
+    });
+
+    skipToLastBtn.on("click", function() {
+        pause(dateIndex)
+        dateIndex = dates.length - 1;
+
+        drawDots(covidData, path, counties, dates, map_svg, mapHeight, mapWidth, dateIndex);
 
     });
 
@@ -132,13 +202,14 @@ Promise.all([
 
         interval = setInterval(function() {
             startInterval()
-        }, 1000)
+        }, refreshRate)
     }
 
 });
 
 
 function drawDots(covidData, path, counties, dates, map_svg, height, width, dateIndex) {
+
 
     let tempDate = dates[dateIndex]
 
@@ -150,13 +221,10 @@ function drawDots(covidData, path, counties, dates, map_svg, height, width, date
         .data(counties)
         .enter()
         .append('circle')
-        .attr('cx', (d) => {
-            return path.centroid(d)[0]
-        })
-        .attr('cy', (d) => path.centroid(d)[1])
+        .attr('cx', (d) => { return d.x })
+        .attr('cy', (d) => { return d.y })
         .attr('r', (d) => {
             let countyName = d.properties.name;
-            tempDate;
             let day = filterData(tempDate, countyName)
             let cases = 0;
             if (day[0]) {
@@ -194,6 +262,8 @@ function drawDots(covidData, path, counties, dates, map_svg, height, width, date
     d3.selectAll('.cases-text').remove()
 
     let content = d3.select('.animated-content-container')
+
+    // console.log(counties)
 
     map_svg.selectAll("text")
         .data(counties)

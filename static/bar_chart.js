@@ -353,6 +353,7 @@ function ready(data, date) {
     let skipBack5Btn = d3.select("#skip-back-5-btn");
     let skipAhead1Btn = d3.select("#skip-ahead-1-btn");
     let skipBack1Btn = d3.select("#skip-back-1-btn");
+    let skipToLastBtn = d3.select("#skip-to-last-btn");
     let currentIdx;
 
     function startInterval() {
@@ -434,6 +435,13 @@ function ready(data, date) {
             idx = 0
         }
 
+        nextDay(dates[idx])
+
+    });
+
+    skipToLastBtn.on("click", function() {
+        pause(idx)
+        idx = dates.length - 1;
         nextDay(dates[idx])
 
     });
