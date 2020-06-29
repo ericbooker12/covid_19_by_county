@@ -407,7 +407,7 @@ function ready(data, date) {
     function pause(currentIdx) {
         clearInterval(interval);
         pauseBtn
-            .html("Start")
+            .html("Resume")
         pauseBtn
             .attr("class", "start")
     }
