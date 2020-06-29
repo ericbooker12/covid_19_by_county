@@ -219,45 +219,50 @@ function drawDots(covidData, path, counties, dates, map_svg, height, width, date
         .append('g')
         .selectAll('circle')
         .data(counties)
-        .enter()
-        .append('circle')
-        .attr('cx', (d) => { return d.x })
-        .attr('cy', (d) => { return d.y })
-        .attr('r', (d) => {
-            let countyName = d.properties.name;
-            let day = filterData(tempDate, countyName)
-            let cases = 0;
-            if (day[0]) {
-                cases = day[0].cases
+        .join(
+            enter => {
+                enter
+                    .append('circle')
+                    .attr('cx', (d) => { return d.x })
+                    .attr('cy', (d) => { return d.y })
+                    .attr('r', (d) => {
+                        let countyName = d.properties.name;
+                        let day = filterData(tempDate, countyName)
+                        let cases = 0;
+                        if (day[0]) {
+                            cases = day[0].cases
+                        }
+
+                        let radius = Math.sqrt(cases)
+
+                        if (cases >= 2000) {
+                            radius = Math.sqrt(2000)
+                        }
+
+                        return radius;
+                    })
+                    .attr('fill', (d) => {
+                        let countyName = d.properties.name;
+                        let day = filterData(tempDate, countyName)
+
+                        if (day[0] && day[0].cases >= 12500) {
+                            return "red"
+                        } else if (day[0] && day[0].cases >= 10000) {
+                            return colors2[4]
+                        } else if (day[0] && day[0].cases >= 7500) {
+                            return colors2[5]
+                        } else if (day[0] && day[0].cases >= 5000) {
+                            return colors2[6]
+                        } else if (day[0] && day[0].cases >= 2000) {
+                            return colors2[7]
+                        } else
+                            return '#2090b3'
+                    })
+                    .attr('opacity', .7)
+                    .attr('class', 'circle');
             }
+        )
 
-            let radius = Math.sqrt(cases)
-
-            if (cases >= 2000) {
-                radius = Math.sqrt(2000)
-            }
-
-            return radius;
-        })
-        .attr('fill', (d) => {
-            let countyName = d.properties.name;
-            let day = filterData(tempDate, countyName)
-
-            if (day[0] && day[0].cases >= 12500) {
-                return "red"
-            } else if (day[0] && day[0].cases >= 10000) {
-                return colors2[4]
-            } else if (day[0] && day[0].cases >= 7500) {
-                return colors2[5]
-            } else if (day[0] && day[0].cases >= 5000) {
-                return colors2[6]
-            } else if (day[0] && day[0].cases >= 2000) {
-                return colors2[7]
-            } else
-                return '#2090b3'
-        })
-        .attr('opacity', .7)
-        .attr('class', 'circle');
 
     d3.selectAll('.cases-text').remove()
 
