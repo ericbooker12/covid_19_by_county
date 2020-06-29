@@ -347,19 +347,73 @@ function ready(data, date) {
             dates.push(row.date)
     })
 
-    // idx = 45;
     let stopIndex = dates.length - 1;
+    let pauseBtn = d3.select("#pause-btn");
+    let currentIdx;
 
-    const interval = setInterval(function() {
+    // startInterval()
+
+
+    function startInterval() {
         nextDay(dates[idx])
         idx += 1;
+
         if (idx > stopIndex) {
             myStopFunction(dates[stopIndex]);
         }
-    }, 1000);
+    }
+
+    let interval = setInterval(function() {
+        startInterval()
+
+    }, 1000)
+
+    // const interval = setInterval(function() {
+    //     nextDay(dates[idx])
+    //     idx += 1;
+
+    // if (idx > stopIndex) {
+    //     myStopFunction(dates[stopIndex]);
+    // }
+
+    pauseBtn.on("click", function() {
+
+        if (pauseBtn.attr("class") == "pause") {
+            console.log("pause")
+            currentIdx = idx;
+            pause(currentIdx)
+
+        } else
+
+        if (pauseBtn.attr("class") == "start") {
+            start(currentIdx)
+        }
+
+    });
+
+    // }, 1000);
+
+    function pause(currentIdx) {
+        clearInterval(interval);
+        pauseBtn
+            .html("Start")
+        pauseBtn
+            .attr("class", "start")
+    }
+
+    function start(currentIdx) {
+        pauseBtn.html("Pause")
+        pauseBtn
+            .attr("class", "pause")
+
+        interval = setInterval(function() {
+            startInterval()
+
+        }, 1000)
+    }
 
     function myStopFunction(date) {
-        clearInterval(interval);
+        interval = clearInterval(interval);
         nextDay(date)
     }
     // d3.selectAll('button').on('click', click);
