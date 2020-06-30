@@ -93,8 +93,6 @@ function formatTicks(d) {
 // Main function.
 function ready(data, date) {
 
-
-
     let metric = 'cases';
 
     function nextDay(date) {
@@ -132,7 +130,10 @@ function ready(data, date) {
         function mouse() {
             console.log("mouseover")
         }
-        let tooltip = d3.select("body").append("div").attr("class", "toolTip");
+        let div = d3.select("body")
+            .append("div")
+            .attr("class", "bar-tooltip")
+            .style("opacity", 0);
 
         bars
             .selectAll('.bar')
@@ -141,16 +142,28 @@ function ready(data, date) {
                 enter => {
                     enter
                         .append('rect')
-                        // .on('mouseover', function(d, i) {
-                        //     let currentCounty = unsnake_it(this.id)
-                        //     console.log(d3.event.pageX)
-                        //     tooltip
-                        //         .style("left", d3.event.pageX - 50 + "px")
-                        //         .style("top", d3.event.pageY - 70 + "px")
-                        //         .style("display", "inline-block")
-                        //         .html("Cases: " + d.cases + " <br> " + "Deaths: " + d.deaths);
-                        //     // let tooltip = new Tooltip(this.width, this.y, covidData, perCapita)
-                        // })
+                        .on('mousemove', function(d, i) {
+                            div
+                                .transition()
+                                .duration(200)
+                                .style("opacity", .9)
+
+                            div
+                                .html(`
+                                    <strong class='title'>${d.county} County</strong><br/>
+                                    <span>Cases: ${numberWithCommas(d.cases)}</span><br/>
+                                    <span>Deaths: ${numberWithCommas(d.deaths)}</span><br/>
+                                    <span>Population: ${numberWithCommas(d.population)}</span><br/>
+                                `)
+                                .style("left", d3.event.pageX + 20 + "px")
+                                .style("top", (d3.event.pageY - 30) + "px")
+                                .style("display", "inline-block")
+                        })
+                        .on("mouseout", function(d) {
+                            div.transition()
+                                .duration(200)
+                                .style("opacity", 0);
+                        })
                         .attr('class', 'bar')
                         .attr('id', d => { return snake_it(d.county) })
                         .attr('height', 10)
@@ -495,86 +508,6 @@ function ready(data, date) {
         clearInterval(interval);
         nextDay(date);
     }
-}
-
-class Tooltip {
-    constructor(svgX, svgY, data, perCapitaData) {
-        this.data = data
-        this.svgX = svgX
-        this.svgY = svgY
-        this.perCapita = perCapitaData
-
-        this.div = d3.select('body').append('div')
-            .attr('class', 'tooltip')
-            .style('opacity', 0);
-
-    }
-
-    showStats(x, y, county) {
-
-        this.remove()
-
-        let countyName;
-        let cases;
-        let deaths;
-        let population;
-        let perCapita;
-
-        this.data.forEach((d) => {
-            if (d.county == county.properties.name) {
-                countyName = d.county
-                cases = d.cases
-                deaths = d.deaths
-                population = d.population
-            }
-        })
-
-        if (isNaN(cases)) {
-            cases = 0
-        }
-
-        this.perCapita.forEach(function(x) {
-            if (x.county == countyName) {
-                perCapita = x.cases_per_capita
-            }
-        })
-
-        this.div.transition().duration(100).style('opacity', 1)
-
-        //Map tooltip.
-        this.div
-            .html(`
-				<strong class='title'>${countyName} County</strong><br/>
-				<span>Cases: ${numberWithCommas(cases)}</span><br/>
-				<span>Deaths: ${deaths}</span><br/>
-				<span>Population: ${numberWithCommas(population)}</span><br/>
-				<span>Cases per 100k: ${perCapita}</span><br/>
-			`)
-            .style('left', '20px')
-            .style('top', '500px')
-    }
-
-    showChartStats(x, y, county) {
-
-        let date = county.date
-        let cases = county.cases
-        let deaths = county.deaths
-
-        this.div.transition().duration(200).style('opacity', 1)
-
-        this.div.html(`
-            <strong>${date} County</strong><br/>
-            <span>Cases: ${cases}</span><br/>
-            <span>XXXDeaths: XXX${deaths}</span><br/>
-        `)
-            .style('left', '20px')
-            .style('top', '600px')
-    }
-
-    remove() {
-        this.div.transition().duration(200).style('opacity', 0)
-    }
-
 }
 
 function snake_it(name) {
