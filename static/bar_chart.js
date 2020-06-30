@@ -93,6 +93,8 @@ function formatTicks(d) {
 // Main function.
 function ready(data, date) {
 
+
+
     let metric = 'cases';
 
     function nextDay(date) {
@@ -104,15 +106,12 @@ function ready(data, date) {
         // idx = 0;
         const updatedData = dataClean
             .sort((a, b) => b.cases - a.cases)
-            // .filter((d, i) => i < 10);
             .filter((d, i) => {
                 if (numItems < numToShow) {
                     return i < numItems
                 }
-
                 return i < numToShow
             });
-
         update(updatedData, date)
     }
 
@@ -130,6 +129,11 @@ function ready(data, date) {
         const dur = 800;
         const t = d3.transition().duration(dur)
 
+        function mouse() {
+            console.log("mouseover")
+        }
+        let tooltip = d3.select("body").append("div").attr("class", "toolTip");
+
         bars
             .selectAll('.bar')
             .data(data, d => d.county)
@@ -137,17 +141,25 @@ function ready(data, date) {
                 enter => {
                     enter
                         .append('rect')
+                        // .on('mouseover', function(d, i) {
+                        //     let currentCounty = unsnake_it(this.id)
+                        //     console.log(d3.event.pageX)
+                        //     tooltip
+                        //         .style("left", d3.event.pageX - 50 + "px")
+                        //         .style("top", d3.event.pageY - 70 + "px")
+                        //         .style("display", "inline-block")
+                        //         .html("Cases: " + d.cases + " <br> " + "Deaths: " + d.deaths);
+                        //     // let tooltip = new Tooltip(this.width, this.y, covidData, perCapita)
+                        // })
                         .attr('class', 'bar')
-
-                    // .attr('height', d => yScale.bandwidth())
-                    .attr('height', 10)
+                        .attr('id', d => { return snake_it(d.county) })
+                        .attr('height', 10)
                         .style('fill', 'dodgerblue')
                         .transition(t)
                         .delay((d, i) => i * 20)
                         .attr('y', d => yScale(d.county))
                         .attr('width', d => xScale(d[metric]))
                         .style('fill', 'dodgerblue')
-
                 },
 
                 update => {
@@ -184,7 +196,6 @@ function ready(data, date) {
                         .delay((d, i) => i * 20)
                         .attr('width', d => xScale(d.deaths))
                         .style('fill', 'red')
-
                 },
 
                 update => {
@@ -204,8 +215,59 @@ function ready(data, date) {
                         .remove()
                 }
             )
+            // d3.selectAll(".bar-text").remove()
 
-        var formatTime = d3.timeFormat("%B %d, %Y");
+        let texBarColor = "black"
+        barText.selectAll(".bar-text")
+            .data(data)
+            .join(
+                enter => {
+                    enter
+                        .append("text")
+                        .attr('class', 'bar-text')
+                        .attr('id', d => { return snake_it(d.county) + "-text" })
+                        .text(d => { return numberWithCommas(d.cases) })
+                        .attr("font-size", "1pt")
+                        .attr("fill", texBarColor)
+                        .attr("y", d => yScale(d.county) + 5)
+                        .attr("x", d => xScale(d.cases) + 5)
+                        .attr('opacity', .1)
+                        .attr("alignment-baseline", "central")
+                        // .transition(t)
+                        .transition()
+                        .duration(600)
+                        .delay((d, i) => i * 20)
+                        .text(d => { return numberWithCommas(d.cases) })
+                        .attr("font-size", "8pt")
+                        .attr("y", d => yScale(d.county) + 5)
+                        .attr("x", d => xScale(d.cases) + 5)
+                        .attr('opacity', 1)
+                        .attr("fill", texBarColor)
+                },
+
+                update => {
+                    update
+                        .transition()
+                        .duration(600)
+                        .delay((d, i) => i * 20)
+                        .text(d => { return numberWithCommas(d.cases) })
+                        .attr("x", d => xScale(d.cases) + 5)
+                        .attr("y", d => yScale(d.county) + 5)
+                        .attr("font-size", "8pt")
+                        .attr('opacity', 1)
+
+                },
+                exit => {
+                    exit
+                        .transition()
+                        .duration(dur / 2)
+                        .style('fill-opacity', 0)
+                        .remove()
+                }
+            )
+
+
+        let formatTime = d3.timeFormat("%B %d, %Y");
         let tempDate = parseDate(date)
         tempDate = formatTime(tempDate)
 
@@ -271,7 +333,7 @@ function ready(data, date) {
     //     // .paddingInner("0.25px")
 
     // Draw base
-    const svg = d3.select('.bar-chart-container')
+    let svg = d3.select('.bar-chart-container')
         .append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
@@ -279,25 +341,30 @@ function ready(data, date) {
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
     // Draw Header
-    const header = svg
+    let header = svg
         .append('g')
         .attr('class', 'bar-header')
         .attr('transform', `translate(0, ${-margin.top / 2})`)
         .append('text');
 
-    const headline = header.append('tspan').text('Total Cases');
+    let headline = header.append('tspan').text('Total Cases');
 
     // Draw bars
-    const bars = svg
+    let bars = svg
         .append('g')
         .attr('class', 'bars');
 
-    const bars2 = svg
+    let barText = svg
+        .append('g')
+        .attr('class', 'bars-text');
+
+
+    let bars2 = svg
         .append('g')
         .attr('class', 'bars');
 
     // Draw Axes
-    const xAxis = d3
+    let xAxis = d3
         .axisTop(xScale)
         .ticks(8)
         // .tickFormat("")
@@ -306,14 +373,14 @@ function ready(data, date) {
         // .attr('fill', 'white')
 
 
-    const xAxisDraw = svg
+    let xAxisDraw = svg
         .append('g')
         .attr('class', 'x axis')
         .call(xAxis)
 
-    const yAxis = d3.axisLeft(yScale).tickSize(0);
+    let yAxis = d3.axisLeft(yScale).tickSize(0);
 
-    const yAxisDraw = svg
+    let yAxisDraw = svg
         .append('g')
         .attr('class', 'y axis')
         .call(yAxis)
@@ -334,6 +401,7 @@ function ready(data, date) {
     let skipToLastBtn = d3.select("#skip-to-last-btn");
     let currentIdx;
     let refreshRate = 1000;
+
 
     function startInterval() {
         nextDay(dates[idx])
@@ -427,4 +495,104 @@ function ready(data, date) {
         clearInterval(interval);
         nextDay(date);
     }
+}
+
+class Tooltip {
+    constructor(svgX, svgY, data, perCapitaData) {
+        this.data = data
+        this.svgX = svgX
+        this.svgY = svgY
+        this.perCapita = perCapitaData
+
+        this.div = d3.select('body').append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
+
+    }
+
+    showStats(x, y, county) {
+
+        this.remove()
+
+        let countyName;
+        let cases;
+        let deaths;
+        let population;
+        let perCapita;
+
+        this.data.forEach((d) => {
+            if (d.county == county.properties.name) {
+                countyName = d.county
+                cases = d.cases
+                deaths = d.deaths
+                population = d.population
+            }
+        })
+
+        if (isNaN(cases)) {
+            cases = 0
+        }
+
+        this.perCapita.forEach(function(x) {
+            if (x.county == countyName) {
+                perCapita = x.cases_per_capita
+            }
+        })
+
+        this.div.transition().duration(100).style('opacity', 1)
+
+        //Map tooltip.
+        this.div
+            .html(`
+				<strong class='title'>${countyName} County</strong><br/>
+				<span>Cases: ${numberWithCommas(cases)}</span><br/>
+				<span>Deaths: ${deaths}</span><br/>
+				<span>Population: ${numberWithCommas(population)}</span><br/>
+				<span>Cases per 100k: ${perCapita}</span><br/>
+			`)
+            .style('left', '20px')
+            .style('top', '500px')
+    }
+
+    showChartStats(x, y, county) {
+
+        let date = county.date
+        let cases = county.cases
+        let deaths = county.deaths
+
+        this.div.transition().duration(200).style('opacity', 1)
+
+        this.div.html(`
+            <strong>${date} County</strong><br/>
+            <span>Cases: ${cases}</span><br/>
+            <span>XXXDeaths: XXX${deaths}</span><br/>
+        `)
+            .style('left', '20px')
+            .style('top', '600px')
+    }
+
+    remove() {
+        this.div.transition().duration(200).style('opacity', 0)
+    }
+
+}
+
+function snake_it(name) {
+    return name.toLowerCase().split(" ").join("_")
+}
+
+function unsnake_it(name) {
+    let newName = [];
+    name = name.toLowerCase().split("_");
+    name.forEach(d => newName.push(capitalize(d)))
+    return newName.join(" ")
+}
+
+function capitalize(s) {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

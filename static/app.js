@@ -7,16 +7,11 @@ $(document).ready(function() {
             d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
         ]).then(([topoData, californiaData, perCapita, covidData]) => {
 
-
-
-
             covidData = covidData.filter(d => {
                 return (
                     d.state == "California"
                 );
             });
-
-
 
             let colorInterpolations = [
                 d3.interpolateReds, //0

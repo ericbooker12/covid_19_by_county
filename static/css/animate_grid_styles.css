@@ -41,3 +41,11 @@ text {
     /* margin-top: 40px; */
     /* grid-column-start: 0; */
 }
+
+.bar-controls {
+    grid-row-start: 4;
+    grid-row-end: 5;
+    margin-left: 175px;
+    margin-top: 25px;
+    /* grid-column-start: 0; */
+}
