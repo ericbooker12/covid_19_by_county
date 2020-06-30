@@ -49,3 +49,7 @@ text {
     margin-top: 25px;
     /* grid-column-start: 0; */
 }
+
+#pause-btn {
+    width: 80px;
+}

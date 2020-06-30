@@ -143,6 +143,7 @@ function ready(data, date) {
                     enter
                         .append('rect')
                         .on('mousemove', function(d, i) {
+                            console.log(this.parentNode.parentNode.parentNode)
                             div
                                 .transition()
                                 .duration(200)
@@ -382,7 +383,6 @@ function ready(data, date) {
         .tickSizeInner(0)
         .tickSizeOuter(0)
         // .attr('fill', 'white')
-
 
     let xAxisDraw = svg
         .append('g')
