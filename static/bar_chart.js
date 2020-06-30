@@ -147,7 +147,6 @@ function ready(data, date) {
                                 .transition()
                                 .duration(200)
                                 .style("opacity", .9)
-
                             div
                                 .html(`
                                     <strong class='title'>${d.county} County</strong><br/>
@@ -172,7 +171,7 @@ function ready(data, date) {
                         .delay((d, i) => i * 20)
                         .attr('y', d => yScale(d.county))
                         .attr('width', d => xScale(d[metric]))
-                        .style('fill', 'dodgerblue')
+                        .style('fill', 'dodgerblue');
                 },
 
                 update => {
@@ -180,7 +179,7 @@ function ready(data, date) {
                         .transition(t)
                         .delay((d, i) => i * 20)
                         .attr('y', d => yScale(d.county))
-                        .attr('width', d => xScale(d[metric]))
+                        .attr('width', d => xScale(d.cases))
                         .attr('height', 10)
                         // .attr('height', d => yScale.bandwidth())
                 },
@@ -189,7 +188,7 @@ function ready(data, date) {
                         .transition()
                         .duration(20)
                         .style('fill-opacity', 0)
-                        .remove()
+                        .remove();
                 }
             )
 
@@ -228,7 +227,6 @@ function ready(data, date) {
                         .remove()
                 }
             )
-            // d3.selectAll(".bar-text").remove()
 
         let texBarColor = "black"
         barText.selectAll(".bar-text")
@@ -325,8 +323,8 @@ function ready(data, date) {
 
 
     // Margin Convention
-    const margin = { top: 80, right: 40, bottom: 100, left: 100 }
-    const width = 600 - margin.left - margin.right;
+    const margin = { top: 80, right: 80, bottom: 100, left: 100 }
+    const width = 800 - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
 
     const xExtent = d3.extent(day1Data, (d) => { return d.cases })
