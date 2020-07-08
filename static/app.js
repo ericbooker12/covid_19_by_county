@@ -36,8 +36,6 @@ $(document).ready(function() {
             let countyGroup = countyMap.drawCounties(colorScheme)
 
             countyMap.colorCounties(countyGroup, colorScheme)
-                // map.drawBubbles(countryGroup)
-                // map.drawCapitals(capitals)
             countyMap.drawLegend(colorScheme)
 
         })
@@ -54,16 +52,27 @@ class Tooltip {
         this.div = d3.select('body').append('div')
             .attr('class', 'tooltip')
             .style('opacity', 0);
-
     }
 
     showStats(x, y, county) {
 
-        this.remove()
+        // this.remove()
+
+        let currentCounty = county.properties.name
+
+        let countyData = this.data.filter(data => {
+            return (
+                data.county == currentCounty
+            );
+        });
+
+        countyData = getNewCasesAndDeaths(countyData)
 
         let countyName;
         let cases;
+        let newCases;
         let deaths;
+        let newDeaths;
         let population;
         let perCapita;
 
@@ -71,10 +80,14 @@ class Tooltip {
             if (d.county == county.properties.name) {
                 countyName = d.county
                 cases = d.cases
+                newCases = d.new_cases
                 deaths = d.deaths
+                newDeaths = d.new_deaths
                 population = d.population
             }
         })
+
+        let currentPerCapita = (newCases / population * 100000).toFixed(1);
 
         if (isNaN(cases)) {
             cases = 0
@@ -92,10 +105,13 @@ class Tooltip {
         this.div
             .html(`
 				<strong class='title'>${countyName} County</strong><br/>
-				<span>Cases: ${numberWithCommas(cases)}</span><br/>
-				<span>Deaths: ${deaths}</span><br/>
+                <span>Cases: ${numberWithCommas(cases)}</span><br/>
+                <span>New Cases: ${(newCases)}</span><br/>
+                <span>Deaths: ${deaths}</span><br/>
+                <span>New Deaths: ${(newDeaths)}</span><br/>
 				<span>Population: ${numberWithCommas(population)}</span><br/>
-				<span>Cases per 100k: ${perCapita}</span><br/>
+                <span>Total Cases per 100k: ${perCapita}</span><br/>
+                <span>New Cases per 100k: ${currentPerCapita}</span><br/>
 			`)
             .style('left', '20px')
             .style('top', '500px')
@@ -187,7 +203,7 @@ class D3Map {
             .enter()
             .append('path')
             .attr('d', path)
-            .attr('id', function(d) { return snake_it(d.properties.name) })
+            .attr('id', d => { return snake_it(d.properties.name) })
             .attr('class', "county")
             .attr('stroke', 'lightgray')
             .attr("transform", "translate(20, 0) rotate(0) scale(1)")
@@ -263,16 +279,7 @@ class D3Map {
             );
         });
 
-        let previousCaseCount = 0;
-        let currentCaseCount = 0;
-        let newCases = 0;
-
-        countyData.forEach(function(c) {
-            currentCaseCount = c.cases;
-            newCases = currentCaseCount - previousCaseCount;
-            previousCaseCount = currentCaseCount
-            c.new_cases = newCases;
-        })
+        countyData = getNewCasesAndDeaths(countyData);
 
         $("#data-source").remove();
         $("#slider-table").attr('hidden', true);
@@ -583,13 +590,13 @@ function makeData(inputData, source, exp, entity) {
 
             data.forEach((point) => {
 
-                let date;
-                let cases;
-                let deaths;
-                let xpos;
-                let ypos;
-                let newDate;
-                let newCases;
+                // let date;
+                // let cases;
+                // let deaths;
+                // let xpos;
+                // let ypos;
+                // let newDate;
+                // let newCases;
 
                 let color = colors[i];
 
@@ -610,13 +617,14 @@ function makeData(inputData, source, exp, entity) {
                         .attr('opacity', 1)
 
 
-                    date = point.date.toString().split(" ");
-                    newDate = date[1] + ' ' + date[2] + ', ' + date[3];
-                    cases = point.cases;
-                    newCases = point.new_cases;
-                    deaths = point.deaths;
-                    xpos = x(point.date);
-                    ypos = y(point[propertyName]);
+                    let date = point.date.toString().split(" ");
+                    let newDate = date[1] + ' ' + date[2] + ', ' + date[3];
+                    let cases = point.cases;
+                    let newCases = point.new_cases;
+                    let newDeaths = point.new_deaths;
+                    let deaths = point.deaths;
+                    let xpos = x(point.date);
+                    let ypos = y(point[propertyName]);
 
 
                     let x0 = x(data[0].date);
@@ -630,7 +638,8 @@ function makeData(inputData, source, exp, entity) {
 						<strong class="">${newDate}</strong><br/>
                         <span>Total Cases: ${numberWithCommas(cases)}</span><br/>
                         <span>New Cases: ${numberWithCommas(newCases)}</span><br/>
-						<span>Deaths: ${numberWithCommas(deaths)}</span><br/>
+                        <span>Deaths: ${numberWithCommas(deaths)}</span><br/>
+                        <span>New Deaths: ${numberWithCommas(newDeaths)}</span><br/>
 					`)
                         .style('left', xOrg + xpos - 70 + 'px')
                         .style('top', yOrg + ypos + 30 + 'px')
@@ -847,12 +856,27 @@ function numberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-// function formatDateFromObject(date) {
-//     let monthNames = ["January", "February", "March", "April", "May", "June",
-//         "July", "August", "September", "October", "November", "December"
-//     ];
+function getNewCasesAndDeaths(countyData) {
 
-//     let month =
+    let previousCaseCount = 0;
+    let previousDeathCount = 0;
+    // let currentDeathCount = 0;
+    let newCases = 0;
+    let newDeaths = 0;
 
+    countyData.forEach(c => {
+        let currentCaseCount = c.cases;
+        let currentDeathCount = c.deaths;
 
-// }
+        newCases = currentCaseCount - previousCaseCount;
+        newDeaths = currentDeathCount - previousDeathCount;
+
+        previousCaseCount = currentCaseCount;
+        previousDeathCount = currentDeathCount;
+
+        c.new_deaths = newDeaths;
+        c.new_cases = newCases;
+    })
+
+    return countyData;
+}

@@ -139,3 +139,11 @@ date,county,state,fips,cases,deaths,new_cases
 2020-06-26,San Diego,California,6073.0,12464,358,440.0
 2020-06-27,San Diego,California,6073.0,12900,360,436.0
 2020-06-28,San Diego,California,6073.0,13397,361,497.0
+2020-06-29,San Diego,California,6073.0,13895,361,498.0
+2020-06-30,San Diego,California,6073.0,14212,365,317.0
+2020-07-01,San Diego,California,6073.0,14686,372,474.0
+2020-07-02,San Diego,California,6073.0,15270,377,584.0
+2020-07-03,San Diego,California,6073.0,15759,387,489.0
+2020-07-04,San Diego,California,6073.0,15761,387,2.0
+2020-07-05,San Diego,California,6073.0,16789,387,1028.0
+2020-07-06,San Diego,California,6073.0,17063,387,274.0
