@@ -1,4 +1,5 @@
-let countyData = "static/county_data/all_counties.csv"
+let countyDataCSV = "static/county_data/all_counties.csv"
+let countyDataURL = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
 
 let colors = {
     smoky: "#210f04",
@@ -25,7 +26,7 @@ let idx = 0;
 let dates = [];
 
 Promise.all([
-    d3.csv(countyData, type)
+    d3.csv(countyDataCSV, type)
 ]).then(([covidData]) => {
 
     covidData = covidData.filter(d => {
