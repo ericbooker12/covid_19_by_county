@@ -26,7 +26,7 @@ let idx = 0;
 let dates = [];
 
 Promise.all([
-    d3.csv(countyDataCSV, type)
+    d3.csv(countyDataURL, type)
 ]).then(([covidData]) => {
 
     covidData = covidData.filter(d => {
