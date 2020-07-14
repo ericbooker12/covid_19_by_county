@@ -7,8 +7,8 @@ $(document).ready(function() {
             d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'), //covidData
             d3.csv('./static/data/population_data/population_data.csv') //populationData
         ]).then(([topoData, californiaData, perCapita, covidData, populationData]) => {
+            //Discountinue use of californiaData
 
-            console.log(californiaData)
 
             covidData = covidData.filter(d => {
                 return (
@@ -16,18 +16,19 @@ $(document).ready(function() {
                 );
             });
 
+            let tempPopulationData = populationData;
 
-            // Add population data to dataset
-            populationData.forEach(function(i) {
-                let popCounty = i.county;
-
-
-                covidData.forEach(function(j) {
+            covidData.forEach(function(i) {
+                populationData.forEach(function(j) {
+                    let popCounty = j.county;
                     if (j.county == i.county) {
-                        j.population = i.population
+                        i.population = removeCommas(j.population)
+                        i.cases_per_capita = Math.round(parseInt(i.cases) * 100000 / i.population)
                     }
                 })
             })
+
+            // console.log(covidData)
 
 
             let colorInterpolations = [
@@ -44,7 +45,7 @@ $(document).ready(function() {
             ]
 
             let colorScheme = colorInterpolations[5];
-            let countyMap = new D3Map(topoData, californiaData, perCapita, covidData)
+            let countyMap = new D3Map(topoData, covidData, perCapita, covidData)
             let countyGroup = countyMap.drawCounties(colorScheme)
 
             countyMap.colorCounties(countyGroup, colorScheme)
@@ -55,11 +56,13 @@ $(document).ready(function() {
 })
 
 class Tooltip {
-    constructor(svgX, svgY, data, perCapitaData) {
+    constructor(svgX, svgY, data) {
         this.data = data
         this.svgX = svgX
         this.svgY = svgY
-        this.perCapita = perCapitaData
+            // this.perCapita = perCapitaData
+
+        // console.log(this.perCapita)
 
         this.div = d3.select('body').append('div')
             .attr('class', 'tooltip')
@@ -71,8 +74,8 @@ class Tooltip {
         // this.remove()
 
         let currentCounty = county.properties.name
-        console.log(currentCounty)
-        console.log(this.data)
+            // console.log(currentCounty)
+            // console.log(this.data)
 
         let countyData = this.data.filter(data => {
             return (
@@ -98,6 +101,7 @@ class Tooltip {
                 deaths = d.deaths
                 newDeaths = d.new_deaths
                 population = d.population
+                perCapita = d.cases_per_capita
             }
         })
 
@@ -107,11 +111,11 @@ class Tooltip {
             cases = 0
         }
 
-        this.perCapita.forEach(function(x) {
-            if (x.county == countyName) {
-                perCapita = x.cases_per_capita
-            }
-        })
+        // this.perCapita.forEach(function(x) {
+        //     if (x.county == countyName) {
+        //         perCapita = x.cases_per_capita
+        //     }
+        // })
 
         this.div.transition().duration(100).style('opacity', 1)
 
@@ -163,7 +167,9 @@ class D3Map {
         // console.log('covidData2', covidData2)
 
 
-        this.covidData2 = covidData2
+        this.covidData2 = covidData2;
+
+        this.covidData = covidData;
 
 
         // Get population data from perCapita
@@ -198,12 +204,15 @@ class D3Map {
         this.maxCounty = maxCounty
         this.perCapita = perCapita
 
-        this.tooltip = new Tooltip(x, y, covidData, perCapita)
+
+
+        this.tooltip = new Tooltip(x, y, covidData)
 
     }
 
     drawCounties(colorScheme) {
         const path = d3.geoPath().projection(this.projection)
+        let tempData = this.covidData
 
         const scale = getScale(this.min, this.max, colorScheme)
         let casesPerCapita = this.perCapita
@@ -253,11 +262,16 @@ class D3Map {
                         let countyName = county.properties.name;
                         let cases;
 
-                        casesPerCapita.forEach(function(c) {
+                        tempData.forEach(function(c) {
                             if (c.county == countyName) {
                                 cases = c.cases_per_capita
                             }
                         })
+
+                        if (!cases) {
+                            cases = 0
+                        }
+
                         return scale(cases)
                     })
             })
@@ -271,21 +285,38 @@ class D3Map {
     colorCounties(countyGroup, colorScheme) {
         const scale = getScale(this.min, this.max, colorScheme)
 
-        let casesPerCapita = this.perCapita
+        // console.log(countyGroup)
+
+        let casesPerCapita = this.perCapita;
+        let tempData = this.covidData
 
         countyGroup
             .attr('fill', function(county) {
-                let countyName = county.properties.name
-                let cases
+                let countyName = county.properties.name;
+                let cases;
 
-                casesPerCapita.forEach(function(c) {
+                // console.log(county)
+
+                // casesPerCapita.forEach(function(c) {
+                //     if (c.county == countyName) {
+                //         cases = c.cases_per_capita
+                //     }
+                // })
+
+                tempData.forEach(function(c) {
                     if (c.county == countyName) {
                         cases = c.cases_per_capita
                     }
                 })
 
+                if (!cases) {
+                    cases = 0
+                }
+
 
                 return scale(cases)
+
+
             })
             .attr('opacity', '.8')
     }
@@ -899,4 +930,10 @@ function getNewCasesAndDeaths(countyData) {
     })
 
     return countyData;
+}
+
+function removeCommas(str) {
+    let num = str.split(',').join('');
+    num = parseInt(num);
+    return num;
 }
