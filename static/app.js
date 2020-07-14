@@ -1,17 +1,34 @@
 $(document).ready(function() {
 
     Promise.all([
-            d3.json('./static/topodata/cal_counties.topo.json'),
-            d3.csv('./static/county_data/all_counties.csv'),
-            d3.csv('./static/data/population_data/cases_per_capita.csv'),
-            d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
-        ]).then(([topoData, californiaData, perCapita, covidData]) => {
+            d3.json('./static/topodata/cal_counties.topo.json'), //topoData
+            d3.csv('./static/county_data/all_counties.csv'), //californiaData
+            d3.csv('./static/data/population_data/cases_per_capita.csv'), // perCapita
+            d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'), //covidData
+            d3.csv('./static/data/population_data/population_data.csv') //populationData
+        ]).then(([topoData, californiaData, perCapita, covidData, populationData]) => {
+
+            console.log(californiaData)
 
             covidData = covidData.filter(d => {
                 return (
                     d.state == "California"
                 );
             });
+
+
+            // Add population data to dataset
+            populationData.forEach(function(i) {
+                let popCounty = i.county;
+
+
+                covidData.forEach(function(j) {
+                    if (j.county == i.county) {
+                        j.population = i.population
+                    }
+                })
+            })
+
 
             let colorInterpolations = [
                 d3.interpolateReds, //0
@@ -54,6 +71,8 @@ class Tooltip {
         // this.remove()
 
         let currentCounty = county.properties.name
+        console.log(currentCounty)
+        console.log(this.data)
 
         let countyData = this.data.filter(data => {
             return (
@@ -96,6 +115,7 @@ class Tooltip {
 
         this.div.transition().duration(100).style('opacity', 1)
 
+
         //Map tooltip.
         this.div
             .html(`
@@ -104,8 +124,8 @@ class Tooltip {
                 <span>New Cases: ${(newCases)}</span><br/>
                 <span>Deaths: ${deaths}</span><br/>
                 <span>New Deaths: ${(newDeaths)}</span><br/>
-				<span>Population: ${numberWithCommas(population)}</span><br/>
-                <span>Total Cases per 100k: ${perCapita}</span><br/>
+				<span>Population: ${population > 0 ? numberWithCommas(population) : population}</span><br/>
+                <span>Total Cases per 100k: ${perCapita ? perCapita : 0 }</span><br/>
                 <span>New Cases per 100k: ${currentPerCapita}</span><br/>
 			`)
             .style('left', '20px')
@@ -137,6 +157,11 @@ class Tooltip {
 
 class D3Map {
     constructor(topoData, covidData, perCapita, covidData2) {
+
+        // covid data is the same as coviddata2 but has population data
+        // console.log('covidData', covidData)
+        // console.log('covidData2', covidData2)
+
 
         this.covidData2 = covidData2
 
