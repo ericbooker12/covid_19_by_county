@@ -2,12 +2,10 @@ $(document).ready(function() {
 
     Promise.all([
             d3.json('./static/topodata/cal_counties.topo.json'), //topoData
-            d3.csv('./static/data/population_data/cases_per_capita.csv'), // perCapita
             d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'), //covidData
             d3.csv('./static/data/population_data/population_data.csv') //populationData
-        ]).then(([topoData, perCapita, covidData, populationData]) => {
+        ]).then(([topoData, covidData, populationData]) => {
             //Discountinue use of californiaData
-
 
             covidData = covidData.filter(d => {
                 return (
@@ -44,7 +42,7 @@ $(document).ready(function() {
             ]
 
             let colorScheme = colorInterpolations[5];
-            let countyMap = new D3Map(topoData, covidData, perCapita, covidData)
+            let countyMap = new D3Map(topoData, covidData)
             let countyGroup = countyMap.drawCounties(colorScheme)
 
             countyMap.colorCounties(countyGroup, colorScheme)
@@ -159,14 +157,14 @@ class Tooltip {
 }
 
 class D3Map {
-    constructor(topoData, covidData, perCapita, covidData2) {
+    constructor(topoData, covidData) {
 
         // covid data is the same as coviddata2 but has population data
         // console.log('covidData', covidData)
         // console.log('covidData2', covidData2)
 
 
-        this.covidData2 = covidData2;
+        // this.covidData2 = covidData2;
 
         this.covidData = covidData;
 
@@ -194,14 +192,17 @@ class D3Map {
                 [width - 50, height - 50]
             ], geojson)
 
-        const { min, max, minCounty, maxCounty } = getCasesPerCapitaRange(perCapita)
+        // console.log(perCapita)
+
+        const { min, max, minCounty, maxCounty } = getCasesPerCapitaRange(covidData)
 
 
         this.min = min
         this.max = max
         this.minCounty = minCounty
         this.maxCounty = maxCounty
-        this.perCapita = perCapita
+
+        console.log("covidData", this.min, this.max, this.minCounty, this.maxCounty)
 
 
 
@@ -214,7 +215,7 @@ class D3Map {
         let tempData = this.covidData
 
         const scale = getScale(this.min, this.max, colorScheme)
-        let casesPerCapita = this.perCapita
+            // let casesPerCapita = this.perCapita
 
         let title = this.svg
             .append('text')
@@ -286,7 +287,7 @@ class D3Map {
 
         // console.log(countyGroup)
 
-        let casesPerCapita = this.perCapita;
+        // let casesPerCapita = this.perCapita;
         let tempData = this.covidData
 
         countyGroup
@@ -323,7 +324,7 @@ class D3Map {
     showData(entity, i, counties, covidData) {
 
         let countyName = entity.properties.name
-        let countyData = this.covidData2.filter(data => {
+        let countyData = this.covidData.filter(data => {
             return (
                 data.county == countyName
             );
@@ -344,8 +345,10 @@ class D3Map {
         makeData(countyData, "json", 1, countyName)
 
         // Make ajax request to app to create and store csv file for current data.
+        console.log($(this))
         $.ajax({
-            data: $(this).text(),
+            // data: $(this).text(),
+            data: "Hello from showData",
             type: 'POST',
             url: '/' + countyName
         })
@@ -452,6 +455,8 @@ function casesPerCapita(county) {
 function getCasesPerCapitaRange(counties) {
     let min = Infinity;
     let max = -Infinity;
+    let minCounty = "";
+    let maxCounty = "";
 
     counties.forEach((county) => {
         const cpc = parseFloat(county.cases_per_capita)
@@ -466,12 +471,13 @@ function getCasesPerCapitaRange(counties) {
         }
     })
 
-    return { min, max }
+    return { min, max, minCounty, maxCounty }
 }
 
 function renderChart(value) {
 
     let county = $("#render_scale").attr("class");
+
 
     county_joined = county.toLowerCase().split(' ').join('_')
 
@@ -689,7 +695,7 @@ function makeData(inputData, source, exp, entity) {
                         <span>Total Cases: ${numberWithCommas(cases)}</span><br/>
                         <span>New Cases: ${numberWithCommas(newCases)}</span><br/>
                         <span>Deaths: ${numberWithCommas(deaths)}</span><br/>
-                        <span>New Deaths: ${numberWithCommas(newDeaths)}</span><br/>
+                        <span>New Deaths: ${numberWithCommas(Math.round(newDeaths))}</span><br/>
 					`)
                         .style('left', xOrg + xpos - 70 + 'px')
                         .style('top', yOrg + ypos + 30 + 'px')
@@ -926,6 +932,31 @@ function getNewCasesAndDeaths(countyData) {
 
         c.new_deaths = newDeaths;
         c.new_cases = newCases;
+    })
+
+    return countyData;
+}
+
+function getNewDeaths(countyData) {
+
+    // let previousCaseCount = 0;
+    let previousDeathCount = 0;
+    // let currentDeathCount = 0;
+    // let newCases = 0;
+    let newDeaths = 0;
+
+    countyData.forEach(c => {
+        // let currentCaseCount = c.cases;
+        let currentDeathCount = c.deaths;
+
+        // newCases = currentCaseCount - previousCaseCount;
+        newDeaths = currentDeathCount - previousDeathCount;
+
+        // previousCaseCount = currentCaseCount;
+        previousDeathCount = currentDeathCount;
+
+        c.new_deaths = newDeaths;
+        // c.new_cases = newCases;
     })
 
     return countyData;

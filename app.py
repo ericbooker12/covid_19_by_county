@@ -13,19 +13,26 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
 
-	california_data = get_california_data()
+	# california_data = get_california_data()
 	
-	create_csv("All Counties", california_data)
-	counties = get_counties()
+	# create_csv("All Counties", california_data)
+	# counties = get_counties()
 
-	return render_template("counties.html", counties = counties)
+	# return render_template("counties.html", counties = counties)
+	return render_template("counties.html")
 
 @app.route("/<county>", methods=["GET", "POST"])
 def show_data(county):
 
+	print(county)
+
 	county_data = get_county_data(county)
 
+	
+	print(county_data)
+	
 	county_data_json = county_data.to_json(orient="records")
+
 
 	create_csv(county, county_data)
 

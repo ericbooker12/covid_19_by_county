@@ -164,9 +164,15 @@ def get_county_data(county):
 
 
 	new_cases = get_new_cases(county_data)
+	new_deaths = get_new_deaths(county_data)
 
 	county_data.loc[:, "new_cases"] = new_cases
 	county_data.loc[:0, "new_cases"] = county_data.loc[:0, "cases"]
+
+	county_data.loc[:, "new_deaths"] = new_deaths
+	county_data.loc[:0, "new_deaths"] = county_data.loc[:0, "deaths"]
+
+	
 
 	return county_data
 
@@ -236,6 +242,7 @@ def format_date(dates):
 def get_new_cases(data):
 
 	cases = data.loc[:, "cases"]
+	
 
 	cases = np.array(cases)
 	df = pd.DataFrame(data = cases)
@@ -245,6 +252,20 @@ def get_new_cases(data):
 	new_cases = np.array(df)
 
 	return new_cases
+
+def get_new_deaths(data):
+
+	deaths = data.loc[:, "deaths"]
+	
+
+	deaths = np.array(deaths)
+	df = pd.DataFrame(data = deaths)
+	df = df.diff()
+	df = df.fillna(0)
+
+	new_deaths = np.array(df)
+
+	return new_deaths
 
 
 def get_counties():

@@ -248,7 +248,7 @@ function ready(data, date) {
                         .attr("alignment-baseline", "central")
                         // .transition(t)
                         .transition()
-                        .duration(600)
+                        .duration(800)
                         .delay((d, i) => i * 20)
                         .text(d => { return numberWithCommas(d.cases) })
                         .attr("font-size", "8pt")
