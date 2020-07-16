@@ -69,6 +69,7 @@ class Tooltip {
     showStats(x, y, county) {
 
         // this.remove()
+        console.log(county)
 
         let currentCounty = county.properties.name
             // console.log(currentCounty)
@@ -119,16 +120,23 @@ class Tooltip {
 
         //Map tooltip.
         this.div
-            .html(`
-				<strong class='title'>${countyName} County</strong><br/>
-                <span>Cases: ${numberWithCommas(cases)}</span><br/>
-                <span>New Cases: ${(newCases)}</span><br/>
-                <span>Deaths: ${deaths}</span><br/>
-                <span>New Deaths: ${(newDeaths)}</span><br/>
-				<span>Population: ${population > 0 ? numberWithCommas(population) : population}</span><br/>
-                <span>Total Cases per 100k: ${perCapita ? perCapita : 0 }</span><br/>
-                <span>New Cases per 100k: ${currentPerCapita}</span><br/>
-			`)
+            .html(function() {
+                if (countyName) {
+                    return (`
+                        <strong class='title'>${countyName} County</strong><br/>
+                        <span>Cases: ${numberWithCommas(cases)}</span><br/>
+                        <span>New Cases: ${(newCases)}</span><br/>
+                        <span>Deaths: ${deaths}</span><br/>
+                        <span>New Deaths: ${(newDeaths)}</span><br/>
+                        <span>Population: ${population > 0 ? numberWithCommas(population) : population}</span><br/>
+                        <span>Total Cases per 100k: ${perCapita ? perCapita : 0 }</span><br/>
+                        <span>New Cases per 100k: ${currentPerCapita}</span><br/>`)
+                } else {
+                    return (`
+                    <strong class = 'title' > ${county.properties.namelsad}</strong><br/ >
+                    <span>No Cases Reported</span><br/>`)
+                }
+            })
             .style('left', '20px')
             .style('top', '500px')
     }
