@@ -202,9 +202,7 @@ class D3Map {
         this.minCounty = minCounty
         this.maxCounty = maxCounty
 
-        console.log("covidData", this.min, this.max, this.minCounty, this.maxCounty)
-
-
+        let currentDate = covidData[covidData.length - 1].date;
 
         this.tooltip = new Tooltip(x, y, covidData)
 
