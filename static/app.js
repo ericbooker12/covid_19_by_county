@@ -69,7 +69,6 @@ class Tooltip {
     showStats(x, y, county) {
 
         // this.remove()
-        console.log(county)
 
         let currentCounty = county.properties.name
             // console.log(currentCounty)
@@ -133,8 +132,8 @@ class Tooltip {
                         <span>New Cases per 100k: ${currentPerCapita}</span><br/>`)
                 } else {
                     return (`
-                    <strong class = 'title' > ${county.properties.namelsad}</strong><br/ >
-                    <span>No Cases Reported</span><br/>`)
+                        <strong class = 'title' > ${county.properties.namelsad}</strong><br/ >
+                        <span>No Cases Reported</span><br/>`)
                 }
             })
             .style('left', '20px')
@@ -243,7 +242,6 @@ class D3Map {
             .attr('stroke', 'lightgray')
             .attr("transform", "translate(20, 0) rotate(0) scale(1)")
             .on('click', (d, i, counties) => {
-
                 let countyName = d.properties.name
 
                 const [x, y] = path.centroid(d)
@@ -319,15 +317,13 @@ class D3Map {
                     cases = 0
                 }
 
-
                 return scale(cases)
-
-
             })
             .attr('opacity', '.8')
     }
 
     showData(entity, i, counties, covidData) {
+
 
         let countyName = entity.properties.name
         let countyData = this.covidData.filter(data => {
@@ -351,7 +347,7 @@ class D3Map {
         makeData(countyData, "json", 1, countyName)
 
         // Make ajax request to app to create and store csv file for current data.
-        console.log($(this))
+
         $.ajax({
             // data: $(this).text(),
             data: "Hello from showData",
@@ -767,141 +763,149 @@ function makeData(inputData, source, exp, entity) {
 
 
     function drawLegend(propertyNames, chart, max, county) {
-        d3.csv("/static/data/population_data/cases_per_capita.csv" + '?' + Math.floor(Math.random() * 100)).then(function(d) {
-            // d3.csv("/static/data/population_data/population_data.csv").then(function(d){
 
-            let numOfData = inputData.length;
-            let endDate = inputData[numOfData - 1].date;
-            let latestNewCases = inputData[numOfData - 1].new_cases;
-            let pop;
-            let casesPer;
+        let legend = chart.append("g")
+        let elementHeight = 4;
+        let elementWidth = 40;
+        let xMargin = 5;
+        let yMargin = 5;
+        let xOrigin = 40;
+        let yOrigin = 40;
+        let boxMargin = 8
+        let width = 140 + boxMargin * 2;
+        let height = 40;
+        let legendElements = [];
 
-            var formatTime = d3.timeFormat("%B %d, %Y");
-            endDate = formatTime(endDate); // "June 30, 2015"
+        // max[0] is number of cases, only attempt to draw chart if cases exist
+        if (max[0]) {
+            d3.csv("/static/data/population_data/cases_per_capita.csv" + '?' + Math.floor(Math.random() * 100))
+                .then(function(d) {
+                    // d3.csv("/static/data/population_data/population_data.csv").then(function(d){
 
-            d.forEach(function(row) {
-                if (row.county == county) {
-                    pop = row.population
-                    casesPer = parseFloat(row.cases_per_capita).toFixed(0)
-                }
-            })
+                    let numOfData = inputData.length;
+                    let endDate = inputData[numOfData - 1].date;
+                    let latestNewCases = inputData[numOfData - 1].new_cases;
+                    let pop;
+                    let casesPer;
 
-            let legendElements = [];
+                    var formatTime = d3.timeFormat("%B %d, %Y");
+                    endDate = formatTime(endDate); // "June 30, 2015"
 
-            let legend = chart
-                .append("g")
+                    d.forEach(function(row) {
+                        if (row.county == county) {
+                            pop = row.population
+                            casesPer = parseFloat(row.cases_per_capita).toFixed(0)
+                        }
+                    })
 
-            let elementHeight = 4;
-
-            let xMargin = 5;
-            let yMargin = 5;
-            let xOrigin = 40;
-            let yOrigin = 40;
-            let boxMargin = 8
-            let width = 140 + boxMargin * 2;
-            let height = 40;
-
-            let elementWidth = 40;
-
-            legend
-                .append("rect")
-                .attr("x", xOrigin)
-                .attr("y", yOrigin)
-                .attr("id", "legend-box")
-                // .attr("stroke", "black")
-                .attr("radius", "5")
-                // .attr("fill", "grey")
-                .attr("fill", "white")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("rx", 5)
-                .attr("opacity", .1);
+                    legend
+                        .append("rect")
+                        .attr("x", xOrigin)
+                        .attr("y", yOrigin)
+                        .attr("id", "legend-box")
+                        // .attr("stroke", "black")
+                        .attr("radius", "5")
+                        // .attr("fill", "grey")
+                        .attr("fill", "white")
+                        .attr("width", width)
+                        .attr("height", height)
+                        .attr("rx", 5)
+                        .attr("opacity", .1);
 
 
-            for (let i = 0; i < propertyNames.length; i++) {
-                let element = {
-                    color: colors[i],
-                    propertyName: propertyNames[i],
-                    max: max[i]
-                }
-                legendElements.push(element)
-            }
+                    for (let i = 0; i < propertyNames.length; i++) {
+                        let element = {
+                            color: colors[i],
+                            propertyName: propertyNames[i],
+                            max: max[i]
+                        }
+                        legendElements.push(element)
+                    }
 
-            currentY = yOrigin + yMargin;
+                    currentY = yOrigin + yMargin;
 
-            legendElements.forEach(function(x) {
+                    legendElements.forEach(function(x) {
 
-                legend.append("rect")
-                    .attr("fill", x.color)
-                    .attr("x", xOrigin + xMargin + 8)
-                    .attr("y", currentY + boxMargin)
-                    .attr("width", elementWidth)
-                    .attr("height", elementHeight)
-                    .append("title")
-                    .text(x.propertyName);
+                        legend.append("rect")
+                            .attr("fill", x.color)
+                            .attr("x", xOrigin + xMargin + 8)
+                            .attr("y", currentY + boxMargin)
+                            .attr("width", elementWidth)
+                            .attr("height", elementHeight)
+                            .append("title")
+                            .text(x.propertyName);
 
-                let propertyName = capitalize(x.propertyName) + ":   " + numberWithCommas(x.max);
+                        let propertyName = capitalize(x.propertyName) + ":   " + numberWithCommas(x.max);
 
-                legend.append("text")
-                    .text(endDate)
-                    // .attr("font-weight", "bold")
-                    .attr("font-size", "12pt")
-                    .attr("fill", "black")
-                    .attr("x", 0)
-                    .attr("y", boxMargin + 22)
-                    .attr("dx", elementWidth + xMargin + 8)
-                    .attr("dy", yMargin);
+                        legend.append("text")
+                            .text(endDate)
+                            // .attr("font-weight", "bold")
+                            .attr("font-size", "12pt")
+                            .attr("fill", "black")
+                            .attr("x", 0)
+                            .attr("y", boxMargin + 22)
+                            .attr("dx", elementWidth + xMargin + 8)
+                            .attr("dy", yMargin);
 
-                legend.append("text")
-                    .text(propertyName)
-                    .attr("font-size", "10pt")
-                    .attr("fill", "black")
-                    .attr("x", elementWidth + xMargin + 10)
-                    .attr("y", currentY + boxMargin)
-                    .attr("dx", elementWidth + xMargin + 8)
-                    .attr("dy", yMargin);
+                        legend.append("text")
+                            .text(propertyName)
+                            .attr("font-size", "10pt")
+                            .attr("fill", "black")
+                            .attr("x", elementWidth + xMargin + 10)
+                            .attr("y", currentY + boxMargin)
+                            .attr("dx", elementWidth + xMargin + 8)
+                            .attr("dy", yMargin);
 
-                currentY += elementHeight + 10;
-            });
+                        currentY += elementHeight + 10;
+                    });
 
-            if (pop) {
-                pop = parseFloat(pop.split(",").join(""));
-            }
+                    if (pop) {
+                        pop = parseFloat(pop.split(",").join(""));
+                    }
 
-            if (pop >= 1000000) {
-                pop = (pop / 1000000).toFixed(1)
-                pop = pop.toString() + " million"
-            } else {
-                pop = numberWithCommas(pop);
-            }
+                    if (pop >= 1000000) {
+                        pop = (pop / 1000000).toFixed(1)
+                        pop = pop.toString() + " million"
+                    } else {
+                        pop = numberWithCommas(pop);
+                    }
 
+                    legend.append("text")
+                        .text("New cases: " + latestNewCases)
+                        .attr("font-size", "10pt")
+                        .attr("fill", "black")
+                        .attr("x", 0)
+                        .attr("y", boxMargin + 80)
+                        .attr("dx", elementWidth + xMargin + 8)
+                        .attr("dy", yMargin)
+
+                    legend.append("text")
+                        .text("Population: " + pop)
+                        .attr("font-size", "10pt")
+                        .attr("fill", "black")
+                        .attr("x", 0)
+                        .attr("y", boxMargin + 80 + 20)
+                        .attr("dx", elementWidth + xMargin + 8)
+                        .attr("dy", yMargin)
+
+                    legend.append("text")
+                        .text("Cases per 100k: " + casesPer)
+                        .attr("font-size", "10pt")
+                        .attr("fill", "black")
+                        .attr("x", 0)
+                        .attr("y", boxMargin + 80 + 40)
+                        .attr("dx", elementWidth + xMargin + 8)
+                        .attr("dy", yMargin)
+                })
+        } else {
             legend.append("text")
-                .text("New cases: " + latestNewCases)
-                .attr("font-size", "10pt")
+                .text(`No reported cases for ${county} County`)
+                // .attr("font-weight", "bold")
+                .attr("font-size", "16pt")
                 .attr("fill", "black")
-                .attr("x", 0)
-                .attr("y", boxMargin + 80)
-                .attr("dx", elementWidth + xMargin + 8)
-                .attr("dy", yMargin)
-
-            legend.append("text")
-                .text("Population: " + pop)
-                .attr("font-size", "10pt")
-                .attr("fill", "black")
-                .attr("x", 0)
-                .attr("y", boxMargin + 80 + 20)
-                .attr("dx", elementWidth + xMargin + 8)
-                .attr("dy", yMargin)
-
-            legend.append("text")
-                .text("Cases per 100k: " + casesPer)
-                .attr("font-size", "10pt")
-                .attr("fill", "black")
-                .attr("x", 0)
-                .attr("y", boxMargin + 80 + 40)
-                .attr("dx", elementWidth + xMargin + 8)
-                .attr("dy", yMargin)
-        })
+                .attr("x", xOrigin + 70)
+                .attr("y", 200)
+        }
     }
 
     function capitalize(s) {
