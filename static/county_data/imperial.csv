@@ -117,3 +117,9 @@ date,county,state,fips,cases,deaths,new_cases,new_deaths
 2020-07-13,Imperial,California,6025.0,7977,135,150.0,1.0
 2020-07-14,Imperial,California,6025.0,8119,140,142.0,5.0
 2020-07-15,Imperial,California,6025.0,8145,147,26.0,7.0
+2020-07-16,Imperial,California,6025.0,8310,147,165.0,0.0
+2020-07-17,Imperial,California,6025.0,8397,155,87.0,8.0
+2020-07-18,Imperial,California,6025.0,8531,160,134.0,5.0
+2020-07-19,Imperial,California,6025.0,8531,160,0.0,0.0
+2020-07-20,Imperial,California,6025.0,8606,162,75.0,2.0
+2020-07-21,Imperial,California,6025.0,8606,162,0.0,0.0

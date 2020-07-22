@@ -785,6 +785,7 @@ function makeData(inputData, source, exp, entity) {
                     let numOfData = inputData.length;
                     let endDate = inputData[numOfData - 1].date;
                     let latestNewCases = inputData[numOfData - 1].new_cases;
+                    let latestNewDeaths = inputData[numOfData - 1].new_deaths;
                     let pop;
                     let casesPer;
 
@@ -880,7 +881,7 @@ function makeData(inputData, source, exp, entity) {
                         .attr("dy", yMargin)
 
                     legend.append("text")
-                        .text("Population: " + pop)
+                        .text("New deaths: " + latestNewDeaths)
                         .attr("font-size", "10pt")
                         .attr("fill", "black")
                         .attr("x", 0)
@@ -889,11 +890,20 @@ function makeData(inputData, source, exp, entity) {
                         .attr("dy", yMargin)
 
                     legend.append("text")
+                        .text("Population: " + pop)
+                        .attr("font-size", "10pt")
+                        .attr("fill", "black")
+                        .attr("x", 0)
+                        .attr("y", boxMargin + 80 + 20 + 20)
+                        .attr("dx", elementWidth + xMargin + 8)
+                        .attr("dy", yMargin)
+
+                    legend.append("text")
                         .text("Cases per 100k: " + casesPer)
                         .attr("font-size", "10pt")
                         .attr("fill", "black")
                         .attr("x", 0)
-                        .attr("y", boxMargin + 80 + 40)
+                        .attr("y", boxMargin + 80 + 40 + 20)
                         .attr("dx", elementWidth + xMargin + 8)
                         .attr("dy", yMargin)
                 })
