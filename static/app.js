@@ -1,8 +1,10 @@
 $(document).ready(function() {
+    let url = "./static/county_data/all_counties.csv"
 
     Promise.all([
             d3.json('./static/topodata/cal_counties.topo.json'), //topoData
             d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'), //covidData
+            // d3.csv(url), //covidData
             d3.csv('./static/data/population_data/population_data.csv') //populationData
         ]).then(([topoData, covidData, populationData]) => {
             //Discountinue use of californiaData

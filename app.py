@@ -21,6 +21,11 @@ def index():
 	# return render_template("counties.html", counties = counties)
 	return render_template("counties.html")
 
+@app.route("/states", methods=["GET", "POST"])
+def states():
+
+	return render_template("states.html")
+
 @app.route("/<county>", methods=["GET", "POST"])
 def show_data(county):
 
