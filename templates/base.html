@@ -13,11 +13,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/animate_grid_styles.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/hot.ico') }}">
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <!-- <script src="./static/app.js"></script> -->
 
-    <script src="./static/ajaxFunctions.js"></script>
-
-    <!-- <script src="./static/app3.js"></script> -->
 </head>
 
 <body>
@@ -26,16 +22,12 @@
             <a href="https://www.linkedin.com/in/eric-booker-29232350/" target="_blank" class="navbar-brand">
                 <!-- <img src="{{ url_for('static', filename= 'images/profile_pic.png')}}" height="40px"> -->
                 <img src="{{ url_for('static', filename= 'images/california_icon.png')}}" height="40px">
-
             </a>
 
             <ul class="header">
                 <li><a href="https://www.linkedin.com/in/eric-booker-29232350/" target="_blank">Eric Booker</a></li>
                 <li><a href="mailto:ericbooker12@gmail.com">ericbooker12@gmail.com</a></li>
             </ul>
-
-
-
         </div>
     </nav>
 
@@ -43,9 +35,6 @@
 
     {% block content %}{% endblock %}
 
-
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="./static/topojson.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

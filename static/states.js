@@ -2,30 +2,30 @@ $(document).ready(function() {
     let url = "./static/county_data/all_counties.csv"
 
     Promise.all([
-            d3.json('./static/topodata/cal_counties.topo.json'), //topoData
+            d3.json('./static/topodata/states.topo.json'), //topoData
             d3.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'), //covidData
             // d3.csv(url), //covidData
             d3.csv('./static/data/population_data/population_data.csv') //populationData
         ]).then(([topoData, covidData, populationData]) => {
             //Discountinue use of californiaData
 
-            covidData = covidData.filter(d => {
-                return (
-                    d.state == "California"
-                );
-            });
+            // covidData = covidData.filter(d => {
+            //     return (
+            //         d.state == "California"
+            //     );
+            // });
 
-            let tempPopulationData = populationData;
+            // let tempPopulationData = populationData;
 
-            covidData.forEach(function(i) {
-                populationData.forEach(function(j) {
-                    let popCounty = j.county;
-                    if (j.county == i.county) {
-                        i.population = removeCommas(j.population)
-                        i.cases_per_capita = Math.round(parseInt(i.cases) * 100000 / i.population)
-                    }
-                })
-            })
+            // covidData.forEach(function(i) {
+            //     populationData.forEach(function(j) {
+            //         let popCounty = j.county;
+            //         if (j.county == i.county) {
+            //             i.population = removeCommas(j.population)
+            //             i.cases_per_capita = Math.round(parseInt(i.cases) * 100000 / i.population)
+            //         }
+            //     })
+            // })
 
             // console.log(covidData)
 
@@ -44,11 +44,13 @@ $(document).ready(function() {
             ]
 
             let colorScheme = colorInterpolations[5];
-            let countyMap = new D3Map(topoData, covidData)
-            let countyGroup = countyMap.drawCounties(colorScheme)
+            // let countyMap = new D3Map(topoData, covidData)
+            // let countyGroup = countyMap.drawCounties(colorScheme)
 
-            countyMap.colorCounties(countyGroup, colorScheme)
-            countyMap.drawLegend(colorScheme)
+            let stateMap = new D3Map(topoData, covidData)
+            let stateGroup = stateMap.drawStates(colorScheme)
+                // countyMap.colorCounties(countyGroup, colorScheme)
+                // countyMap.drawLegend(colorScheme)
 
         })
         .catch((err) => console.error('Error retrieving data:', err))
@@ -189,10 +191,10 @@ class D3Map {
         let { height, width, x, y } = document.getElementById('map')
             .getBoundingClientRect()
 
-        const geojson = topojson.feature(topoData, topoData.objects['california_counties'])
+        const geojson = topojson.feature(topoData, topoData.objects['us_states'])
 
 
-        this.counties = geojson.features
+        this.states = geojson.features
             // this.projection = d3.geoAlbers() //set rotate to -30
         this.projection = d3.geoMercator()
         this.projection
@@ -217,7 +219,7 @@ class D3Map {
 
     }
 
-    drawCounties(colorScheme) {
+    drawStates(colorScheme) {
         const path = d3.geoPath().projection(this.projection)
         let tempData = this.covidData
 
@@ -229,31 +231,33 @@ class D3Map {
             .attr("x", 30)
             .attr("y", 50)
             .style("font-size", "18px")
-            .text("Click a county");
+            .text("Click a state");
 
-        const countyGroup = this.svg
+        const stateGroup = this.svg
             .append('g')
-            .attr('class', 'counties')
+            .attr('class', 'states')
             .selectAll('path')
-            .data(this.counties)
+            .data(this.states)
             .enter()
             .append('path')
             .attr('d', path)
-            .attr('id', d => { return snake_it(d.properties.name) })
-            .attr('class', "county")
+            .attr('id', d => {
+                return snake_it(d.properties.NAME)
+            })
+            .attr('class', "state")
             .attr('stroke', 'lightgray')
             .attr("transform", "translate(20, 0) rotate(0) scale(1)")
-            .on('click', (d, i, counties) => {
-                let countyName = d.properties.name
+            .on('click', (d, i, states) => {
+                let stateName = d.properties.name
 
                 const [x, y] = path.centroid(d)
                 this.tooltip.showStats(x, y, d)
 
-                this.showData(d, i, counties)
+                this.showData(d, i, states)
 
             })
-            .on('mouseover', (d, i, counties) => {
-                d3.select(counties[i]).transition().duration(300)
+            .on('mouseover', (d, i, states) => {
+                d3.select(states[i]).transition().duration(300)
                     .attr('fill', 'lightblue')
                     .attr('class', 'shadow')
                     .attr('opacity', 1);
@@ -261,15 +265,15 @@ class D3Map {
                 let [x, y] = path.centroid(d)
                 this.tooltip.showStats(x, y, d)
             })
-            .on('mouseout', (d, i, counties) => {
-                d3.select(counties[i]).transition().duration(100)
+            .on('mouseout', (d, i, states) => {
+                d3.select(states[i]).transition().duration(100)
                     .attr('stroke', 'lightgray')
-                    .attr('fill', function(county) {
-                        let countyName = county.properties.name;
+                    .attr('fill', function(state) {
+                        let stateName = state.properties.name;
                         let cases;
 
                         tempData.forEach(function(c) {
-                            if (c.county == countyName) {
+                            if (c.state == stateName) {
                                 cases = c.cases_per_capita
                             }
                         })
@@ -285,32 +289,26 @@ class D3Map {
         function labels(svg, x, y, name) {
             let joinedName = joinCountyName(name)
         }
-        return countyGroup
+        return stateGroup
     }
 
-    colorCounties(countyGroup, colorScheme) {
+    colorCounties(stateGroup, colorScheme) {
         const scale = getScale(this.min, this.max, colorScheme)
 
-        // console.log(countyGroup)
+        // console.log(stateGroup)
 
         // let casesPerCapita = this.perCapita;
         let tempData = this.covidData
 
-        countyGroup
-            .attr('fill', function(county) {
-                let countyName = county.properties.name;
+        stateGroup
+            .attr('fill', function(state) {
+                let stateName = state.properties.name;
                 let cases;
 
-                // console.log(county)
 
-                // casesPerCapita.forEach(function(c) {
-                //     if (c.county == countyName) {
-                //         cases = c.cases_per_capita
-                //     }
-                // })
 
                 tempData.forEach(function(c) {
-                    if (c.county == countyName) {
+                    if (c.state == stateName) {
                         cases = c.cases_per_capita
                     }
                 })
@@ -319,7 +317,8 @@ class D3Map {
                     cases = 0
                 }
 
-                return scale(cases)
+                // return scale(cases)
+                return "gray"
             })
             .attr('opacity', '.8')
     }

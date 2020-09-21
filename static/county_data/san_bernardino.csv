@@ -146,3 +146,11 @@ date,county,state,fips,cases,deaths,new_cases,new_deaths
 2020-08-06,San Bernardino,California,6071.0,34635,490,398.0,3.0
 2020-08-07,San Bernardino,California,6071.0,34939,497,304.0,7.0
 2020-08-08,San Bernardino,California,6071.0,35452,502,513.0,5.0
+2020-08-09,San Bernardino,California,6071.0,35712,546,260.0,44.0
+2020-08-10,San Bernardino,California,6071.0,36092,546,380.0,0.0
+2020-08-11,San Bernardino,California,6071.0,37367,549,1275.0,3.0
+2020-08-12,San Bernardino,California,6071.0,38467,555,1100.0,6.0
+2020-08-13,San Bernardino,California,6071.0,38811,558,344.0,3.0
+2020-08-14,San Bernardino,California,6071.0,39395,561,584.0,3.0
+2020-08-15,San Bernardino,California,6071.0,40442,568,1047.0,7.0
+2020-08-16,San Bernardino,California,6071.0,41231,568,789.0,0.0

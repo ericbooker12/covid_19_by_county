@@ -13,8 +13,8 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
 
+	# The following lines are commented out because data is now being retrieved on the frontend with javascript
 	# california_data = get_california_data()
-	
 	# create_csv("All Counties", california_data)
 	# counties = get_counties()
 
@@ -29,16 +29,10 @@ def states():
 @app.route("/<county>", methods=["GET", "POST"])
 def show_data(county):
 
-	print(county)
-
 	county_data = get_county_data(county)
-
-	
-	print(county_data)
+	print(county, county_data)
 	
 	county_data_json = county_data.to_json(orient="records")
-
-
 	create_csv(county, county_data)
 
 	return county_data_json
@@ -49,15 +43,18 @@ def all_data():
 
 	data = get_all_data()
 
-
 	return render_template("all_data.html")
+
 
 @app.route("/animate", methods=["GET", "POST"])
 def animate():
+
 	return render_template("animate.html")
+
 
 @app.route("/bar_chart", methods=["GET", "POST"])
 def bar_chart():
+
 	return render_template("bar_chart.html")
 
 

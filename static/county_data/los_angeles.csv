@@ -201,3 +201,5 @@ date,county,state,fips,cases,deaths,new_cases,new_deaths
 2020-08-12,Los Angeles,California,6037.0,214197,5109,2389.0,52.0
 2020-08-13,Los Angeles,California,6037.0,216139,5171,1942.0,62.0
 2020-08-14,Los Angeles,California,6037.0,218693,5214,2554.0,43.0
+2020-08-15,Los Angeles,California,6037.0,220762,5245,2069.0,31.0
+2020-08-16,Los Angeles,California,6037.0,221950,5254,1188.0,9.0
