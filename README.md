@@ -12,3 +12,18 @@ Live at: https://showdata-flask2.herokuapp.com/
 * Counties are colored in varying intensity based on cases per capita
 * Use the slider to alter the y-scale exponentially. 
   - This feature emphasizes (exaggerates) the upper or lower range. Because the number of deaths tend to appear as a flat line when compared to the number of cases, an exponential scale allows you to zoom in to show more detail. 
+
+### Installation
+
+Development requires a local installation of Flask.
+
+Once Flask is installed, run the following commands:
+
+```
+export FLASK_ENV=development
+
+```
+export FLASK_APP=app.py
+
+```
+flask run
