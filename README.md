@@ -15,9 +15,9 @@ Live at: https://showdata-flask2.herokuapp.com/
 
 ### Installation
 
-Development requires a local installation of Flask.
+* Development requires a local installation of Flask.
 
-Once Flask is installed, run the following commands:
+* Once Flask is installed, run the following commands:
 
 ```
 export FLASK_ENV=development
